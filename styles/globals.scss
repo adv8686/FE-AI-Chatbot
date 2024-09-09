@@ -22,3 +22,11 @@ body {
 .container {
   max-width: 1200px !important;
 }
+
+.clip-path-arrow {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+}
+
+.clip-path-arrow-tail {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}

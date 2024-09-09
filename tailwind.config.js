@@ -16,12 +16,19 @@ module.exports = {
     colors: {
       'neutral-01': 'var(--neutral-01)',
       'neutral-02': 'var(--neutral-02)',
+      'neutral-03': 'var(--neutral-03)',
+
       neutral: 'var(--neutral)',
 
       disabled: 'var(--disabled)',
       black: 'var(--black)',
       white: 'var(--white)',
       accent: 'var(--accent)',
+      'fill-accent': 'var(--fill-accent)',
+      secodary: 'var(--secodary)',
+      danger: 'var(--danger)',
+      destructive: 'var(--destructive)',
+      placeholder: 'var(--placeholder)',
     },
   },
   darkMode: 'class',

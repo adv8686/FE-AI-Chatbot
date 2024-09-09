@@ -3,14 +3,21 @@
 @layer base {
   :root {
     --accent: #6d28d9;
+    --fill-accent: #8b5cf6;
 
     --neutral: #74787c;
     --neutral-01: #e4e6e8;
-    --neutral-02: #fafbfc;
+    --neutral-02: #d7d9da;
+    --neutral-03: #e4e6e8;
 
     --disabled: #95999d;
 
+    --secodary: #37393b !important;
     --black: #1e1f20 !important;
     --white: #ffffff;
+
+    --danger: #b91c1c;
+    --destructive: #fee2e2;
+    --placeholder: #95999d;
   }
 }

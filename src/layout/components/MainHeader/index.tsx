@@ -35,10 +35,13 @@ const Header = ({ scrollY }: { scrollY: number }) => {
     return router.pathname;
   }, [router]);
 
+  const handleRedirectPage = (url: string) => {
+    router.push(url);
+  };
   return (
     <div
       className={clsx('w-full border-b  border-b-neutral-01 border-solid sticky top-0 z-50', {
-        'backdrop-blur  transition-all border-b-0': scrollY > 0,
+        'backdrop-blur-lg bg-[rgba(0_0_0_0.01)] transition-all': scrollY > 0,
       })}
     >
       <div className='container m-auto px-6 py-3 flex justify-between items-center'>
@@ -52,6 +55,7 @@ const Header = ({ scrollY }: { scrollY: number }) => {
             {MENUS?.map((item) => {
               return (
                 <div
+                  onClick={() => handleRedirectPage(item.href)}
                   key={item?.key}
                   className='group cursor-pointer transition-all py-2 px-3 flex justify-center items-center'
                 >
