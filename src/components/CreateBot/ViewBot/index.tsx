@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Avatar, Button } from '@nextui-org/react';
 import { ArrowRight, PaperPlaneTilt, X } from '@phosphor-icons/react';
 import Image from 'next/image';

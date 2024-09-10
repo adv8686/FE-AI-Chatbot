@@ -1,10 +1,14 @@
+/* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable quotes */
-import { yupResolver } from '@hookform/resolvers/yup';
+
+import { useRef } from 'react';
+
+import { closestCenter, DndContext } from '@dnd-kit/core';
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { Avatar, Button } from '@nextui-org/react';
 import Image from 'next/image';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import { useFieldArray, useForm } from 'react-hook-form';
-import * as Yup from 'yup';
+import { useFieldArray } from 'react-hook-form';
 
 import CustomSelect from '@components/UI/CustomSelect';
 import InputText from '@components/UI/InputText';
@@ -13,32 +17,31 @@ import Text from '@components/UI/Text';
 
 import CardSetupBot from '../CardSetupBot';
 
-const ChatBotSchema = Yup.object().shape({
-  phone: Yup.string().required('Số điện thoại không được để trống'),
-});
-
-const General = () => {
-  const {
-    formState: { errors },
-    control,
-  } = useForm<any>({
-    resolver: yupResolver(ChatBotSchema),
-    defaultValues: {
-      items: [{ title: 'I’m having trouble with my account.' }],
-    },
-  });
+const General = ({ control, errors }: any) => {
+  const fileInputRef = useRef<any>(null);
 
   const { fields, append, remove, move } = useFieldArray({
     control,
     name: 'items',
   });
 
-  const handleOnDragEnd = (result: any) => {
-    if (!result.destination) {
-      return;
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+    if (active.id !== over.id) {
+      const oldIndex = fields.findIndex((item) => item.id === active.id);
+      const newIndex = fields.findIndex((item) => item.id === over.id);
+      move(oldIndex, newIndex);
     }
+  };
 
-    move(result.source.index, result.destination.index);
+  const handleFileChange = (event: any) => {
+    const file = event.target.files[0];
+    // eslint-disable-next-line no-console
+    console.log('File selected:', file);
+  };
+
+  const handleChangeAvatar = () => {
+    fileInputRef.current.click();
   };
 
   return (
@@ -49,7 +52,19 @@ const General = () => {
             <Text type='font-14-600'>Bot Avatar</Text>
             <div className='flex items-center gap-2'>
               <Avatar className='w-12 h-12' />
-              <Button variant='light' size='md' radius='md' color='secondary'>
+              <input
+                type='file'
+                ref={fileInputRef}
+                className='hidden'
+                onChange={handleFileChange}
+              />
+              <Button
+                onClick={handleChangeAvatar}
+                variant='light'
+                size='md'
+                radius='md'
+                color='secondary'
+              >
                 <Text type='font-14-600' className='text-accent'>
                   Change avatar
                 </Text>
@@ -170,61 +185,18 @@ const General = () => {
         title='Chat Suggestions'
         description='Enter up to 4 questions to help users get started with your bot.'
       >
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId='droppable-list'>
-            {(provided) => (
-              <div
-                className='flex flex-col gap-3'
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {fields?.map((item: any, index) => {
-                  return (
-                    <Draggable key={item.id} draggableId={item.id} index={index}>
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className='flex justify-between cursor-pointer items-center border-1 pr-3 pl-5 py-3 border-solid border-neutral-02 rounded-xl'
-                        >
-                          <div className='flex items-center gap-[10px]'>
-                            <Image
-                              src={'/static/icons/ic-dots.svg'}
-                              width={8}
-                              height={12}
-                              alt=''
-                              className='w-[8px] h-[12px]'
-                            />
-                            <Text type='font-14-400'>{item?.title}</Text>
-                          </div>
-                          <Button
-                            onClick={() => remove(index)}
-                            variant='light'
-                            size='sm'
-                            color='danger'
-                            isIconOnly
-                            className='rounded-full'
-                          >
-                            <Image
-                              src={'/static/icons/ic-close-danger.svg'}
-                              width={14}
-                              height={14}
-                              alt=''
-                              className='w-[14px] h-[14px]'
-                            />
-                          </Button>
-                        </div>
-                      )}
-                    </Draggable>
-                  );
-                })}
-
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext
+            items={fields.map((item) => item.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className='flex flex-col gap-3'>
+              {fields?.map((item: any, index) => (
+                <SortableItem key={item.id} item={item} index={index} remove={remove} />
+              ))}
+            </div>
+          </SortableContext>
+        </DndContext>
 
         <Button
           onClick={() => append({ title: `New Item ${fields.length + 1}` })}
@@ -243,3 +215,51 @@ const General = () => {
   );
 };
 export default General;
+
+const SortableItem = ({ item, index, remove }: any) => {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: item.id,
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className='flex justify-between cursor-pointer items-center border-1 pr-3 pl-5 py-3 border-solid border-neutral-02 rounded-xl'
+    >
+      <div className='flex items-center gap-[10px]'>
+        <Image
+          src={'/static/icons/ic-dots.svg'}
+          width={8}
+          height={12}
+          alt=''
+          className='w-[8px] h-[12px]'
+        />
+        <Text type='font-14-400'>{item?.title}</Text>
+      </div>
+      <Button
+        onClick={() => remove(index)}
+        variant='light'
+        size='sm'
+        color='danger'
+        isIconOnly
+        className='rounded-full'
+      >
+        <Image
+          src={'/static/icons/ic-close-danger.svg'}
+          width={14}
+          height={14}
+          alt=''
+          className='w-[14px] h-[14px]'
+        />
+      </Button>
+    </div>
+  );
+};

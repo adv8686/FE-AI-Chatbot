@@ -10,7 +10,7 @@ const CardLinkChatBot = () => {
         <Text type='font-14-600'>Link to Chatbot</Text>
         <Text
           type='font-14-400'
-          className='text-accent break-words whitespace-normal overflow-hidden'
+          className='text-accent break-words whitespace-normal overflow-hidden hover:underline cursor-pointer'
         >
           https://demy.ai/chat/66cc43fe7453d2f35b26c38e
         </Text>

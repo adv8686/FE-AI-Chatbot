@@ -49,16 +49,19 @@ const InputText = (props: IInputText) => {
   });
 
   return (
-    <div className='flex flex-col gap-2'>
-      <div className='flex items-center justify-between w-full'>
-        {label && <Text type='font-14-600'>{label}</Text>}
+    <div className='flex flex-col gap-2 w-full'>
+      {label && (
+        <div className='flex items-center justify-between w-full'>
+          <Text type='font-14-600'>{label}</Text>
 
-        {maxLength && maxLength > 0 && (
-          <Text type='font-12-400' className={clsx('text-neutral', {})}>
-            {`${field?.value?.length || 0}/${maxLength}`}
-          </Text>
-        )}
-      </div>
+          {maxLength && maxLength > 0 && (
+            <Text type='font-12-400' className={clsx('text-neutral', {})}>
+              {`${field?.value?.length || 0}/${maxLength}`}
+            </Text>
+          )}
+        </div>
+      )}
+
       <Input
         startContent={startContent}
         endContent={endContent}
@@ -82,9 +85,11 @@ const InputText = (props: IInputText) => {
           inputWrapper: errors?.[name]?.message
             ? ['px-3 border-1 border-solid !border-red-500']
             : [
-                'px-3 border-1 border-solid !border-neutral-01 data-[hover=true]:!border-fill-accent group-data-[focus=true]:!border-fill-accent',
+                'px-3 border-1 border-solid border-neutral-01 transition-all data-[hover=true]:!border-disabled group-data-[focus=true]:!border-accent',
               ],
-          input: ['placeholder:text-placeholder'],
+          input: startContent
+            ? ['ml-2 placeholder:text-placeholder']
+            : ['placeholder:text-placeholder'],
         }}
         placeholder={placeholder}
         labelPlacement='outside'

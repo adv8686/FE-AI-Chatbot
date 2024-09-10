@@ -82,7 +82,7 @@ const InputTextarea = (props: IInputTextarea) => {
           inputWrapper: errors?.[name]?.message
             ? ['px-3 border-1 border-solid !border-red-500']
             : [
-                'px-3 border-1 border-solid !border-neutral-01 data-[hover=true]:!border-fill-accent group-data-[focus=true]:!border-fill-accent',
+                'px-3 border-1 border-solid !border-neutral-01 data-[hover=true]:!border-disabled transition-all group-data-[focus=true]:!border-accent',
               ],
         }}
         placeholder={placeholder}

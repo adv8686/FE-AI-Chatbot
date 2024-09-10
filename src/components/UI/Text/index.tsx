@@ -14,6 +14,7 @@ interface TextProps {
     | 'font-18-600'
     | 'font-12-400'
     | 'font-12-600'
+    | 'font-20-600'
     | undefined;
   color?:
     | 'cwhite'

@@ -17,7 +17,11 @@
     --white: #ffffff;
 
     --danger: #b91c1c;
+    --danger-1: #ef4444;
+
     --destructive: #fee2e2;
     --placeholder: #95999d;
+    --upload-accent: #f5f3ff;
+    --upload-border: #ddd6fe;
   }
 }
