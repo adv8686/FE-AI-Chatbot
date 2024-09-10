@@ -1,5 +1,5 @@
 /* eslint-disable multiline-ternary */
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@nextui-org/react';
@@ -17,6 +17,7 @@ import CardLinkChatBot from './CardLinkChatBot';
 import General from './General';
 import ImportData from './ImportData';
 import Installation from './Installation';
+import ModalDiscardChanges from './ModalDiscardChanges';
 import ViewBot from './ViewBot';
 
 const steps = [
@@ -44,6 +45,7 @@ const ChatBotSchema = Yup.object().shape({
 
 const CreateBot = () => {
   const router = useRouter();
+  const refModalDiscardChanges: any = useRef();
 
   const [currentStep, setCurrentStep] = useState<string>(STEP_SETUP_BOT.GENERAL);
 
@@ -101,7 +103,12 @@ const CreateBot = () => {
           )}
 
           <div className='flex items-center justify-between'>
-            <Button radius='md' size='lg' className='bg-destructive'>
+            <Button
+              onClick={() => refModalDiscardChanges.current.onOpen()}
+              radius='md'
+              size='lg'
+              className='bg-destructive'
+            >
               <Text type='font-14-600' className='text-danger'>
                 Discard
               </Text>
@@ -136,6 +143,7 @@ const CreateBot = () => {
           <CardLinkChatBot />
         </div>
       </div>
+      <ModalDiscardChanges ref={refModalDiscardChanges} />
     </div>
   );
 };
