@@ -19,7 +19,7 @@ module.exports = {
       'neutral-03': 'var(--neutral-03)',
 
       neutral: 'var(--neutral)',
-
+      'accent-soft': 'var(--accent-soft)',
       disabled: 'var(--disabled)',
       black: 'var(--black)',
       white: 'var(--white)',

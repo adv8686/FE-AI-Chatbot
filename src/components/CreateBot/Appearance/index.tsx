@@ -1,7 +1,7 @@
 /* eslint-disable multiline-ternary */
 import { useState } from 'react';
 
-import { Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react';
+import { Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup } from '@nextui-org/react';
 import ColorPicker from '@rc-component/color-picker';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -48,15 +48,44 @@ const DATA_BACKGROUND = [
   },
 ];
 
+const DATA_CHATBOT_HEADER = [
+  {
+    id: 1,
+    label: 'Use the background color',
+    key: 'bgColor',
+  },
+  {
+    id: 2,
+    key: 'gradient',
+    label: 'Gradient',
+  },
+  {
+    id: 3,
+    label: 'Image',
+    key: 'image',
+  },
+];
+
 const Appearance = () => {
+  const [valueChatBotHeader, setValueChatBotHeader] = useState<string>('bgColor');
   const [color, setColor] = useState<string>('#8B5CF6');
+  const [colorChatBotHeader, setColorChatBotHeader] = useState<string>('#8B5CF6');
+
   const [activeBgColor, setActiveBgColor] = useState<number>(1);
 
   const handleColorChange = (value: any) => {
     setColor(value.toHexString());
   };
+  const handleColorChangeChatBotHeader = (value: any) => {
+    setColorChatBotHeader(value.toHexString());
+  };
+
   const handleClickBgColor = (id: number) => {
     setActiveBgColor(id);
+  };
+
+  const onValueChangeRadio = (value: any) => {
+    setValueChatBotHeader(value);
   };
   return (
     <>
@@ -136,9 +165,9 @@ const Appearance = () => {
                   <div
                     onClick={() => handleClickBgColor(item.id)}
                     className={clsx(
-                      'border-1 transition-all cursor-pointer border-solid border-neutral-01 rounded-lg p-2',
+                      'border-1  cursor-pointer border-solid border-neutral-01 rounded-lg p-2',
                       {
-                        'border-accent border-2': activeBgColor === item?.id,
+                        '!border-accent !border-2': activeBgColor === item?.id,
                       },
                     )}
                     key={item?.id}
@@ -160,6 +189,64 @@ const Appearance = () => {
             </div>
           </div>
         </div>
+      </CardSetupBot>
+
+      <CardSetupBot
+        title='Chatbot Header'
+        description='Explore and adjust your chatbot’s settings to match your brand.'
+      >
+        {/* <div className='flex flex-col gap-4'>
+          {DATA_CHATBOT_HEADER?.map((item) => {
+            return (
+              <div key={item?.id} className='flex flex-col gap-2'>
+                <Radio value={item?.key}>
+                  <Text type='font-14-600'>{item?.label}</Text>
+                </Radio>
+              </div>
+            );
+          })}
+        </div> */}
+        <RadioGroup
+          onValueChange={onValueChangeRadio}
+          label=''
+          color='secondary'
+          value={valueChatBotHeader}
+          defaultValue='bgColor'
+        >
+          {DATA_CHATBOT_HEADER?.map((item) => {
+            return (
+              <div key={item?.id} className='flex flex-col gap-2 mb-2'>
+                <Radio value={item?.key}>
+                  <Text type='font-14-600'>{item?.label}</Text>
+                </Radio>
+                {valueChatBotHeader === 'bgColor' && item?.key === valueChatBotHeader && (
+                  <Popover
+                    classNames={{
+                      content: ['!p-0 !shadow-none'],
+                    }}
+                    placement='bottom-start'
+                  >
+                    <PopoverTrigger>
+                      <div className='rounded-xl max-w-[192px] hover:border-disabled focus:border-accent cursor-pointer h-[42px] bg-white p-3 flex items-center gap-2 border-1 border-solid border-neutral-01'>
+                        <div
+                          className='w-5 h-5 rounded'
+                          style={{ background: colorChatBotHeader }}
+                        />
+                        <Text type='font-14-400'>{colorChatBotHeader}</Text>
+                      </div>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <ColorPicker
+                        value={colorChatBotHeader}
+                        onChange={handleColorChangeChatBotHeader}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
+            );
+          })}
+        </RadioGroup>
       </CardSetupBot>
     </>
   );

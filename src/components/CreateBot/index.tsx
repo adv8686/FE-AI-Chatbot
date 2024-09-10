@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 import { useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,6 +16,7 @@ import Appearance from './Appearance';
 import CardLinkChatBot from './CardLinkChatBot';
 import General from './General';
 import ImportData from './ImportData';
+import Installation from './Installation';
 import ViewBot from './ViewBot';
 
 const steps = [
@@ -90,10 +92,14 @@ const CreateBot = () => {
         <div className='col-span-4 flex flex-col gap-4'>
           <StepProgress steps={steps} currentStep={currentStep} />
           {currentStep === STEP_SETUP_BOT.GENERAL && <General control={control} errors={errors} />}
-          {currentStep === STEP_SETUP_BOT.APPEARANCE && <Appearance />}
           {currentStep === STEP_SETUP_BOT.IMPORT_DATA && (
             <ImportData watch={watch} control={control} errors={errors} />
           )}
+          {currentStep === STEP_SETUP_BOT.APPEARANCE && <Appearance />}
+          {currentStep === STEP_SETUP_BOT.INSTALLATION && (
+            <Installation control={control} errors={errors} />
+          )}
+
           <div className='flex items-center justify-between'>
             <Button radius='md' size='lg' className='bg-destructive'>
               <Text type='font-14-600' className='text-danger'>
@@ -101,16 +107,27 @@ const CreateBot = () => {
               </Text>
             </Button>
             <div className='flex items-center gap-2'>
-              <Button onClick={handlePrevStep} radius='md' size='lg' className='bg-neutral-01'>
-                <ArrowLeft color='#1e1f20' size={16} />
-                <Text type='font-14-600'>Back</Text>
-              </Button>
-              <Button onClick={handleNextStep} radius='md' size='lg' className='bg-black'>
-                <Text type='font-14-600' className='text-white'>
-                  Next
-                </Text>
-                <ArrowRight color='#fff' size={16} />
-              </Button>
+              {currentStep !== STEP_SETUP_BOT.GENERAL && (
+                <Button onClick={handlePrevStep} radius='md' size='lg' className='bg-neutral-01'>
+                  <ArrowLeft color='#1e1f20' size={16} />
+                  <Text type='font-14-600'>Back</Text>
+                </Button>
+              )}
+
+              {currentStep === STEP_SETUP_BOT.INSTALLATION ? (
+                <Button onClick={handleNextStep} radius='md' size='lg' className='bg-fill-accent'>
+                  <Text type='font-14-600' className='text-white'>
+                    Publish Chatbot
+                  </Text>
+                </Button>
+              ) : (
+                <Button onClick={handleNextStep} radius='md' size='lg' className='bg-black'>
+                  <Text type='font-14-600' className='text-white'>
+                    Next
+                  </Text>
+                  <ArrowRight color='#fff' size={16} />
+                </Button>
+              )}
             </div>
           </div>
         </div>

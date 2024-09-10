@@ -1,5 +1,7 @@
+/* eslint-disable multiline-ternary */
 import React from 'react';
 
+import { Check } from '@phosphor-icons/react';
 import clsx from 'clsx';
 
 import Text from '../Text';
@@ -13,6 +15,7 @@ const StepProgress = ({ steps, currentStep }: { steps: ISteps[]; currentStep: st
   return (
     <div className='flex items-center justify-between p-4 border-1 border-solid border-neutral-01 rounded-lg'>
       {steps?.map((step, index) => {
+        const currentIndex = steps.findIndex((item: any) => item.value === currentStep);
         return (
           <div
             key={step.value}
@@ -24,17 +27,22 @@ const StepProgress = ({ steps, currentStep }: { steps: ISteps[]; currentStep: st
 
                 {
                   '!bg-fill-accent': currentStep === step.value,
+                  '!bg-accent-soft': currentIndex > index,
                 },
               )}
             >
-              <Text
-                className={clsx('text-neutral', {
-                  'text-white': currentStep === step.value,
-                })}
-                type='font-12-500'
-              >
-                {index + 1}
-              </Text>
+              {currentIndex > index ? (
+                <Check size={10} color='#8B5CF6' weight='light' />
+              ) : (
+                <Text
+                  className={clsx('text-neutral', {
+                    'text-white': currentStep === step.value,
+                  })}
+                  type='font-12-500'
+                >
+                  {index + 1}
+                </Text>
+              )}
             </div>
             <Text type='font-14-600' className='text-secodary'>
               {step.label}

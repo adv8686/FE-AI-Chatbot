@@ -23,6 +23,8 @@ interface IInputTextarea {
   type?: any;
   size?: any;
   maxLength?: number;
+  rows?: number;
+  minRows?: number;
 }
 const InputTextarea = (props: IInputTextarea) => {
   const {
@@ -39,6 +41,8 @@ const InputTextarea = (props: IInputTextarea) => {
     required,
     defaultValue,
     name,
+    rows,
+    minRows,
     maxLength,
     ...rest
   } = props;
@@ -50,26 +54,31 @@ const InputTextarea = (props: IInputTextarea) => {
 
   return (
     <div className='flex flex-col gap-2'>
-      <div className='flex items-center justify-between w-full'>
-        {label && <Text type='font-14-600'>{label}</Text>}
+      {label && (
+        <div className='flex items-center justify-between w-full'>
+          <Text type='font-14-600'>{label}</Text>
 
-        {maxLength && maxLength > 0 && (
-          <Text type='font-12-400' className={clsx('text-neutral', {})}>
-            {`${field?.value?.length || 0}/${maxLength}`}
-          </Text>
-        )}
-      </div>
+          {maxLength && maxLength > 0 && (
+            <Text type='font-12-400' className={clsx('text-neutral', {})}>
+              {`${field?.value?.length || 0}/${maxLength}`}
+            </Text>
+          )}
+        </div>
+      )}
+
       <Textarea
         startContent={startContent}
         endContent={endContent}
         name={field?.name}
         variant='bordered'
         type={type}
+        minRows={minRows}
         onBlur={field.onBlur}
         autoComplete='off'
         isDisabled={isDisabled}
         value={field?.value}
         readOnly={readOnly}
+        rows={rows}
         defaultValue={defaultValue}
         onChange={field?.onChange}
         radius='md'
