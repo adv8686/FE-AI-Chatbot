@@ -3,9 +3,10 @@ import { Avatar, Button } from '@nextui-org/react';
 import { ArrowRight, PaperPlaneTilt, X } from '@phosphor-icons/react';
 import Image from 'next/image';
 
+import InputText from '@components/UI/InputText';
 import Text from '@components/UI/Text';
 
-const ViewBot = () => {
+const ViewBot = ({ control, errors }: any) => {
   return (
     <div>
       <div className='bg-fill-accent rounded-[8px_8px_0_0] p-4 flex items-center justify-between'>
@@ -45,12 +46,14 @@ const ViewBot = () => {
           </div>
         </div>
         <div className='flex flex-col gap-2  text-center'>
-          <div className='bg-white border-1 border-solid border-neutral-01 rounded-lg flex p-3 justify-between items-center'>
-            <Text type='font-14-400' className='text-placeholder'>
-              Type your question
-            </Text>
-            <PaperPlaneTilt size={14} weight='fill' color='#95999D' />
-          </div>
+          <InputText
+            control={control}
+            errors={errors}
+            name='question'
+            size={'lg'}
+            placeholder='Type your question'
+            endContent={<PaperPlaneTilt />}
+          />
           <Text type='font-12-400' className='text-neutral'>
             Powered by{' '}
             <Text element='span' className='text-accent'>

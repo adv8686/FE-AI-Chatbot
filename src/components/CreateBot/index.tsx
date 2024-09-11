@@ -139,7 +139,7 @@ const CreateBot = () => {
           </div>
         </div>
         <div className='col-span-2 flex flex-col gap-4'>
-          <ViewBot />
+          <ViewBot control={control} errors={errors} />
           <CardLinkChatBot />
         </div>
       </div>
