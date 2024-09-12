@@ -1,4 +1,4 @@
-const { i18n } = require('./next-i18next.config');
+// const { i18n } = require('./next-i18next.config');
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -25,7 +25,7 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // i18n
-  i18n,
+  // i18n,
   swcMinify: true,
   output: 'standalone',
 

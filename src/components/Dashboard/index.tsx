@@ -1,3 +1,5 @@
+import { useForm } from 'react-hook-form';
+
 import CustomSelect from '@components/UI/CustomSelect';
 import Text from '@components/UI/Text';
 
@@ -8,12 +10,14 @@ import CardCustomerTrendTopic from './CardCustomerTrendTopic';
 import CardOrderNumber from './CardOrderNumber';
 
 const Dashboard = () => {
+  const { control } = useForm<any>({});
   return (
     <div className='flex flex-col gap-6'>
       <div className='flex items-center justify-between'>
         <Text type='font-24-600'>Dashboard</Text>
         <div className='flex items-center gap-2'>
           <CustomSelect
+            control={control}
             className='min-w-[192px] '
             radius='md'
             size='lg'
@@ -35,6 +39,7 @@ const Dashboard = () => {
           />
           <CustomSelect
             className='min-w-[192px]'
+            control={control}
             radius='md'
             size='lg'
             placeholder='All date'

@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable multiline-ternary */
 import { useRef, useState } from 'react';
 
@@ -69,6 +70,7 @@ const CreateBot = () => {
   };
 
   const onSubmit = (values: any) => {
+    // eslint-disable-next-line no-console
     console.log(values, 'values');
   };
 

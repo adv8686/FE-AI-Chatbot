@@ -44,8 +44,6 @@ const ImportData = ({ errors, control, watch, setValue, register }: any) => {
   const watchedUrl = watch('url');
   const watchedFiles = watch('files');
 
-  console.log(watchedFiles, 'watchedFiles');
-
   const refModalDeleteFile: any = useRef();
 
   const renderCell = (record: any, columnKey: any) => {

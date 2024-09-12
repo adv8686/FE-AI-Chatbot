@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-null */
 /* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable quotes */
 
@@ -30,8 +31,8 @@ const General = ({ control, watch, register, errors, setValue }: any) => {
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
     if (active.id !== over.id) {
-      const oldIndex = fields.findIndex((item) => item.id === active.id);
-      const newIndex = fields.findIndex((item) => item.id === over.id);
+      const oldIndex = fields?.findIndex((item) => item.id === active.id);
+      const newIndex = fields?.findIndex((item) => item.id === over.id);
       move(oldIndex, newIndex);
     }
   };
@@ -214,23 +215,24 @@ const General = ({ control, watch, register, errors, setValue }: any) => {
       >
         <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext
-            items={fields.map((item) => item.id)}
+            items={fields?.map((item) => item.id) || []}
             strategy={verticalListSortingStrategy}
           >
             <div className='flex flex-col gap-3'>
-              {fields?.map((item: any, index) => (
-                <SortableItem
-                  control={control}
-                  key={item.id}
-                  item={item}
-                  index={index}
-                  remove={remove}
-                />
-              ))}
+              {fields?.length &&
+                fields?.map((item: any, index) => (
+                  <SortableItem
+                    control={control}
+                    key={item.id}
+                    item={item}
+                    index={index}
+                    remove={remove}
+                  />
+                ))}
             </div>
           </SortableContext>
         </DndContext>
-        {fields?.length < 4 && (
+        {fields?.length && fields?.length < 4 && (
           <Button
             onClick={() => append({ title: `Enter suggestion ${fields.length + 1}` })}
             radius='sm'
@@ -263,7 +265,8 @@ const SortableItem = ({ item, index, remove, control }: any) => {
   return (
     <div ref={setNodeRef} style={style}>
       <InputText
-        name={`suggestion-${index}`}
+        maxLength={34}
+        name={`chatSuggestions.${index}.title`}
         startContent={
           <div {...attributes} {...listeners}>
             <Image

@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 export const ROUTE_PATH = {
-  Home: '/',
+  Home: '',
   CREATE_BOT: '/create-bot',
 };
 

@@ -8,7 +8,6 @@ import Text from '@components/UI/Text';
 
 const ViewBot = ({ control, errors, watch }: any) => {
   const allValues = watch();
-  console.log(allValues, 'allValues');
 
   return (
     <div>

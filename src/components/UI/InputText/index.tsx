@@ -25,7 +25,6 @@ interface IInputText {
   maxLength?: number;
   autoFocus?: boolean;
   ref?: any;
-  onClick?: any;
 }
 const InputText = (props: IInputText) => {
   const {
@@ -36,7 +35,6 @@ const InputText = (props: IInputText) => {
     autoFocus,
     placeholder,
     type,
-    onClick,
     className = '',
     control,
     readOnly,
