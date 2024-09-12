@@ -1,7 +1,7 @@
 /* eslint-disable indent */
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
-import { Button } from '@nextui-org/react';
+import { Button, Tooltip } from '@nextui-org/react';
 
 import DragDropUpload from '@components/UI/DragDropUpload';
 import IconDeleteDanger from '@components/UI/Icons';
@@ -13,6 +13,8 @@ import Text from '@components/UI/Text';
 import CardSetupBot from '../CardSetupBot';
 import ModalDeleteFile from '../ModalDeleteFile';
 import NoDataUpload from '../NoDataUpload';
+import dayjs from 'dayjs';
+import { uuid } from 'uuidv4';
 
 const columns = [
   {
@@ -38,46 +40,12 @@ const columns = [
   },
 ];
 
-const dataTable = [
-  {
-    id: 1,
-    file_number: '1/10',
-    name: 'demy-bot-example.csv',
-    uploaded_at: '31/08/2024',
-    status: 'Trained',
-  },
-  {
-    id: 2,
-    file_number: '2/10',
-    name: 'demy-bot-example.csv',
-    uploaded_at: '31/08/2024',
-    status: 'Trained',
-  },
-  {
-    id: 3,
-    file_number: '3/10',
-    name: 'demy-bot-example.csv',
-    uploaded_at: '31/08/2024',
-    status: 'Extracting',
-  },
-  {
-    id: 4,
-    file_number: '4/10',
-    name: 'demy-bot-example.csv',
-    uploaded_at: '31/08/2024',
-    status: 'Error',
-  },
-  {
-    id: 5,
-    file_number: '5/10',
-    name: 'demy-bot-example.csv',
-    uploaded_at: '31/08/2024',
-    status: 'Trained',
-  },
-];
-
-const ImportData = ({ errors, control, watch }: any) => {
+const ImportData = ({ errors, control, watch, setValue, register }: any) => {
   const watchedUrl = watch('url');
+  const watchedFiles = watch('files');
+
+  console.log(watchedFiles, 'watchedFiles');
+
   const refModalDeleteFile: any = useRef();
 
   const renderCell = (record: any, columnKey: any) => {
@@ -87,14 +55,14 @@ const ImportData = ({ errors, control, watch }: any) => {
       case 'file_number': {
         return (
           <Text className='text-secodary' type='font-14-400'>
-            {record?.file_number || '-'}
+            {`${record?.key + 1}/10` || '-'}
           </Text>
         );
       }
       case 'name': {
         return (
-          <div className='w-[200px]'>
-            <Text type='font-14-600'>{record?.name || '-'}</Text>
+          <div className='w-[200px] line-clamp-1 cursor-pointer'>
+            <Text type='font-14-600'>{record?.fileName || '-'}</Text>
           </div>
         );
       }
@@ -107,13 +75,13 @@ const ImportData = ({ errors, control, watch }: any) => {
         );
       }
       case 'status': {
-        return <StatusUpload status={record?.status} />;
+        return <>{record?.status ? <StatusUpload status={record?.status} /> : <>-</>}</>;
       }
 
       case 'action': {
         return (
           <Button
-            onClick={() => refModalDeleteFile.current.onOpen()}
+            onClick={() => refModalDeleteFile.current.onOpen(record.id)}
             isIconOnly
             size='md'
             radius='full'
@@ -129,6 +97,45 @@ const ImportData = ({ errors, control, watch }: any) => {
     }
   };
 
+  const handleDrop = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      const arrayFiles = [...watchedFiles];
+      const newObjFile = {
+        id: uuid(),
+        fileName: files?.[0]?.name,
+        uploaded_at: dayjs(files?.[0]?.lastModifiedDate).format('DD/MM/YYYY'),
+        file: files?.[0],
+      };
+      arrayFiles.unshift(newObjFile);
+      setValue('files', arrayFiles);
+    }
+  };
+
+  const handleFileChange = (e: any) => {
+    const files = e.target.files;
+    const fileArray = Array.from(files).map((file: any) => ({
+      id: uuid(),
+      fileName: file.name,
+      uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
+    }));
+
+    if (fileArray.length > 0) {
+      const arrayFiles = [...watchedFiles];
+
+      arrayFiles.unshift(...fileArray);
+
+      setValue('files', arrayFiles);
+    }
+  };
+
+  const handleDeleteFile = (id: string) => {
+    const newValue = watchedFiles?.filter((item: any) => item?.id !== id);
+    setValue('files', newValue);
+  };
+
   return (
     <>
       <CardSetupBot title='From Website' description='Import data using a website URL'>
@@ -136,7 +143,6 @@ const ImportData = ({ errors, control, watch }: any) => {
           <Text type='font-14-600'>Website URL</Text>
           <div className='flex items-center gap-2'>
             <InputText
-              required
               name='url'
               errors={errors}
               control={control}
@@ -161,16 +167,20 @@ const ImportData = ({ errors, control, watch }: any) => {
       </CardSetupBot>
       <CardSetupBot title='From Files' description='Upload a file to import data'>
         <div className='flex flex-col gap-4'>
-          <DragDropUpload />
+          <DragDropUpload
+            {...register('files')}
+            handleDrop={handleDrop}
+            handleFileChange={handleFileChange}
+          />
           <TableCustom
             emptyContent={<NoDataUpload />}
             renderCell={renderCell}
             columns={columns}
-            dataSource={dataTable}
+            dataSource={watchedFiles}
           />
         </div>
       </CardSetupBot>
-      <ModalDeleteFile ref={refModalDeleteFile} />
+      <ModalDeleteFile handleDeleteFile={handleDeleteFile} ref={refModalDeleteFile} />
     </>
   );
 };

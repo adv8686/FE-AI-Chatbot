@@ -1,6 +1,7 @@
 import { Select, SelectItem } from '@nextui-org/react';
 
 import Text from '../Text';
+import { Control, useController } from 'react-hook-form';
 
 interface IOptions {
   label: string;
@@ -14,6 +15,8 @@ interface ICustomSelect {
   radius?: 'none' | 'sm' | 'md' | 'lg' | 'full' | undefined;
   size?: 'sm' | 'md' | 'lg' | undefined;
   label?: string;
+  name?: any;
+  control?: Control;
 }
 const CustomSelect = (props: ICustomSelect) => {
   const {
@@ -23,9 +26,16 @@ const CustomSelect = (props: ICustomSelect) => {
     placeholder,
     selectionMode,
     radius,
+    control,
+    name,
     className = '',
     ...rest
   } = props;
+
+  const { field } = useController({
+    name,
+    control,
+  });
 
   return (
     <div className='flex flex-col gap-2 '>
@@ -35,12 +45,15 @@ const CustomSelect = (props: ICustomSelect) => {
         classNames={{
           popoverContent: ['!text-black bg-none'],
           value: ['!text-black text-[14px] font-normal'],
-          selectorIcon: ['!text-black w-5 h-5'],
+          selectorIcon: ['w-5 h-5'],
           trigger: [
             'bg-white data-[hover=true]:bg-white transition-all group-data-[focus=true]:!border-accent data-[hover=true]:border-disabled !px-3 border-1 border-neutral-01 border-solid',
           ],
         }}
         label={''}
+        name={field?.name}
+        value={field?.value}
+        onChange={field?.onChange}
         // labelPlacement='inside'
         radius={radius}
         size={size}

@@ -66,7 +66,7 @@ const DATA_CHATBOT_HEADER = [
   },
 ];
 
-const Appearance = () => {
+const Appearance = ({ control }: any) => {
   const [valueChatBotHeader, setValueChatBotHeader] = useState<string>('bgColor');
   const [color, setColor] = useState<string>('#8B5CF6');
   const [colorChatBotHeader, setColorChatBotHeader] = useState<string>('#8B5CF6');
@@ -117,6 +117,8 @@ const Appearance = () => {
             <CustomSelect
               label='Font Style'
               className='w-full'
+              control={control}
+              name='contentFontStyle'
               radius='md'
               size='lg'
               placeholder='Default'
@@ -137,6 +139,8 @@ const Appearance = () => {
             />
             <CustomSelect
               label='Font Size'
+              control={control}
+              name='contentFontSize'
               className='w-full'
               radius='md'
               size='lg'

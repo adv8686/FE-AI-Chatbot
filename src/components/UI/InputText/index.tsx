@@ -23,6 +23,9 @@ interface IInputText {
   type?: any;
   size?: any;
   maxLength?: number;
+  autoFocus?: boolean;
+  ref?: any;
+  onClick?: any;
 }
 const InputText = (props: IInputText) => {
   const {
@@ -30,8 +33,10 @@ const InputText = (props: IInputText) => {
     endContent,
     label,
     errors,
+    autoFocus,
     placeholder,
     type,
+    onClick,
     className = '',
     control,
     readOnly,
@@ -39,6 +44,7 @@ const InputText = (props: IInputText) => {
     required,
     defaultValue,
     name,
+    ref,
     maxLength,
     ...rest
   } = props;
@@ -49,7 +55,7 @@ const InputText = (props: IInputText) => {
   });
 
   return (
-    <div className='flex flex-col gap-2 w-full'>
+    <div className='flex flex-col gap-2 w-full z-[10000]'>
       {label && (
         <div className='flex items-center justify-between w-full'>
           <Text type='font-14-600'>{label}</Text>
@@ -63,15 +69,20 @@ const InputText = (props: IInputText) => {
       )}
 
       <Input
+        ref={ref}
         startContent={startContent}
         endContent={endContent}
         name={field?.name}
         variant='bordered'
         type={type}
+        // onClick={onClick}
+        autoFocus={autoFocus}
         onBlur={field.onBlur}
         autoComplete='off'
         isDisabled={isDisabled}
         value={field?.value}
+        onMouseDown={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         readOnly={readOnly}
         defaultValue={defaultValue}
         onChange={field?.onChange}

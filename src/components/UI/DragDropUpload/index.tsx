@@ -7,29 +7,12 @@ import { UploadSimple } from '@phosphor-icons/react';
 
 import Text from '../Text';
 
-const DragDropUpload = () => {
-  const [file, setFile] = useState<any>(undefined);
+const DragDropUpload = ({ handleDrop, handleFileChange }: any) => {
   const fileInputRef = useRef<any>(null);
 
   const handleDragOver = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
-  };
-
-  const handleDrop = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      setFile(files[0]);
-    }
-  };
-
-  const handleFileChange = (e: any) => {
-    const files = e.target.files;
-    if (files.length > 0) {
-      setFile(files[0]);
-    }
   };
 
   const handleClickUpload = () => {
@@ -71,6 +54,7 @@ const DragDropUpload = () => {
         <input
           ref={fileInputRef}
           id='file-upload'
+          multiple
           type='file'
           className='hidden'
           onChange={handleFileChange}

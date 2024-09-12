@@ -13,7 +13,6 @@ const Installation = ({ errors, control }: any) => {
     >
       <div className='flex flex-col gap-4'>
         <InputTextarea
-          required
           name='script'
           errors={errors}
           minRows={5}

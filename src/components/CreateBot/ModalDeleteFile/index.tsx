@@ -7,16 +7,20 @@ import { X } from '@phosphor-icons/react';
 import CustomModal from '@components/UI/CustomModal';
 import Text from '@components/UI/Text';
 
-interface IModalDeleteFile {}
+interface IModalDeleteFile {
+  handleDeleteFile: (id: string) => void;
+}
 
 const ModalDeleteFile = (props: IModalDeleteFile, ref?: any) => {
-  const {} = props;
+  const { handleDeleteFile } = props;
   const [visible, setVisible] = useState(false);
+  const [idDelete, setIdDelete] = useState<string>('');
 
   useImperativeHandle(ref, () => {
     return {
-      onOpen: () => {
+      onOpen: (id: string) => {
         setVisible(true);
+        setIdDelete(id);
       },
       onClose: () => setVisible(false),
     };
@@ -48,7 +52,15 @@ const ModalDeleteFile = (props: IModalDeleteFile, ref?: any) => {
             <Button onClick={onVisible} className='bg-neutral-01 w-full' radius='sm' size='lg'>
               <Text type='font-14-600'>Cancel</Text>
             </Button>
-            <Button radius='sm' size='lg' className='bg-danger-1 w-full'>
+            <Button
+              onClick={() => {
+                handleDeleteFile(idDelete);
+                onVisible();
+              }}
+              radius='sm'
+              size='lg'
+              className='bg-danger-1 w-full'
+            >
               <Text type='font-14-600' className='text-white'>
                 Delete
               </Text>

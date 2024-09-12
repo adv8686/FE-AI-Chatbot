@@ -16,13 +16,15 @@ import InputTextarea from '@components/UI/InputTextarea';
 import Text from '@components/UI/Text';
 
 import CardSetupBot from '../CardSetupBot';
+import { toast } from '@components/UI/Toast/toast';
 
-const General = ({ control, errors }: any) => {
+const General = ({ control, watch, register, errors, setValue }: any) => {
   const fileInputRef = useRef<any>(null);
+  const avatarBot = watch('avatarBot');
 
   const { fields, append, remove, move } = useFieldArray({
     control,
-    name: 'items',
+    name: 'chatSuggestions',
   });
 
   const handleDragEnd = (event: any) => {
@@ -36,8 +38,29 @@ const General = ({ control, errors }: any) => {
 
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];
-    // eslint-disable-next-line no-console
-    console.log('File selected:', file);
+
+    const validTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (!validTypes.includes(file.type)) {
+      toast.error('Only upload PNG or JPG files!');
+      event.target.value = null;
+      return;
+    }
+
+    if (file.size > maxSize) {
+      alert('File size must be less than 5MB!');
+      event.target.value = null;
+      return;
+    }
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setValue('avatarBot', reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleChangeAvatar = () => {
@@ -51,10 +74,12 @@ const General = ({ control, errors }: any) => {
           <div className='flex flex-col gap-2'>
             <Text type='font-14-600'>Bot Avatar</Text>
             <div className='flex items-center gap-2'>
-              <Avatar className='w-12 h-12' />
+              <Avatar src={avatarBot || ''} className='w-12 h-12' />
               <input
+                {...register('avatarBot')}
                 type='file'
                 ref={fileInputRef}
+                accept='.png, .jpg, .jpeg'
                 className='hidden'
                 onChange={handleFileChange}
               />
@@ -72,8 +97,7 @@ const General = ({ control, errors }: any) => {
             </div>
           </div>
           <InputText
-            required
-            name='name'
+            name='botname'
             maxLength={40}
             errors={errors}
             label='Bot Name'
@@ -82,7 +106,6 @@ const General = ({ control, errors }: any) => {
             size='lg'
           />
           <InputTextarea
-            required
             name='description'
             maxLength={240}
             errors={errors}
@@ -92,8 +115,7 @@ const General = ({ control, errors }: any) => {
             size='lg'
           />
           <InputText
-            required
-            name='message'
+            name='welcomeMessage'
             maxLength={120}
             errors={errors}
             label='Welcome Message'
@@ -108,6 +130,8 @@ const General = ({ control, errors }: any) => {
               label='Category'
               className='w-full'
               radius='md'
+              control={control}
+              name='categoryId'
               size='lg'
               placeholder='No Category'
               options={[
@@ -126,8 +150,7 @@ const General = ({ control, errors }: any) => {
               ]}
             />
             <InputText
-              required
-              name='info'
+              name='contactInfo'
               errors={errors}
               label='Contact Info'
               control={control}
@@ -138,9 +161,11 @@ const General = ({ control, errors }: any) => {
           <div className='grid grid-cols-2 gap-4'>
             <CustomSelect
               label='Language'
+              control={control}
               className='w-full'
               radius='md'
               size='lg'
+              name='language'
               placeholder='English'
               options={[
                 {
@@ -160,6 +185,8 @@ const General = ({ control, errors }: any) => {
             <CustomSelect
               label='Timezone'
               className='w-full'
+              control={control}
+              name='timezone'
               radius='md'
               size='lg'
               placeholder='(GMT+0) UTC'
@@ -192,31 +219,38 @@ const General = ({ control, errors }: any) => {
           >
             <div className='flex flex-col gap-3'>
               {fields?.map((item: any, index) => (
-                <SortableItem key={item.id} item={item} index={index} remove={remove} />
+                <SortableItem
+                  control={control}
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  remove={remove}
+                />
               ))}
             </div>
           </SortableContext>
         </DndContext>
-
-        <Button
-          onClick={() => append({ title: `New Item ${fields.length + 1}` })}
-          radius='sm'
-          variant='light'
-          size='md'
-          color='secondary'
-          className='w-max'
-        >
-          <Text type='font-14-600' className='text-accent'>
-            Add new suggestion
-          </Text>
-        </Button>
+        {fields?.length < 4 && (
+          <Button
+            onClick={() => append({ title: `Enter suggestion ${fields.length + 1}` })}
+            radius='sm'
+            variant='light'
+            size='md'
+            color='secondary'
+            className='w-max'
+          >
+            <Text type='font-14-600' className='text-accent'>
+              Add new suggestion
+            </Text>
+          </Button>
+        )}
       </CardSetupBot>
     </>
   );
 };
 export default General;
 
-const SortableItem = ({ item, index, remove }: any) => {
+const SortableItem = ({ item, index, remove, control }: any) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: item.id,
   });
@@ -227,39 +261,43 @@ const SortableItem = ({ item, index, remove }: any) => {
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className='flex justify-between cursor-pointer items-center border-1 pr-3 pl-5 py-3 border-solid border-neutral-02 rounded-xl'
-    >
-      <div className='flex items-center gap-[10px]'>
-        <Image
-          src={'/static/icons/ic-dots.svg'}
-          width={8}
-          height={12}
-          alt=''
-          className='w-[8px] h-[12px]'
-        />
-        <Text type='font-14-400'>{item?.title}</Text>
-      </div>
-      <Button
-        onClick={() => remove(index)}
-        variant='light'
-        size='sm'
-        color='danger'
-        isIconOnly
-        className='rounded-full'
-      >
-        <Image
-          src={'/static/icons/ic-close-danger.svg'}
-          width={14}
-          height={14}
-          alt=''
-          className='w-[14px] h-[14px]'
-        />
-      </Button>
+    <div ref={setNodeRef} style={style}>
+      <InputText
+        name={`suggestion-${index}`}
+        startContent={
+          <div {...attributes} {...listeners}>
+            <Image
+              src={'/static/icons/ic-dots.svg'}
+              width={8}
+              height={12}
+              alt=''
+              className='w-[8px] h-[12px]'
+            />
+          </div>
+        }
+        endContent={
+          <Button
+            onClick={() => remove(index)}
+            variant='light'
+            size='sm'
+            color='danger'
+            isIconOnly
+            className='rounded-full'
+          >
+            <Image
+              src={'/static/icons/ic-close-danger.svg'}
+              width={14}
+              height={14}
+              alt=''
+              className='w-[14px] h-[14px]'
+            />
+          </Button>
+        }
+        control={control}
+        placeholder={`Enter suggestion ${index + 1}`}
+        size='lg'
+        {...attributes}
+      />
     </div>
   );
 };

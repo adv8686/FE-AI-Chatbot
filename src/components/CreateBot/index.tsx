@@ -39,10 +39,6 @@ const steps = [
   },
 ];
 
-const ChatBotSchema = Yup.object().shape({
-  phone: Yup.string().required('Số điện thoại không được để trống'),
-});
-
 const CreateBot = () => {
   const router = useRouter();
   const refModalDiscardChanges: any = useRef();
@@ -53,10 +49,13 @@ const CreateBot = () => {
     formState: { errors },
     control,
     watch,
+    setValue,
+    register,
+    handleSubmit,
   } = useForm<any>({
-    resolver: yupResolver(ChatBotSchema),
     defaultValues: {
-      items: [{ title: 'I’m having trouble with my account.' }],
+      chatSuggestions: [{ title: 'I’m having trouble with my account.' }],
+      files: [],
     },
   });
 
@@ -71,80 +70,102 @@ const CreateBot = () => {
     setCurrentStep(nextStep);
   };
 
+  const onSubmit = (values: any) => {
+    console.log(values, 'values');
+  };
+
   return (
-    <div className='flex flex-col gap-6'>
-      <div className='flex flex-col gap-1'>
-        <div className='flex items-center gap-1'>
-          <Button
-            variant='light'
-            size='sm'
-            isIconOnly
-            onClick={() => router.back()}
-            className='rounded-full'
-          >
-            <CaretLeft size={12} />
-          </Button>
-          <Text className='text-neutral' type='font-12-500'>
-            Dashboard
-          </Text>
-        </div>
-        <Text type='font-24-600'>Setup Your Bot</Text>
-      </div>
-      <div className='grid grid-cols-6 gap-8'>
-        <div className='col-span-4 flex flex-col gap-4'>
-          <StepProgress steps={steps} currentStep={currentStep} />
-          {currentStep === STEP_SETUP_BOT.GENERAL && <General control={control} errors={errors} />}
-          {currentStep === STEP_SETUP_BOT.IMPORT_DATA && (
-            <ImportData watch={watch} control={control} errors={errors} />
-          )}
-          {currentStep === STEP_SETUP_BOT.APPEARANCE && <Appearance />}
-          {currentStep === STEP_SETUP_BOT.INSTALLATION && (
-            <Installation control={control} errors={errors} />
-          )}
-
-          <div className='flex items-center justify-between'>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className='flex flex-col gap-6'>
+        <div className='flex flex-col gap-1'>
+          <div className='flex items-center gap-1'>
             <Button
-              onClick={() => refModalDiscardChanges.current.onOpen()}
-              radius='md'
-              size='lg'
-              className='bg-destructive'
+              variant='light'
+              size='sm'
+              isIconOnly
+              onClick={() => router.back()}
+              className='rounded-full'
             >
-              <Text type='font-14-600' className='text-danger'>
-                Discard
-              </Text>
+              <CaretLeft size={12} />
             </Button>
-            <div className='flex items-center gap-2'>
-              {currentStep !== STEP_SETUP_BOT.GENERAL && (
-                <Button onClick={handlePrevStep} radius='md' size='lg' className='bg-neutral-01'>
-                  <ArrowLeft color='#1e1f20' size={16} />
-                  <Text type='font-14-600'>Back</Text>
-                </Button>
-              )}
+            <Text className='text-neutral' type='font-12-500'>
+              Dashboard
+            </Text>
+          </div>
+          <Text type='font-24-600'>Setup Your Bot</Text>
+        </div>
+        <div className='grid grid-cols-6 gap-8'>
+          <div className='col-span-4 flex flex-col gap-4'>
+            <StepProgress steps={steps} currentStep={currentStep} />
+            {currentStep === STEP_SETUP_BOT.GENERAL && (
+              <General
+                watch={watch}
+                register={register}
+                setValue={setValue}
+                control={control}
+                errors={errors}
+              />
+            )}
+            {currentStep === STEP_SETUP_BOT.IMPORT_DATA && (
+              <ImportData
+                register={register}
+                setValue={setValue}
+                watch={watch}
+                control={control}
+                errors={errors}
+              />
+            )}
+            {currentStep === STEP_SETUP_BOT.APPEARANCE && <Appearance control={control} />}
+            {currentStep === STEP_SETUP_BOT.INSTALLATION && (
+              <Installation control={control} errors={errors} />
+            )}
 
-              {currentStep === STEP_SETUP_BOT.INSTALLATION ? (
-                <Button onClick={handleNextStep} radius='md' size='lg' className='bg-fill-accent'>
-                  <Text type='font-14-600' className='text-white'>
-                    Publish Chatbot
-                  </Text>
-                </Button>
-              ) : (
-                <Button onClick={handleNextStep} radius='md' size='lg' className='bg-black'>
-                  <Text type='font-14-600' className='text-white'>
-                    Next
-                  </Text>
-                  <ArrowRight color='#fff' size={16} />
-                </Button>
-              )}
+            <div className='flex items-center justify-between'>
+              <Button
+                onClick={() => refModalDiscardChanges.current.onOpen()}
+                radius='md'
+                size='lg'
+                isDisabled={currentStep === STEP_SETUP_BOT.GENERAL}
+                className='bg-destructive'
+              >
+                <Text type='font-14-600' className='text-danger'>
+                  Discard
+                </Text>
+              </Button>
+              <div className='flex items-center gap-2'>
+                {currentStep !== STEP_SETUP_BOT.GENERAL && (
+                  <Button onClick={handlePrevStep} radius='md' size='lg' className='bg-neutral-01'>
+                    <ArrowLeft color='#1e1f20' size={16} />
+                    <Text type='font-14-600'>Back</Text>
+                  </Button>
+                )}
+
+                {currentStep === STEP_SETUP_BOT.INSTALLATION ? (
+                  <Button type='submit' radius='md' size='lg' className='bg-fill-accent'>
+                    <Text type='font-14-600' className='text-white'>
+                      Publish Chatbot
+                    </Text>
+                  </Button>
+                ) : (
+                  <Button onClick={handleNextStep} radius='md' size='lg' className='bg-black'>
+                    <Text type='font-14-600' className='text-white'>
+                      Next
+                    </Text>
+                    <ArrowRight color='#fff' size={16} />
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
+          <div className='col-span-2 flex flex-col gap-4'>
+            <ViewBot watch={watch} control={control} errors={errors} />
+            <CardLinkChatBot />
+          </div>
         </div>
-        <div className='col-span-2 flex flex-col gap-4'>
-          <ViewBot control={control} errors={errors} />
-          <CardLinkChatBot />
-        </div>
+
+        <ModalDiscardChanges ref={refModalDiscardChanges} />
       </div>
-      <ModalDiscardChanges ref={refModalDiscardChanges} />
-    </div>
+    </form>
   );
 };
 export default CreateBot;
