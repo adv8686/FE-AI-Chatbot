@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unicorn/consistent-function-scoping */
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
 import { Button } from '@nextui-org/react';
 import { UploadSimple } from '@phosphor-icons/react';

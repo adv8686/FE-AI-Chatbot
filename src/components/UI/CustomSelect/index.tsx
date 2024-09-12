@@ -1,7 +1,7 @@
 import { Select, SelectItem } from '@nextui-org/react';
+import { Control, useController } from 'react-hook-form';
 
 import Text from '../Text';
-import { Control, useController } from 'react-hook-form';
 
 interface IOptions {
   label: string;

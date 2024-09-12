@@ -1,12 +1,10 @@
 /* eslint-disable multiline-ternary */
 import { useRef, useState } from 'react';
 
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@nextui-org/react';
 import { ArrowLeft, ArrowRight, CaretLeft } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import * as Yup from 'yup';
 
 import StepProgress from '@components/UI/StepProgress';
 import Text from '@components/UI/Text';

@@ -14,9 +14,9 @@ import CustomSelect from '@components/UI/CustomSelect';
 import InputText from '@components/UI/InputText';
 import InputTextarea from '@components/UI/InputTextarea';
 import Text from '@components/UI/Text';
+import { toast } from '@components/UI/Toast/toast';
 
 import CardSetupBot from '../CardSetupBot';
-import { toast } from '@components/UI/Toast/toast';
 
 const General = ({ control, watch, register, errors, setValue }: any) => {
   const fileInputRef = useRef<any>(null);

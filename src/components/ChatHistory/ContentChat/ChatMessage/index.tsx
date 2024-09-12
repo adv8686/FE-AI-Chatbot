@@ -1,28 +1,29 @@
-import InputText from '@components/UI/InputText';
-import Text from '@components/UI/Text';
 import { Avatar, Button } from '@nextui-org/react';
 import { PaperPlaneTilt } from '@phosphor-icons/react';
+
+import InputText from '@components/UI/InputText';
+import Text from '@components/UI/Text';
 
 const DataChatSettle = [
   {
     id: 1,
     user: 'bot',
     name: 'Demy bot',
-    text: "Oh, I'm sorry to hear that. Let me double-check the code on our end to ensure there were no errors.",
+    text: 'Oh, I\'m sorry to hear that. Let me double-check the code on our end to ensure there were no errors.',
   },
   {
     id: 2,
     user: 'me',
     name: 'Dealpool',
     avatar: '/static/icons/avatar-buyer.svg',
-    text: "Oh, I'm sorry to hear that. Let me double-check the code on our end to ensure there were no errors.",
+    text: 'Oh, I\'m sorry to hear that. Let me double-check the code on our end to ensure there were no errors.',
   },
   {
     id: 3,
     name: 'Demy bot',
 
     user: 'bot',
-    text: "Oh, I'm sorry to hear that. Let me double-check the code on our end to ensure there were no errors.",
+    text: 'Oh, I\'m sorry to hear that. Let me double-check the code on our end to ensure there were no errors.',
   },
   {
     id: 4,
@@ -30,7 +31,7 @@ const DataChatSettle = [
     name: 'Dealpool',
 
     avatar: '/static/icons/avatar-buyer.svg',
-    text: "Alright, I'll check that right away. It seems there might have been a mistake in generating the code",
+    text: 'Alright, I\'ll check that right away. It seems there might have been a mistake in generating the code',
   },
   {
     id: 5,
@@ -45,7 +46,7 @@ const DataChatSettle = [
     name: 'Dealpool',
 
     avatar: '/static/icons/avatar-buyer.svg',
-    text: "I completely understand. I've escalated the issue to our technical team, and they are working on generating a new code for you. Once it's ready, I'll send it to your email immediately.",
+    text: 'I completely understand. I\'ve escalated the issue to our technical team, and they are working on generating a new code for you. Once it\'s ready, I\'ll send it to your email immediately.',
   },
   {
     id: 6,
@@ -53,7 +54,7 @@ const DataChatSettle = [
 
     user: 'bot',
 
-    text: "I completely understand. I've escalated the issue to our technical team, and they are working on generating a new code for you. Once it's ready, I'll send it to your email immediately.",
+    text: 'I completely understand. I\'ve escalated the issue to our technical team, and they are working on generating a new code for you. Once it\'s ready, I\'ll send it to your email immediately.',
   },
   {
     id: 7,
@@ -62,7 +63,7 @@ const DataChatSettle = [
 
     user: 'me',
     avatar: '/static/icons/avatar-buyer.svg',
-    text: "I completely understand. I've escalated the issue to our technical team, and they are working on generating a new code for you. Once it's ready, I'll send it to your email immediately.",
+    text: 'I completely understand. I\'ve escalated the issue to our technical team, and they are working on generating a new code for you. Once it\'s ready, I\'ll send it to your email immediately.',
   },
 ];
 const ChatMessage = ({ control }: any) => {

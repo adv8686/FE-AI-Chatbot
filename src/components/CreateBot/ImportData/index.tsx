@@ -1,7 +1,9 @@
 /* eslint-disable indent */
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
-import { Button, Tooltip } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
+import dayjs from 'dayjs';
+import { uuid } from 'uuidv4';
 
 import DragDropUpload from '@components/UI/DragDropUpload';
 import IconDeleteDanger from '@components/UI/Icons';
@@ -13,8 +15,6 @@ import Text from '@components/UI/Text';
 import CardSetupBot from '../CardSetupBot';
 import ModalDeleteFile from '../ModalDeleteFile';
 import NoDataUpload from '../NoDataUpload';
-import dayjs from 'dayjs';
-import { uuid } from 'uuidv4';
 
 const columns = [
   {
@@ -116,7 +116,7 @@ const ImportData = ({ errors, control, watch, setValue, register }: any) => {
 
   const handleFileChange = (e: any) => {
     const files = e.target.files;
-    const fileArray = Array.from(files).map((file: any) => ({
+    const fileArray = [...files].map((file: any) => ({
       id: uuid(),
       fileName: file.name,
       uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),

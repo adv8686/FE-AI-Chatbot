@@ -1,6 +1,7 @@
+import { Avatar } from '@nextui-org/react';
+
 import InputText from '@components/UI/InputText';
 import Text from '@components/UI/Text';
-import { Avatar } from '@nextui-org/react';
 
 const DataToday = [
   {
@@ -13,7 +14,7 @@ const DataToday = [
     id: 2,
     name: 'Newsman',
     message:
-      "While Saitama's strength remains constant, he undergoes personal growth  as he forms friendships, confronts his own limitations, and seeks  fulfillment beyond physical battles.",
+      'While Saitama\'s strength remains constant, he undergoes personal growth  as he forms friendships, confronts his own limitations, and seeks  fulfillment beyond physical battles.',
     time: '3h',
   },
   {
@@ -34,7 +35,7 @@ const DataPrevious = [
   {
     id: 2,
     name: 'Donal Trump',
-    message: "You're fired!",
+    message: 'You\'re fired!',
     time: '3h',
   },
 ];
@@ -48,31 +49,31 @@ const DataPrevious30 = [
   {
     id: 2,
     name: 'Donal Trump',
-    message: "You're fired!",
+    message: 'You\'re fired!',
     count: '17/08',
   },
   {
     id: 4,
     name: 'Donal Trump',
-    message: "You're fired!",
+    message: 'You\'re fired!',
     count: '17/08',
   },
   {
     id: 5,
     name: 'Donal Trump',
-    message: "You're fired!",
+    message: 'You\'re fired!',
     count: '17/08',
   },
   {
     id: 6,
     name: 'Donal Trump',
-    message: "You're fired!",
+    message: 'You\'re fired!',
     count: '17/08',
   },
   {
     id: 7,
     name: 'Donal Trump',
-    message: "You're fired!",
+    message: 'You\'re fired!',
     count: '17/08',
   },
 ];
