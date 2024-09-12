@@ -1,5 +1,7 @@
+import InputText from '@components/UI/InputText';
 import Text from '@components/UI/Text';
 import { Avatar, Button } from '@nextui-org/react';
+import { PaperPlaneTilt } from '@phosphor-icons/react';
 
 const DataChatSettle = [
   {
@@ -65,8 +67,8 @@ const DataChatSettle = [
 ];
 const ChatMessage = ({ control }: any) => {
   return (
-    <div className='border-1 rounded-lg border-l-0 h-full rounded-tl-none rounded-bl-none border-solid border-neutral-01 p-4 flex flex-col gap-4'>
-      <div className='flex flex-col gap-6 max-h-[640px] overflow-auto pr-6 scroll-custom'>
+    <div className='border-1 rounded-lg border-l-0 h-full rounded-tl-none rounded-bl-none border-solid border-neutral-01 pl-4 pb-4 flex flex-col gap-4'>
+      <div className='flex flex-col gap-6 max-h-[640px] overflow-auto pt-4 pr-4 scroll-custom'>
         {DataChatSettle?.map((item) => {
           return (
             <div key={item?.id}>
@@ -74,6 +76,21 @@ const ChatMessage = ({ control }: any) => {
             </div>
           );
         })}
+      </div>
+      <div className='flex flex-col gap-2 pr-4 items-center'>
+        <InputText
+          control={control}
+          name='question'
+          size={'lg'}
+          placeholder='Type your question'
+          endContent={<PaperPlaneTilt size={12} color='#95999D' weight='fill' />}
+        />
+        <Text type='font-12-400' className='text-neutral'>
+          Powered by{' '}
+          <Text element='span' className='text-accent'>
+            Demy.ai
+          </Text>
+        </Text>
       </div>
     </div>
   );
@@ -112,7 +129,9 @@ const MessaeUser = ({ item }: any) => {
   return (
     <div className='flex gap-2 justify-end'>
       <div className='flex flex-col gap-2 w-6/12'>
-        <Text type='font-12-600'>{item?.name}</Text>
+        <Text type='font-12-600' className='text-end'>
+          {item?.name}
+        </Text>
         <div className='rounded-[12px_0_12px_12px] bg-fill-accent py-3 px-4'>
           <Text type='font-14-400' className='text-white'>
             {item?.text}

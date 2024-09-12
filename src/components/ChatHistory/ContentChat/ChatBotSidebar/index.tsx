@@ -78,93 +78,98 @@ const DataPrevious30 = [
 ];
 const ChatBotSidebar = ({ control }: any) => {
   return (
-    <div className='border-1 rounded-lg rounded-r-none border-solid border-neutral-01 p-4 flex flex-col gap-4'>
-      <InputText
-        name='search'
-        maxLength={40}
-        control={control}
-        placeholder='Search by user or keyword'
-        size='lg'
-      />
-      <div className='flex flex-col gap-2'>
-        <Text type='font-12-500' className='text-neutral'>
-          Today
-        </Text>
-        <div>
-          {DataToday?.map((item) => {
-            return (
-              <div key={item?.id} className='p-3 flex items-center gap-2'>
-                <div>
-                  <Avatar className='w-9 h-9' />
-                </div>
-                <div className='flex flex-col gap-1 w-full'>
-                  <div className='flex items-center justify-between w-full'>
-                    <Text type='font-14-600'>{item?.name}</Text>
-                    <Text className='text-disabled' type='font-12-400'>
-                      {item?.time}
-                    </Text>
-                  </div>
-                  <Text type='font-12-400' className='text-neutral line-clamp-1'>
-                    {item?.message}
-                  </Text>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+    <div className='border-1 rounded-lg  rounded-r-none border-solid border-neutral-01 py-4 pl-4 flex flex-col gap-4'>
+      <div className='pr-4'>
+        <InputText
+          name='search'
+          maxLength={40}
+          control={control}
+          placeholder='Search by user or keyword'
+          size='lg'
+        />
       </div>
-      <div className='flex flex-col gap-2'>
-        <Text type='font-12-500' className='text-neutral'>
-          Previous 7 Days
-        </Text>
-        <div>
-          {DataPrevious?.map((item) => {
-            return (
-              <div key={item?.id} className='p-3 flex items-center gap-2'>
-                <div>
-                  <Avatar className='w-9 h-9' />
-                </div>
-                <div className='flex flex-col gap-1 w-full'>
-                  <div className='flex items-center justify-between w-full'>
-                    <Text type='font-14-600'>{item?.name}</Text>
-                    <Text className='text-disabled' type='font-12-400'>
-                      {item?.time}
+
+      <div className='flex flex-col gap-4 max-h-[650px] overflow-auto scroll-custom pr-4'>
+        <div className='flex flex-col gap-2'>
+          <Text type='font-12-500' className='text-neutral'>
+            Today
+          </Text>
+          <div>
+            {DataToday?.map((item) => {
+              return (
+                <div key={item?.id} className='p-3 flex items-center gap-2'>
+                  <div>
+                    <Avatar className='w-9 h-9' />
+                  </div>
+                  <div className='flex flex-col gap-1 w-full'>
+                    <div className='flex items-center justify-between w-full'>
+                      <Text type='font-14-600'>{item?.name}</Text>
+                      <Text className='text-disabled' type='font-12-400'>
+                        {item?.time}
+                      </Text>
+                    </div>
+                    <Text type='font-12-400' className='text-neutral line-clamp-1'>
+                      {item?.message}
                     </Text>
                   </div>
-                  <Text type='font-12-400' className='text-neutral line-clamp-1'>
-                    {item?.message}
-                  </Text>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
-      <div className='flex flex-col gap-2'>
-        <Text type='font-12-500' className='text-neutral'>
-          Previous 30 Days
-        </Text>
-        <div>
-          {DataPrevious30?.map((item) => {
-            return (
-              <div key={item?.id} className='p-3 flex items-center gap-2'>
-                <div>
-                  <Avatar className='w-9 h-9' />
-                </div>
-                <div className='flex flex-col gap-1 w-full'>
-                  <div className='flex items-center justify-between w-full'>
-                    <Text type='font-14-600'>{item?.name}</Text>
-                    <Text className='text-disabled' type='font-12-400'>
-                      {item?.count}
+        <div className='flex flex-col gap-2'>
+          <Text type='font-12-500' className='text-neutral'>
+            Previous 7 Days
+          </Text>
+          <div>
+            {DataPrevious?.map((item) => {
+              return (
+                <div key={item?.id} className='p-3 flex items-center gap-2'>
+                  <div>
+                    <Avatar className='w-9 h-9' />
+                  </div>
+                  <div className='flex flex-col gap-1 w-full'>
+                    <div className='flex items-center justify-between w-full'>
+                      <Text type='font-14-600'>{item?.name}</Text>
+                      <Text className='text-disabled' type='font-12-400'>
+                        {item?.time}
+                      </Text>
+                    </div>
+                    <Text type='font-12-400' className='text-neutral line-clamp-1'>
+                      {item?.message}
                     </Text>
                   </div>
-                  <Text type='font-12-400' className='text-neutral line-clamp-1'>
-                    {item?.message}
-                  </Text>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+        </div>
+        <div className='flex flex-col gap-2'>
+          <Text type='font-12-500' className='text-neutral'>
+            Previous 30 Days
+          </Text>
+          <div>
+            {DataPrevious30?.map((item) => {
+              return (
+                <div key={item?.id} className='p-3 flex items-center gap-2'>
+                  <div>
+                    <Avatar className='w-9 h-9' />
+                  </div>
+                  <div className='flex flex-col gap-1 w-full'>
+                    <div className='flex items-center justify-between w-full'>
+                      <Text type='font-14-600'>{item?.name}</Text>
+                      <Text className='text-disabled' type='font-12-400'>
+                        {item?.count}
+                      </Text>
+                    </div>
+                    <Text type='font-12-400' className='text-neutral line-clamp-1'>
+                      {item?.message}
+                    </Text>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

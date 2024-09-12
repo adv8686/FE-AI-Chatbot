@@ -52,7 +52,7 @@ const ViewBot = ({ control, errors }: any) => {
             name='question'
             size={'lg'}
             placeholder='Type your question'
-            endContent={<PaperPlaneTilt />}
+            endContent={<PaperPlaneTilt size={12} color='#95999D' weight='fill' />}
           />
           <Text type='font-12-400' className='text-neutral'>
             Powered by{' '}
