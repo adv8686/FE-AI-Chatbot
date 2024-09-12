@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-array-for-each */
 import { useRequest } from 'ahooks';
 
 import { API_PATH } from '@api/constant';
@@ -22,7 +23,7 @@ interface IBodyCreateBot {
   endColor: string;
   contentFontStyle: string;
   chatbotHeader: string;
-  avatarBot: string;
+  avatar: string;
   botname: string;
   description: string;
   welcomeMessage: string;
@@ -37,15 +38,20 @@ interface IBodyCreateBot {
 const convertToFormData = (body: IBodyCreateBot): FormData => {
   const formData = new FormData();
 
-  // Append simple fields
   for (const [key, value] of Object.entries(body)) {
-    if (Array.isArray(value) || typeof value === 'object') {
+    if (Array.isArray(value)) {
+      // Handle arrays by appending each item
+      value.forEach((item, index) => {
+        formData.append(`${key}[${index}]`, JSON.stringify(item));
+      });
+    } else if (typeof value === 'object') {
+      // Handle objects by converting to JSON string
       formData.append(key, JSON.stringify(value));
     } else {
+      // Handle primitive values
       formData.append(key, value);
     }
   }
-
   return formData;
 };
 
@@ -54,9 +60,6 @@ const serviceCreateSettingBot = (body: IBodyCreateBot) => {
 
   return privateRequest(request.post, API_PATH.CREATE_BOT, {
     data: formData,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
   });
 };
 

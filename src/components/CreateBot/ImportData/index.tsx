@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable no-console */
 /* eslint-disable indent */
 import { useRef } from 'react';
@@ -12,6 +13,7 @@ import InputText from '@components/UI/InputText';
 import StatusUpload from '@components/UI/StatusUpload';
 import TableCustom from '@components/UI/Table';
 import Text from '@components/UI/Text';
+import { toast } from '@components/UI/Toast/toast';
 
 import CardSetupBot from '../CardSetupBot';
 import ModalDeleteFile from '../ModalDeleteFile';
@@ -96,37 +98,74 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
     }
   };
 
+  const validateFile = (files: any) => {
+    const allowedFormats = new Set([
+      'application/pdf',
+      'text/plain',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/json',
+      'text/csv',
+    ]);
+    const maxFileSize = 50 * 1024 * 1024; // 50MB
+
+    for (const file of files) {
+      // Check file size
+      if (file.size > maxFileSize) {
+        return { valid: false, message: `File ${file.name} exceeds 50MB.` };
+      }
+
+      // Check file format
+      if (!allowedFormats.has(file.type)) {
+        return { valid: false, message: `File ${file.name} has an invalid format.` };
+      }
+    }
+
+    return { valid: true, message: 'All files are valid' };
+  };
+
   const handleDrop = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
     const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      const arrayFiles = [...watchedFiles];
-      const newObjFile = {
-        id: uuid(),
-        fileName: files?.[0]?.name,
-        uploaded_at: dayjs(files?.[0]?.lastModifiedDate).format('DD/MM/YYYY'),
-        file: files?.[0],
-      };
-      arrayFiles.unshift(newObjFile);
-      setValue('files', arrayFiles);
+    const validation = validateFile(files);
+
+    if (validation.valid) {
+      if (files.length > 0) {
+        const arrayFiles = [...watchedFiles];
+        const newObjFile = {
+          id: uuid(),
+          fileName: files?.[0]?.name,
+          uploaded_at: dayjs(files?.[0]?.lastModifiedDate).format('DD/MM/YYYY'),
+          file: files?.[0],
+        };
+        arrayFiles.unshift(newObjFile);
+        setValue('files', arrayFiles);
+      }
+    } else {
+      toast.error(validation.message);
     }
   };
 
   const handleFileChange = (e: any) => {
     const files = e.target.files;
-    const fileArray = [...files].map((file: any) => ({
-      id: uuid(),
-      fileName: file.name,
-      uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
-    }));
+    const validation = validateFile(files);
 
-    if (fileArray.length > 0) {
-      const arrayFiles = [...watchedFiles];
+    if (validation.valid) {
+      const fileArray = [...files].map((file: any) => ({
+        id: uuid(),
+        fileName: file.name,
+        uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
+      }));
 
-      arrayFiles.unshift(...fileArray);
+      if (fileArray.length > 0) {
+        const arrayFiles = [...watchedFiles];
 
-      setValue('files', arrayFiles);
+        arrayFiles.unshift(...fileArray);
+
+        setValue('files', arrayFiles);
+      }
+    } else {
+      toast.error(validation.message);
     }
   };
 

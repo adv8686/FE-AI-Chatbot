@@ -11,6 +11,7 @@ import Image from 'next/image';
 import ColorPickerCustom from '@components/UI/ColorPickerCustom';
 import CustomSelect from '@components/UI/CustomSelect';
 import Text from '@components/UI/Text';
+import { HeaderBackgroundType } from '@utils/common';
 
 import CardSetupBot from '../CardSetupBot';
 
@@ -55,17 +56,17 @@ const DATA_CHATBOT_HEADER = [
   {
     id: 1,
     label: 'Use the background color',
-    key: 'bgColor',
+    key: HeaderBackgroundType.COLOR,
   },
   {
     id: 2,
-    key: 'gradient',
+    key: HeaderBackgroundType.GRADIENT,
     label: 'Gradient',
   },
   {
     id: 3,
     label: 'Image',
-    key: 'image',
+    key: HeaderBackgroundType.IMAGE,
   },
 ];
 

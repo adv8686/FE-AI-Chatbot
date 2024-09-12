@@ -50,3 +50,9 @@ export const ListCategory = [
 export const getTimeZone = () => {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
 };
+
+export enum HeaderBackgroundType {
+  COLOR = 'COLOR',
+  GRADIENT = 'GRADIENT',
+  IMAGE = 'IMAGE',
+}

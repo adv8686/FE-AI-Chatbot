@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 
 import StepProgress from '@components/UI/StepProgress';
 import Text from '@components/UI/Text';
-import { STEP_SETUP_BOT } from '@utils/common';
+import { HeaderBackgroundType, STEP_SETUP_BOT } from '@utils/common';
 
 import Appearance from './Appearance';
 import CardLinkChatBot from './CardLinkChatBot';
@@ -68,7 +68,7 @@ const CreateBot = () => {
       startColor: '#8B5CF6',
       endColor: '#4d3780',
       contentFontStyle: 'Switzer, sans-serif',
-      chatbotHeader: 'bgColor',
+      chatbotHeader: HeaderBackgroundType.COLOR,
     },
   });
 
@@ -90,8 +90,10 @@ const CreateBot = () => {
 
   const onSubmit = (values: any) => {
     const body = {
-      avatar: '',
       ...values,
+      avatar: '',
+      files: [],
+      chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
     };
     requestCreateSettingBot.run(body);
   };

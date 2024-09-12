@@ -7,12 +7,16 @@ import Image from 'next/image';
 
 import InputText from '@components/UI/InputText';
 import Text from '@components/UI/Text';
+import { HeaderBackgroundType } from '@utils/common';
 
 const ViewBot = ({ control, errors, watch }: any) => {
   const allValues = watch();
 
   const getBackgroundStyle = () => {
-    if (allValues?.chatbotHeader === 'bgColor' || allValues?.chatbotHeader === 'image') {
+    if (
+      allValues?.chatbotHeader === HeaderBackgroundType.COLOR ||
+      allValues?.chatbotHeader === HeaderBackgroundType.IMAGE
+    ) {
       return {
         background: allValues?.headerBackground
           ? allValues?.headerBackground
@@ -20,7 +24,7 @@ const ViewBot = ({ control, errors, watch }: any) => {
       };
     }
 
-    if (allValues?.chatbotHeader === 'gradient') {
+    if (allValues?.chatbotHeader === HeaderBackgroundType.IMAGE) {
       return {
         background: `linear-gradient(to right, ${allValues.startColor}, ${allValues.endColor})`,
       };
@@ -86,7 +90,7 @@ const ViewBot = ({ control, errors, watch }: any) => {
       >
         <div className='flex gap-2 flex-auto'>
           <div>
-            <Avatar src={allValues?.avatarBot || ''} className='w-9 h-9' />
+            <Avatar src={allValues?.avatar?.url || ''} className='w-9 h-9' />
           </div>
           <div className='flex flex-col gap-1 mr-8'>
             <Text type='font-12-600'> {allValues?.botname || 'Demy Bot'}</Text>
