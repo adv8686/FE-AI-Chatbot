@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-nested-ternary */
 /* eslint-disable indent */
 import React, { ReactNode } from 'react';
 
@@ -25,6 +26,8 @@ interface IInputText {
   maxLength?: number;
   autoFocus?: boolean;
   ref?: any;
+  botSetting?: boolean;
+  messageError?: string;
 }
 const InputText = (props: IInputText) => {
   const {
@@ -41,6 +44,7 @@ const InputText = (props: IInputText) => {
     isDisabled,
     required,
     defaultValue,
+    botSetting,
     name,
     ref,
     maxLength,
@@ -93,6 +97,10 @@ const InputText = (props: IInputText) => {
         classNames={{
           inputWrapper: errors?.[name]?.message
             ? ['px-3 border-1 border-solid !border-red-500']
+            : botSetting
+            ? [
+                'px-3 border-1 border-solid border-neutral-01 transition-all data-[hover=true]:!border-disabled group-data-[focus=true]:!border-disabled',
+              ]
             : [
                 'px-3 border-1 border-solid border-neutral-01 transition-all data-[hover=true]:!border-disabled group-data-[focus=true]:!border-accent',
               ],
@@ -104,7 +112,7 @@ const InputText = (props: IInputText) => {
         labelPlacement='outside'
         {...rest}
       />
-      {errors?.[name]?.message && required && (
+      {(errors?.[name]?.message || required) && (
         <Text type='font-14-400' className='text-danger'>
           {errors?.[name]?.message}
         </Text>

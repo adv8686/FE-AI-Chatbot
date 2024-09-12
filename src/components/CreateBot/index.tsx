@@ -2,10 +2,12 @@
 /* eslint-disable multiline-ternary */
 import { useRef, useState } from 'react';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@nextui-org/react';
 import { ArrowLeft, ArrowRight, CaretLeft } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
 
 import StepProgress from '@components/UI/StepProgress';
 import Text from '@components/UI/Text';
@@ -17,6 +19,7 @@ import General from './General';
 import ImportData from './ImportData';
 import Installation from './Installation';
 import ModalDiscardChanges from './ModalDiscardChanges';
+import { useCreateSettingBot } from './service';
 import ViewBot from './ViewBot';
 
 const steps = [
@@ -37,6 +40,9 @@ const steps = [
     value: STEP_SETUP_BOT.INSTALLATION,
   },
 ];
+const createBotSchema = Yup.object().shape({
+  url: Yup.string().url('Enter a valid URL'),
+});
 
 const CreateBot = () => {
   const router = useRouter();
@@ -49,13 +55,26 @@ const CreateBot = () => {
     control,
     watch,
     setValue,
+    trigger,
     register,
     handleSubmit,
   } = useForm<any>({
+    resolver: yupResolver(createBotSchema),
     defaultValues: {
       chatSuggestions: [{ title: 'I’m having trouble with my account.' }],
       files: [],
+      contentColor: '#8B5CF6',
+      headerBackground: '#8B5CF6',
+      startColor: '#8B5CF6',
+      endColor: '#4d3780',
+      contentFontStyle: 'Switzer, sans-serif',
+      chatbotHeader: 'bgColor',
     },
+  });
+
+  const requestCreateSettingBot = useCreateSettingBot({
+    onSuccess: () => {},
+    onError: () => {},
   });
 
   const handleNextStep = () => {
@@ -70,8 +89,11 @@ const CreateBot = () => {
   };
 
   const onSubmit = (values: any) => {
-    // eslint-disable-next-line no-console
-    console.log(values, 'values');
+    const body = {
+      avatar: '',
+      ...values,
+    };
+    requestCreateSettingBot.run(body);
   };
 
   return (
@@ -109,13 +131,16 @@ const CreateBot = () => {
             {currentStep === STEP_SETUP_BOT.IMPORT_DATA && (
               <ImportData
                 register={register}
+                trigger={trigger}
                 setValue={setValue}
                 watch={watch}
                 control={control}
                 errors={errors}
               />
             )}
-            {currentStep === STEP_SETUP_BOT.APPEARANCE && <Appearance control={control} />}
+            {currentStep === STEP_SETUP_BOT.APPEARANCE && (
+              <Appearance watch={watch} register={register} setValue={setValue} control={control} />
+            )}
             {currentStep === STEP_SETUP_BOT.INSTALLATION && (
               <Installation control={control} errors={errors} />
             )}

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable indent */
 import { useRef } from 'react';
 
@@ -40,7 +41,7 @@ const columns = [
   },
 ];
 
-const ImportData = ({ errors, control, watch, setValue, register }: any) => {
+const ImportData = ({ errors, trigger, control, watch, setValue, register }: any) => {
   const watchedUrl = watch('url');
   const watchedFiles = watch('files');
 
@@ -134,32 +135,49 @@ const ImportData = ({ errors, control, watch, setValue, register }: any) => {
     setValue('files', newValue);
   };
 
+  const handleSubmitUrl = async () => {
+    const isValid = await trigger('url');
+    console.log(isValid, 'isValid');
+  };
+
   return (
     <>
       <CardSetupBot title='From Website' description='Import data using a website URL'>
         <div className='flex flex-col gap-2 '>
           <Text type='font-14-600'>Website URL</Text>
-          <div className='flex items-center gap-2'>
-            <InputText
-              name='url'
-              errors={errors}
-              control={control}
-              className='w-full'
-              placeholder={'Enter website URL'}
-              size='lg'
-              startContent={
-                <div className='w-max flex justify-center items-center  pr-3  h-full border-r-1 border-solid border-r-neutral-01'>
-                  <Text type='font-14-400' className='text-neutral'>
-                    https://
-                  </Text>
-                </div>
-              }
-            />
-            <Button size='lg' isDisabled={!watchedUrl} radius='md' className='bg-black'>
-              <Text type='font-14-400' className='text-white'>
-                Submit URL
+          <div className='flex flex-col gap-1'>
+            <div className='flex items-center gap-2'>
+              <InputText
+                name='url'
+                control={control}
+                className='w-full'
+                placeholder={'Enter website URL'}
+                size='lg'
+                startContent={
+                  <div className='w-max flex justify-center items-center  pr-3  h-full border-r-1 border-solid border-r-neutral-01'>
+                    <Text type='font-14-400' className='text-neutral'>
+                      https://
+                    </Text>
+                  </div>
+                }
+              />
+              <Button
+                onClick={handleSubmitUrl}
+                size='lg'
+                isDisabled={!watchedUrl}
+                radius='md'
+                className='bg-black'
+              >
+                <Text type='font-14-400' className='text-white'>
+                  Submit URL
+                </Text>
+              </Button>
+            </div>
+            {errors?.url?.message && (
+              <Text type='font-12-400' className='text-danger-1'>
+                {errors?.url?.message}
               </Text>
-            </Button>
+            )}
           </div>
         </div>
       </CardSetupBot>

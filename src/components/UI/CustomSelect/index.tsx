@@ -1,3 +1,4 @@
+/* eslint-disable multiline-ternary */
 import { Select, SelectItem } from '@nextui-org/react';
 import { Control, useController } from 'react-hook-form';
 
@@ -17,6 +18,7 @@ interface ICustomSelect {
   label?: string;
   name?: any;
   control?: Control;
+  defaultSelectedKeys?: any;
 }
 const CustomSelect = (props: ICustomSelect) => {
   const {
@@ -26,6 +28,7 @@ const CustomSelect = (props: ICustomSelect) => {
     placeholder,
     selectionMode,
     radius,
+    defaultSelectedKeys,
     control,
     name,
     className = '',
@@ -53,6 +56,7 @@ const CustomSelect = (props: ICustomSelect) => {
         label={''}
         name={field?.name}
         value={field?.value}
+        defaultSelectedKeys={defaultSelectedKeys}
         onChange={field?.onChange}
         // labelPlacement='inside'
         radius={radius}

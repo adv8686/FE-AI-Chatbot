@@ -16,12 +16,16 @@ import InputText from '@components/UI/InputText';
 import InputTextarea from '@components/UI/InputTextarea';
 import Text from '@components/UI/Text';
 import { toast } from '@components/UI/Toast/toast';
+import { getTimeZone, ListCategory } from '@utils/common';
 
 import CardSetupBot from '../CardSetupBot';
+import ListTimeZone from '../timezone.json';
 
 const General = ({ control, watch, register, errors, setValue }: any) => {
   const fileInputRef = useRef<any>(null);
   const avatarBot = watch('avatarBot');
+  const timeZone = getTimeZone();
+  const valueTimeZoneDetect = ListTimeZone.find((item) => item.utc.includes(timeZone));
 
   const { fields, append, remove, move } = useFieldArray({
     control,
@@ -135,20 +139,7 @@ const General = ({ control, watch, register, errors, setValue }: any) => {
               name='categoryId'
               size='lg'
               placeholder='No Category'
-              options={[
-                {
-                  value: 1,
-                  label: 'Category 1',
-                },
-                {
-                  value: 2,
-                  label: 'Category 2',
-                },
-                {
-                  value: 3,
-                  label: 'Category 3',
-                },
-              ]}
+              options={ListCategory}
             />
             <InputText
               name='contactInfo'
@@ -188,23 +179,16 @@ const General = ({ control, watch, register, errors, setValue }: any) => {
               className='w-full'
               control={control}
               name='timezone'
+              defaultSelectedKeys={[valueTimeZoneDetect?.value]}
               radius='md'
               size='lg'
               placeholder='(GMT+0) UTC'
-              options={[
-                {
-                  value: 1,
-                  label: 'Category 1',
-                },
-                {
-                  value: 2,
-                  label: 'Category 2',
-                },
-                {
-                  value: 3,
-                  label: 'Category 3',
-                },
-              ]}
+              options={ListTimeZone?.map((item) => {
+                return {
+                  label: item?.text,
+                  value: item?.value,
+                };
+              })}
             />
           </div>
         </div>

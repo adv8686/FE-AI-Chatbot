@@ -19,3 +19,34 @@ export const rgbToHex = (r: any, g: any, b: any) => {
 
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 };
+
+export const ListCategory = [
+  {
+    label: 'Company Site',
+    value: 1,
+  },
+  {
+    label: 'E-commerce Shopping Site',
+    value: 2,
+  },
+  {
+    label: 'Travel Booking Site',
+    value: 3,
+  },
+  {
+    label: 'Online Learning Site',
+    value: 4,
+  },
+  {
+    label: 'News&Media Site',
+    value: 5,
+  },
+  {
+    label: 'Social Media Management Site',
+    value: 6,
+  },
+];
+
+export const getTimeZone = () => {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+};
