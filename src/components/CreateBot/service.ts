@@ -41,8 +41,12 @@ const convertToFormData = (body: IBodyCreateBot): FormData => {
   for (const [key, value] of Object.entries(body)) {
     if (Array.isArray(value)) {
       // Handle arrays by appending each item
-      value.forEach((item, index) => {
-        formData.append(`${key}[${index}]`, JSON.stringify(item));
+      value.forEach((item: any, index) => {
+        if (item instanceof File) {
+          formData.append(`${key}[${index}]`, item);
+        } else {
+          formData.append(`${key}[${index}]`, JSON.stringify(item));
+        }
       });
     } else if (typeof value === 'object') {
       // Handle objects by converting to JSON string

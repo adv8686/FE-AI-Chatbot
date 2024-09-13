@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 
 import StepProgress from '@components/UI/StepProgress';
 import Text from '@components/UI/Text';
+import { toast } from '@components/UI/Toast/toast';
 import { HeaderBackgroundType, STEP_SETUP_BOT } from '@utils/common';
 
 import Appearance from './Appearance';
@@ -73,7 +74,9 @@ const CreateBot = () => {
   });
 
   const requestCreateSettingBot = useCreateSettingBot({
-    onSuccess: () => {},
+    onSuccess: () => {
+      toast.success('Create bot successfully');
+    },
     onError: () => {},
   });
 
@@ -91,8 +94,8 @@ const CreateBot = () => {
   const onSubmit = (values: any) => {
     const body = {
       ...values,
-      avatar: '',
-      files: [],
+      avatar: values?.avatar?.file,
+      files: values?.files?.map((item: any) => item?.file),
       chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
     };
     requestCreateSettingBot.run(body);

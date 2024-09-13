@@ -14,6 +14,7 @@ import StatusUpload from '@components/UI/StatusUpload';
 import TableCustom from '@components/UI/Table';
 import Text from '@components/UI/Text';
 import { toast } from '@components/UI/Toast/toast';
+import { EnumStatusUpload, renderStatusUpload } from '@utils/common';
 
 import CardSetupBot from '../CardSetupBot';
 import ModalDeleteFile from '../ModalDeleteFile';
@@ -76,7 +77,14 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
         );
       }
       case 'status': {
-        return <>{record?.status ? <StatusUpload status={record?.status} /> : <>-</>}</>;
+        return (
+          <>
+            <StatusUpload
+              labelStatus={renderStatusUpload(record?.status)}
+              status={record?.status}
+            />
+          </>
+        );
       }
 
       case 'action': {
@@ -130,15 +138,18 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
     const validation = validateFile(files);
 
     if (validation.valid) {
-      if (files.length > 0) {
+      const fileArray = [...files].map((file: any) => ({
+        id: uuid(),
+        fileName: file.name,
+        file,
+        uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
+        status: EnumStatusUpload.PROCESSING,
+      }));
+      if (fileArray.length > 0) {
         const arrayFiles = [...watchedFiles];
-        const newObjFile = {
-          id: uuid(),
-          fileName: files?.[0]?.name,
-          uploaded_at: dayjs(files?.[0]?.lastModifiedDate).format('DD/MM/YYYY'),
-          file: files?.[0],
-        };
-        arrayFiles.unshift(newObjFile);
+
+        arrayFiles.unshift(...fileArray);
+
         setValue('files', arrayFiles);
       }
     } else {
@@ -154,7 +165,9 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
       const fileArray = [...files].map((file: any) => ({
         id: uuid(),
         fileName: file.name,
+        file,
         uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
+        status: EnumStatusUpload.PROCESSING,
       }));
 
       if (fileArray.length > 0) {

@@ -83,7 +83,7 @@ const General = ({ control, watch, register, errors, setValue }: any) => {
           <div className='flex flex-col gap-2'>
             <Text type='font-14-600'>Bot Avatar</Text>
             <div className='flex items-center gap-2'>
-              <Avatar src={avatar || ''} className='w-12 h-12' />
+              <Avatar src={avatar?.url || ''} className='w-12 h-12' />
               <input
                 {...register('avatar')}
                 type='file'

@@ -56,3 +56,23 @@ export enum HeaderBackgroundType {
   GRADIENT = 'GRADIENT',
   IMAGE = 'IMAGE',
 }
+
+export enum EnumStatusUpload {
+  DONE = 'DONE',
+  PROCESSING = 'PROCESSING',
+  FAIL = 'FAIL',
+}
+
+export const renderStatusUpload = (status: string) => {
+  let text: string = '';
+  if (status === EnumStatusUpload.DONE) {
+    text = 'Done';
+  }
+  if (status === EnumStatusUpload.PROCESSING) {
+    text = 'Processing';
+  }
+  if (status === EnumStatusUpload.FAIL) {
+    text = 'Fail';
+  }
+  return text;
+};

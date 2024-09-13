@@ -55,6 +55,7 @@ const DragDropUpload = ({ handleDrop, handleFileChange }: any) => {
           ref={fileInputRef}
           id='file-upload'
           multiple
+          accept='.pdf,.txt,.docx,.json,.csv'
           type='file'
           className='hidden'
           onChange={handleFileChange}
