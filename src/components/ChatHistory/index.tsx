@@ -18,7 +18,6 @@ const ChatHistory = () => {
             className='min-w-[192px]'
             radius='sm'
             size='lg'
-            control={control}
             startContent={
               <Text type='font-14-400' className='text-secodary w-[140px]'>
                 Start date:
@@ -30,7 +29,6 @@ const ChatHistory = () => {
             className='min-w-[192px]'
             radius='sm'
             size='lg'
-            control={control}
             name='end_date'
             startContent={
               <Text type='font-14-400' className='text-secodary w-[140px]'>

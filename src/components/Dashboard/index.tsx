@@ -17,6 +17,7 @@ const Dashboard = () => {
         <Text type='font-24-600'>Dashboard</Text>
         <div className='flex items-center gap-2'>
           <CustomSelect
+            name='country'
             control={control}
             className='min-w-[192px] '
             radius='md'
@@ -38,6 +39,7 @@ const Dashboard = () => {
             ]}
           />
           <CustomSelect
+            name='date'
             className='min-w-[192px]'
             control={control}
             radius='md'

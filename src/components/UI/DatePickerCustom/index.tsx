@@ -1,13 +1,11 @@
+/* eslint-disable unicorn/consistent-function-scoping */
 import { ReactNode } from 'react';
 
 import { DatePicker } from '@nextui-org/react';
 import clsx from 'clsx';
-import { Control, useController } from 'react-hook-form';
 
 interface IDatePicker {
-  control: Control;
   startContent?: ReactNode;
-  required?: boolean;
   name: string;
   size?: 'sm' | 'md' | 'lg' | undefined;
   radius?: 'none' | 'sm' | 'md' | 'lg' | 'full' | undefined;
@@ -15,19 +13,11 @@ interface IDatePicker {
 }
 
 const DatePickerCustom = (props: IDatePicker) => {
-  const { control, radius, startContent, required, size, name, className = '', ...rest } = props;
-  const { field } = useController({
-    name,
-    control,
-    rules: { required },
-  });
+  const { radius, startContent, size, className = '', ...rest } = props;
+
   return (
     <DatePicker
       startContent={startContent}
-      name={field?.name}
-      onBlur={field.onBlur}
-      onChange={field?.onChange}
-      value={field?.value}
       size={size}
       radius={radius}
       color='secondary'

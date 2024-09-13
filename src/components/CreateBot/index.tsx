@@ -67,6 +67,8 @@ const CreateBot = () => {
       contentColor: '#8B5CF6',
       headerBackground: '#8B5CF6',
       startColor: '#8B5CF6',
+      avatar: '',
+      url: '',
       endColor: '#4d3780',
       contentFontStyle: 'Switzer, sans-serif',
       chatbotHeader: HeaderBackgroundType.COLOR,
