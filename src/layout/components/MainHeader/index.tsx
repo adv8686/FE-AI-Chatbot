@@ -9,7 +9,7 @@ import Text from '@components/UI/Text';
 const MENUS = [
   {
     key: 1,
-    href: '',
+    href: '/',
     title: 'Dashboard',
   },
   {
