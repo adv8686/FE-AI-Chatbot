@@ -19,6 +19,37 @@ body {
   color: #1e1f20;
 }
 
+.font-comic-sans {
+  font-family: 'Comic Sans MS' !important;
+}
+
 .container {
   max-width: 1200px !important;
+}
+
+.clip-path-arrow {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+}
+
+.clip-path-arrow-tail {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.scroll-custom {
+  &::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 6px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #e4e6e8;
+    border-radius: 6px;
+    transition: all 300ms;
+  }
 }

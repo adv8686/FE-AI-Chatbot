@@ -4,7 +4,18 @@ import classNames from 'classnames';
 
 interface TextProps {
   children: React.ReactNode;
-  type?: 'font-10-500' | 'font-14-600' | 'font-14-400' | 'font-24-600' | 'font-16-600' | undefined;
+  type?:
+    | 'font-10-500'
+    | 'font-14-600'
+    | 'font-14-400'
+    | 'font-24-600'
+    | 'font-16-600'
+    | 'font-12-500'
+    | 'font-18-600'
+    | 'font-12-400'
+    | 'font-12-600'
+    | 'font-20-600'
+    | undefined;
   color?:
     | 'cwhite'
     | 'cblack'

@@ -42,7 +42,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       </Head>
 
       <ErrorBoundary>
-        <ProgressBar height='2px' color='#B31E8D' options={{ showSpinner: false }} shallowRouting />
+        <ProgressBar height='2px' color='#6d28d9' options={{ showSpinner: false }} shallowRouting />
         <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
       </ErrorBoundary>
     </>
