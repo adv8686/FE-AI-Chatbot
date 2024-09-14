@@ -15,4 +15,6 @@ HomePage.getLayout = function getLayout(page: ReactElement) {
   );
 };
 
+//
+
 export default HomePage;
