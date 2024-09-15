@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable no-console */
 /* eslint-disable multiline-ternary */
 import { useRef, useState } from 'react';
@@ -113,8 +114,6 @@ const Appearance = ({ watch, control, register, setValue }: any) => {
   useClickAway(() => {
     setOpenFontStyle(false);
   }, refFontStyle);
-
-  console.log(watchContentFontStyle, 'watchContentFontStyle');
 
   return (
     <>
@@ -250,7 +249,7 @@ const Appearance = ({ watch, control, register, setValue }: any) => {
           onValueChange={onValueChangeRadio}
           color='secondary'
           value={watchChatbotHeader}
-          defaultValue='bgColor'
+          defaultValue={HeaderBackgroundType.COLOR}
         >
           {DATA_CHATBOT_HEADER?.map((item) => {
             return (
@@ -258,34 +257,36 @@ const Appearance = ({ watch, control, register, setValue }: any) => {
                 <Radio value={item?.key}>
                   <Text type='font-14-600'>{item?.label}</Text>
                 </Radio>
-                {watchChatbotHeader === 'bgColor' && item?.key === watchChatbotHeader && (
-                  <ColorPickerCustom
-                    control={control}
-                    register={register}
-                    containerColorClassName='max-w-[168px]'
-                    name='headerBackground'
-                  />
-                )}
-                {watchChatbotHeader === 'gradient' && item?.key === watchChatbotHeader && (
-                  <div className='flex items-center gap-2'>
+                {watchChatbotHeader === HeaderBackgroundType.COLOR &&
+                  item?.key === watchChatbotHeader && (
                     <ColorPickerCustom
                       control={control}
-                      labelInsite
-                      label='Start color'
                       register={register}
-                      containerColorClassName='w-max'
-                      name='startColor'
+                      containerColorClassName='max-w-[168px]'
+                      name='headerBackground'
                     />
-                    <ColorPickerCustom
-                      control={control}
-                      labelInsite
-                      register={register}
-                      label='End color'
-                      containerColorClassName='w-max'
-                      name='endColor'
-                    />
-                  </div>
-                )}
+                  )}
+                {watchChatbotHeader === HeaderBackgroundType.GRADIENT &&
+                  item?.key === watchChatbotHeader && (
+                    <div className='flex items-center gap-2'>
+                      <ColorPickerCustom
+                        control={control}
+                        labelInsite
+                        label='Start color'
+                        register={register}
+                        containerColorClassName='w-max'
+                        name='startColor'
+                      />
+                      <ColorPickerCustom
+                        control={control}
+                        labelInsite
+                        register={register}
+                        label='End color'
+                        containerColorClassName='w-max'
+                        name='endColor'
+                      />
+                    </div>
+                  )}
               </div>
             );
           })}
