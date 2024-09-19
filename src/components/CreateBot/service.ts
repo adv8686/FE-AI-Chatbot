@@ -50,7 +50,11 @@ const convertToFormData = (body: IBodyCreateBot): FormData => {
       });
     } else if (typeof value === 'object') {
       // Handle objects by converting to JSON string
-      formData.append(key, JSON.stringify(value));
+      if (key === 'avatar') {
+        formData.append(key, value);
+      } else {
+        formData.append(key, JSON.stringify(value));
+      }
     } else {
       // Handle primitive values
       formData.append(key, value);

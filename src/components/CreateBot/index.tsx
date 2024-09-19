@@ -173,7 +173,13 @@ const CreateBot = () => {
                 )}
 
                 {currentStep === STEP_SETUP_BOT.INSTALLATION ? (
-                  <Button type='submit' radius='md' size='lg' className='bg-fill-accent'>
+                  <Button
+                    onClick={handleSubmit(onSubmit)}
+                    type='submit'
+                    radius='md'
+                    size='lg'
+                    className='bg-fill-accent'
+                  >
                     <Text type='font-14-600' className='text-white'>
                       Publish Chatbot
                     </Text>
