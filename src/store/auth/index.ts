@@ -21,8 +21,8 @@ export const setAuthCookies = (
     expiredTime,
   }: {
     token: string;
-    refreshToken: string;
-    expiredTime: number;
+    refreshToken?: string;
+    expiredTime?: number;
   },
   reqOnServer?: any,
 ) => {
