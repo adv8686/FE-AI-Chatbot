@@ -1,144 +1,586 @@
 /* eslint-disable indent */
 /* eslint-disable unicorn/prefer-logical-operator-over-ternary */
 /* eslint-disable react/no-unescaped-entities */
+import { useMemo } from 'react';
+
 import { Avatar, Button } from '@nextui-org/react';
-import { ArrowRight, PaperPlaneTilt, X } from '@phosphor-icons/react';
-import Image from 'next/image';
+import { ArrowRight, ChatCircleDots, X } from '@phosphor-icons/react';
+import { useRouter } from 'next/router';
 
 import InputText from '@components/UI/InputText';
 import Text from '@components/UI/Text';
-import { HeaderBackgroundType } from '@utils/common';
+import { THEME_BOT } from '@utils/common';
 
 const ViewBot = ({ control, errors, watch }: any) => {
   const allValues = watch();
+  const router = useRouter();
 
-  const getBackgroundStyle = () => {
-    if (
-      allValues?.chatbotHeader === HeaderBackgroundType.COLOR ||
-      allValues?.chatbotHeader === HeaderBackgroundType.IMAGE
-    ) {
+  const themeBot = useMemo(() => {
+    return router.query.theme;
+  }, [router]);
+
+  const getBackgroundHeaderStyle = () => {
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
       return {
-        background: allValues?.headerBackground
-          ? allValues?.headerBackground
-          : allValues.contentColor,
+        background: '#E1DCD8',
       };
     }
-
-    if (allValues?.chatbotHeader === HeaderBackgroundType.IMAGE) {
+    if (themeBot === THEME_BOT?.DEFAULT) {
       return {
-        background: `linear-gradient(to right, ${allValues.startColor}, ${allValues.endColor})`,
+        background: '#262E38',
+      };
+    }
+    if (themeBot === THEME_BOT?.LEMON) {
+      return {
+        background: '#2E2C00',
+      };
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      return {
+        background: '#390E1E',
+      };
+    }
+    if (themeBot === THEME_BOT?.CYBERPUNK) {
+      return {
+        background: '#121933',
+      };
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      return {
+        background: '#150F14',
+      };
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      return {
+        background: '#0D0D0E',
+      };
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      return {
+        background: '#292425',
+      };
+    }
+  };
+  const getBackgroundChatStyle = () => {
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
+      return {
+        background: '#1E1E1E',
+      };
+    }
+    if (themeBot === THEME_BOT?.DEFAULT) {
+      return {
+        background: '#F0F0F0',
+      };
+    }
+    if (themeBot === THEME_BOT?.LEMON) {
+      return {
+        background: '#EBF3DF',
+      };
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      return {
+        background: '#F9E4F2',
+      };
+    }
+    if (themeBot === THEME_BOT?.CYBERPUNK) {
+      return {
+        background: '#FFEE4B',
+      };
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      return {
+        background: '#FFE5C0',
+      };
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      return {
+        background: '#BDC7D9',
+      };
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      return {
+        background: '#D6C291',
+      };
+    }
+  };
+  const getBackgroundContentMessageStyle = () => {
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
+      return {
+        background: '#464546',
+      };
+    }
+    if (themeBot === THEME_BOT?.DEFAULT) {
+      return {
+        background: '#fff',
+      };
+    }
+    if (themeBot === THEME_BOT?.LEMON) {
+      return {
+        background: '#FCFFF7',
+      };
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      return {
+        background: '#FFF8FD',
+      };
+    }
+    if (themeBot === THEME_BOT?.CYBERPUNK) {
+      return {
+        background: '#FFF',
+      };
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      return {
+        background: '#FFF7EC',
+      };
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      return {
+        background: '#E9EDF7',
+      };
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      return {
+        background: '#F9F3E2',
+      };
+    }
+  };
+  const getBackgroundUserChatStyle = () => {
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
+      return {
+        background: '#FF8400',
+      };
+    }
+    if (themeBot === THEME_BOT?.DEFAULT) {
+      return {
+        background: '#3B1FFF',
+      };
+    }
+    if (themeBot === THEME_BOT?.LEMON) {
+      return {
+        background: '#3E8800',
+      };
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      return {
+        background: '#E36471',
+      };
+    }
+    if (themeBot === THEME_BOT?.CYBERPUNK) {
+      return {
+        background: '#C46EFF',
+      };
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      return {
+        background: '#D58746',
+      };
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      return {
+        background: '#15233E',
+      };
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      return {
+        background: '#198E72',
       };
     }
   };
 
-  const getFontSize = () => {
-    if (allValues.contentFontSize === '12px') {
+  const getTextHeaderBotStyle = () => {
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
       return {
-        fontSize: '12px',
-        lineHeight: '16px',
+        color: '#464546',
       };
     }
-    if (allValues.contentFontSize === '14px') {
+    if (themeBot === THEME_BOT?.DEFAULT) {
       return {
-        fontSize: '14px',
-        lineHeight: '20px',
+        color: '#fff',
       };
     }
-    if (allValues.contentFontSize === '16px') {
+    if (themeBot === THEME_BOT?.LEMON) {
       return {
-        fontSize: '16px',
-        lineHeight: '24px',
+        color: '#FCFFF7',
       };
     }
-    if (allValues.contentFontSize === '18px') {
+    if (themeBot === THEME_BOT?.VALENTINE) {
       return {
-        fontSize: '18px',
-        lineHeight: '24px',
+        color: '#FFF8FD',
       };
     }
+    if (themeBot === THEME_BOT?.CYBERPUNK) {
+      return {
+        color: '#fff',
+      };
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      return {
+        color: '#FFE3BA',
+      };
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      return {
+        color: '#E9EDF7',
+      };
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      return {
+        color: '#F9F3E2',
+      };
+    }
+  };
+  const getColorFooterBotStyle = () => {
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
+      return {
+        color: '#FF8400',
+      };
+    }
+    if (themeBot === THEME_BOT?.DEFAULT) {
+      return {
+        color: '#3B1FFF',
+      };
+    }
+    if (themeBot === THEME_BOT?.LEMON) {
+      return {
+        color: '#3E8800',
+      };
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      return {
+        color: '#E36471',
+      };
+    }
+    if (themeBot === THEME_BOT?.CYBERPUNK) {
+      return {
+        color: '#C46EFF',
+      };
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      return {
+        color: '#D58746',
+      };
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      return {
+        color: '#15233E',
+      };
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      return {
+        color: '#198E72',
+      };
+    }
+  };
+
+  const getColorButtonSuggestion = () => {
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
+      return {
+        color: '#E1DCD8CC',
+      };
+    }
+    if (themeBot === THEME_BOT?.DEFAULT) {
+      return {
+        color: 'rgba(38, 46, 56, 0.80)',
+      };
+    }
+    if (themeBot === THEME_BOT?.LEMON) {
+      return {
+        color: 'rgba(46, 44, 0, 0.80)',
+      };
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      return {
+        color: 'rgba(57, 14, 30, 0.80)',
+      };
+    }
+    if (themeBot === THEME_BOT?.CYBERPUNK) {
+      return {
+        color: 'rgba(18, 25, 51, 0.80)',
+      };
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      return {
+        color: 'rgba(29, 22, 28, 0.80)',
+      };
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      return {
+        color: 'rgba(13, 13, 14, 0.80)',
+      };
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      return {
+        color: 'rgba(41, 36, 37, 0.80)',
+      };
+    }
+  };
+  const getColorBotNameStyle = () => {
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
+      return {
+        color: '#E1DCD8',
+      };
+    }
+    if (themeBot === THEME_BOT?.DEFAULT) {
+      return {
+        color: '#262E38',
+      };
+    }
+    if (themeBot === THEME_BOT?.LEMON) {
+      return {
+        color: '#2E2C00',
+      };
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      return {
+        color: '#390E1E',
+      };
+    }
+    if (themeBot === THEME_BOT?.CYBERPUNK) {
+      return {
+        color: '#121933',
+      };
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      return {
+        color: '#150F14',
+      };
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      return {
+        color: '#472E3F',
+      };
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      return {
+        color: '#292425',
+      };
+    }
+  };
+  const getColorTextThinking = () => {
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
+      return {
+        color: '#E1DCD866',
+      };
+    }
+    if (themeBot === THEME_BOT?.DEFAULT) {
+      return {
+        color: 'rgba(38, 46, 56, 0.40',
+      };
+    }
+    if (themeBot === THEME_BOT?.LEMON) {
+      return {
+        color: 'rgba(46, 44, 0, 0.40)',
+      };
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      return {
+        color: 'rgba(57, 14, 30, 0.40)',
+      };
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      return {
+        color: 'rgba(18, 25, 51, 0.40)',
+      };
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      return {
+        color: 'rgba(29, 22, 28, 0.40)',
+      };
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      return {
+        color: 'rgba(13, 13, 14, 0.40)',
+      };
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      return {
+        color: 'rgba(41, 36, 37, 0.40)',
+      };
+    }
+  };
+
+  const getColorIconChat = () => {
+    let color: string = '#464546';
+    if (themeBot === THEME_BOT?.HALLOWEEN) {
+      color = '#464546';
+    }
+    if (themeBot === THEME_BOT?.DEFAULT) {
+      color = '#FFFFFF';
+    }
+    if (themeBot === THEME_BOT?.LEMON) {
+      color = '#FCFFF7';
+    }
+    if (themeBot === THEME_BOT?.VALENTINE) {
+      color = '#FFF8FD';
+    }
+    if (themeBot === THEME_BOT?.CYBERPUNK) {
+      color = '#FFFFFF';
+    }
+    if (themeBot === THEME_BOT?.COFFEE) {
+      color = '#FFE3BA';
+    }
+    if (themeBot === THEME_BOT?.LUXURY) {
+      color = '#E9EDF7';
+    }
+    if (themeBot === THEME_BOT?.RETRO) {
+      color = '#F9F3E2';
+    }
+    return color;
   };
 
   return (
     <div>
       <div
         style={{
-          ...getBackgroundStyle(),
+          ...getBackgroundHeaderStyle(),
         }}
-        className={'rounded-[8px_8px_0_0] p-4 flex items-center justify-between'}
+        className={'rounded-[12px_12px_0_0] p-4 flex items-center justify-between'}
       >
         <div className='flex items-center gap-[10px]'>
-          <Image
-            src={'/static/icons/ic-chat-bot.svg'}
-            alt=''
-            width={13}
-            height={12}
-            className='w-[13px] h-3'
-          />
-          <Text className='text-white' type='font-14-600'>
+          <ChatCircleDots weight='bold' size={16} color={getColorIconChat()} />
+          <Text
+            style={{
+              ...getTextHeaderBotStyle(),
+            }}
+            type='font-14-600'
+          >
             {allValues?.botname || 'Demy Bot'}
           </Text>
         </div>
-        <X size={12} color='#fff' />
+        <X size={14} color={'#FFFFFF86'} />
       </div>
       <div
         style={{
-          backgroundImage: `url(${allValues?.contentBackground})`,
+          ...getBackgroundChatStyle(),
         }}
-        className={
-          'bg-cover bg-center bg-white border-neutral-01 border-1 border-solid rounded-[0_0_8px_8px] p-4 flex-col flex justify-between min-h-[480px]'
-        }
+        className={'bg-cover bg-center p-4 flex-col flex justify-between min-h-[480px]'}
       >
-        <div className='flex gap-2 flex-auto'>
-          <div>
-            <Avatar src={allValues?.avatar?.url || ''} className='w-9 h-9' />
-          </div>
-          <div className='flex flex-col gap-1 mr-8'>
-            <Text type='font-12-600'> {allValues?.botname || 'Demy Bot'}</Text>
-            <div className='flex flex-col gap-2'>
-              <div className='bg-neutral-01 py-3 px-4 rounded-[0_12px_12px_12px]'>
-                <p
-                  style={{
-                    ...getFontSize(),
-                  }}
-                  className={'font-normal'}
-                >
-                  {allValues?.welcomeMessage ||
-                    `Hi there! 👋 I'm here to help you with any questions or issues you might have. How
-                  can I assist you?`}
-                </p>
-              </div>
+        <div className='flex flex-col gap-6'>
+          <div className='flex gap-2 flex-auto w-10/12'>
+            <div>
+              <Avatar src={allValues?.avatar?.url || '/images/img-bot.png'} className='w-9 h-9' />
+            </div>
+            <div className='flex flex-col gap-1 mr-8'>
+              <Text
+                style={{
+                  ...getColorBotNameStyle(),
+                }}
+                type='font-12-600'
+              >
+                {' '}
+                {allValues?.botname || 'Demy Bot'}
+              </Text>
               <div className='flex flex-col gap-2'>
-                {allValues?.chatSuggestions?.map((item: any) => {
-                  return (
-                    <Button
-                      key={item?.id}
-                      size='md'
-                      className='bg-white border border-solid border-neutral-01'
-                    >
-                      <Text type='font-12-400'>{item?.title}</Text>
-                      <ArrowRight color='#95999D' size={16} />
-                    </Button>
-                  );
-                })}
+                <div
+                  style={{
+                    ...getBackgroundContentMessageStyle(),
+                  }}
+                  className='py-3 px-4 rounded-[0_12px_12px_12px]'
+                >
+                  <Text
+                    style={{
+                      ...getColorButtonSuggestion(),
+                    }}
+                    type='font-14-400'
+                    className={'font-normal'}
+                  >
+                    {allValues?.welcomeMessage ||
+                      `Hi there! 👋 I'm here to help you with any questions or issues you might have. How
+                  can I assist you?`}
+                  </Text>
+                </div>
+                <div className='flex flex-col gap-2'>
+                  {allValues?.chatSuggestions?.map((item: any) => {
+                    const colorSuggestion = getColorButtonSuggestion();
+                    return (
+                      <Button
+                        key={item?.id}
+                        size='md'
+                        className='bg-transparent border border-solid border-[#0000001A]'
+                      >
+                        <Text
+                          style={{
+                            ...getColorButtonSuggestion(),
+                          }}
+                          type='font-12-400'
+                        >
+                          {item?.title}
+                        </Text>
+                        <ArrowRight color={colorSuggestion?.color} size={16} />
+                      </Button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='flex items-end justify-end'>
+            <div
+              style={{
+                ...getBackgroundUserChatStyle(),
+              }}
+              className='rounded-[12px_0_12px_12px]  py-3 px-4'
+            >
+              <Text type='font-14-400' className='text-white'>
+                I’m having trouble with my account.
+              </Text>
+            </div>
+          </div>
+          <div className='flex gap-2 flex-auto w-10/12'>
+            <div>
+              <Avatar src={allValues?.avatar?.url || '/images/img-bot.png'} className='w-9 h-9' />
+            </div>
+            <div className='flex flex-col gap-1 mr-8'>
+              <Text
+                style={{
+                  ...getColorBotNameStyle(),
+                }}
+                type='font-12-600'
+              >
+                {' '}
+                {allValues?.botname || 'Demy Bot'}
+              </Text>
+              <div className='flex flex-col gap-2'>
+                <div
+                  style={{
+                    ...getBackgroundContentMessageStyle(),
+                  }}
+                  className='py-3 px-4 rounded-[0_12px_12px_12px]'
+                >
+                  <Text
+                    style={{
+                      ...getColorTextThinking(),
+                    }}
+                    type='font-14-400'
+                    className={'font-normal'}
+                  >
+                    Thinking...
+                  </Text>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className='flex flex-col gap-2  text-center'>
+      </div>
+      <div className='flex flex-col border rounded-[0px_0px_12px_12px] border-t-0  border-solid border-neutral-01 bg-white text-center'>
+        <div className='border-b-1 py-1 border-solid border-neutral-01'>
           <InputText
             control={control}
             errors={errors}
             name='question'
             botSetting
             size={'lg'}
+            endContent={<IconEmoji />}
             placeholder='Type your question'
-            endContent={<PaperPlaneTilt size={12} color='#95999D' weight='fill' />}
           />
+        </div>
+        <div className='p-2'>
           <Text type='font-12-400' className='text-neutral'>
             Powered by{' '}
             <span
               style={{
-                color: allValues.contentColor,
+                ...getColorFooterBotStyle(),
               }}
             >
               Demy.ai
@@ -150,3 +592,15 @@ const ViewBot = ({ control, errors, watch }: any) => {
   );
 };
 export default ViewBot;
+
+const IconEmoji = () => {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none'>
+      <path
+        d='M9.00033 0.666016C13.6028 0.666016 17.3337 4.39685 17.3337 8.99935C17.3337 13.6018 13.6028 17.3327 9.00033 17.3327C4.39783 17.3327 0.666992 13.6018 0.666992 8.99935C0.666992 4.39685 4.39783 0.666016 9.00033 0.666016ZM9.00033 2.33268C7.23222 2.33268 5.53652 3.03506 4.28628 4.2853C3.03604 5.53555 2.33366 7.23124 2.33366 8.99935C2.33366 10.7675 3.03604 12.4632 4.28628 13.7134C5.53652 14.9636 7.23222 15.666 9.00033 15.666C10.7684 15.666 12.4641 14.9636 13.7144 13.7134C14.9646 12.4632 15.667 10.7675 15.667 8.99935C15.667 7.23124 14.9646 5.53555 13.7144 4.2853C12.4641 3.03506 10.7684 2.33268 9.00033 2.33268ZM11.3337 10.5468C11.4114 10.4684 11.504 10.4062 11.606 10.3639C11.708 10.3215 11.8174 10.2999 11.9278 10.3002C12.0382 10.3005 12.1475 10.3227 12.2493 10.3657C12.351 10.4086 12.4432 10.4713 12.5206 10.5501C12.5979 10.629 12.6587 10.7224 12.6996 10.825C12.7405 10.9276 12.7606 11.0373 12.7587 11.1477C12.7568 11.2581 12.733 11.3671 12.6887 11.4682C12.6443 11.5694 12.5803 11.6607 12.5003 11.7368C11.5665 12.6542 10.3094 13.1675 9.00033 13.166C7.6913 13.1675 6.43419 12.6542 5.50033 11.7368C5.34618 11.5813 5.25943 11.3714 5.25883 11.1525C5.25822 10.9335 5.34382 10.7231 5.4971 10.5668C5.65038 10.4104 5.85904 10.3207 6.07796 10.317C6.29688 10.3132 6.50847 10.3958 6.66699 10.5468C7.28934 11.1587 8.12759 11.5009 9.00033 11.4993C9.90866 11.4993 10.7312 11.1368 11.3337 10.5468ZM6.08366 5.66602C6.41518 5.66602 6.73312 5.79771 6.96754 6.03213C7.20196 6.26655 7.33366 6.5845 7.33366 6.91602C7.33366 7.24754 7.20196 7.56548 6.96754 7.7999C6.73312 8.03432 6.41518 8.16602 6.08366 8.16602C5.75214 8.16602 5.4342 8.03432 5.19978 7.7999C4.96535 7.56548 4.83366 7.24754 4.83366 6.91602C4.83366 6.5845 4.96535 6.26655 5.19978 6.03213C5.4342 5.79771 5.75214 5.66602 6.08366 5.66602ZM11.917 5.66602C12.2485 5.66602 12.5665 5.79771 12.8009 6.03213C13.0353 6.26655 13.167 6.5845 13.167 6.91602C13.167 7.24754 13.0353 7.56548 12.8009 7.7999C12.5665 8.03432 12.2485 8.16602 11.917 8.16602C11.5855 8.16602 11.2675 8.03432 11.0331 7.7999C10.7987 7.56548 10.667 7.24754 10.667 6.91602C10.667 6.5845 10.7987 6.26655 11.0331 6.03213C11.2675 5.79771 11.5855 5.66602 11.917 5.66602Z'
+        fill='#464546'
+        fillOpacity='0.4'
+      />
+    </svg>
+  );
+};

@@ -28,6 +28,7 @@ interface IInputText {
   ref?: any;
   botSetting?: boolean;
   messageError?: string;
+  borderNone?: boolean;
 }
 const InputText = (props: IInputText) => {
   const {
@@ -99,7 +100,7 @@ const InputText = (props: IInputText) => {
             ? ['px-3 border-1 border-solid !border-red-500']
             : botSetting
             ? [
-                'px-3 border-1 border-solid border-neutral-01 transition-all data-[hover=true]:!border-disabled group-data-[focus=true]:!border-disabled',
+                'p-4 border-0 shadow-none border-solid border-neutral-01 transition-all data-[hover=true]:!border-disabled group-data-[focus=true]:!border-disabled',
               ]
             : [
                 'px-3 border-1 border-solid border-neutral-01 transition-all data-[hover=true]:!border-disabled group-data-[focus=true]:!border-accent',

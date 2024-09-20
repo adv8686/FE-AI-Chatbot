@@ -99,6 +99,7 @@ const CreateBot = () => {
       avatar: values?.avatar?.file,
       files: values?.files?.map((item: any) => item?.file),
       chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
+      themeBot: router.query.theme,
     };
     requestCreateSettingBot.run(body);
   };

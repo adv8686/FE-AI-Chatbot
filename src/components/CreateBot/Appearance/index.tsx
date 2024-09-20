@@ -10,48 +10,12 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import ColorPickerCustom from '@components/UI/ColorPickerCustom';
-import CustomSelect from '@components/UI/CustomSelect';
 import Text from '@components/UI/Text';
 import { HeaderBackgroundType } from '@utils/common';
 
 import CardSetupBot from '../CardSetupBot';
 
 import '@rc-component/color-picker/assets/index.css';
-
-const DATA_BACKGROUND = [
-  {
-    id: 1,
-    bgImg: '',
-  },
-  {
-    id: 2,
-    bgImg: '/images/bg-bot.png',
-  },
-  {
-    id: 3,
-    bgImg: '/images/bg-2-bot.png',
-  },
-  {
-    id: 4,
-    bgImg: '/images/bg-3-bot.png',
-  },
-  {
-    id: 5,
-    bgImg: '/images/bg-4-bot.png',
-  },
-  {
-    id: 6,
-    bgImg: '/images/bg-5-bot.png',
-  },
-  {
-    id: 7,
-    bgImg: '/images/bg-6-bot.png',
-  },
-  {
-    id: 8,
-    bgImg: '/images/bg-7-bot.png',
-  },
-];
 
 const DATA_CHATBOT_HEADER = [
   {
@@ -91,17 +55,10 @@ const DataFontStyle = [
 
 const Appearance = ({ watch, control, register, setValue }: any) => {
   const refFontStyle = useRef<any>(null);
-  const [activeBgColor, setActiveBgColor] = useState<number>(1);
   const watchChatbotHeader = watch('chatbotHeader');
   const watchContentFontStyle = watch('contentFontStyle');
 
   const [openFontStyle, setOpenFontStyle] = useState(false);
-
-  const handleClickBgColor = (id: number, bgImg: string) => {
-    setActiveBgColor(id);
-    console.log(bgImg, 'bgImg');
-    // setValue('contentBackground');
-  };
 
   const onValueChangeRadio = (value: any) => {
     setValue('chatbotHeader', value);
@@ -122,7 +79,7 @@ const Appearance = ({ watch, control, register, setValue }: any) => {
         description='Explore and adjust your chatbot’s settings to match your brand.'
       >
         <div className='flex flex-col gap-4'>
-          <div className='grid grid-cols-3 gap-4'>
+          <div className='grid grid-cols-2 gap-4'>
             <ColorPickerCustom
               label='Theme Color'
               control={control}
@@ -178,7 +135,7 @@ const Appearance = ({ watch, control, register, setValue }: any) => {
               </PopoverContent>
             </Popover>
 
-            <CustomSelect
+            {/* <CustomSelect
               label='Font Size'
               control={control}
               name='contentFontSize'
@@ -204,39 +161,7 @@ const Appearance = ({ watch, control, register, setValue }: any) => {
                   label: 'Extra Large (18px)',
                 },
               ]}
-            />
-          </div>
-          <div className='flex flex-col gap-2'>
-            <Text type='font-14-600'>Background</Text>
-            <div className='grid-cols-8 gap-4 grid'>
-              {DATA_BACKGROUND?.map((item) => {
-                return (
-                  <div
-                    {...register('contentBackground')}
-                    onClick={() => handleClickBgColor(item.id, item?.bgImg)}
-                    className={clsx(
-                      'border-1  cursor-pointer border-solid border-neutral-01 rounded-lg p-2',
-                      {
-                        '!border-accent !border-2': activeBgColor === item?.id,
-                      },
-                    )}
-                    key={item?.id}
-                  >
-                    {item?.bgImg ? (
-                      <Image
-                        src={item?.bgImg}
-                        alt=''
-                        width={56}
-                        height={75}
-                        className='w-full h-[75px]'
-                      />
-                    ) : (
-                      <div className='w-full h-[75px] bg-white' />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+            /> */}
           </div>
         </div>
       </CardSetupBot>

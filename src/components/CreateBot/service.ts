@@ -3,6 +3,7 @@ import { useRequest } from 'ahooks';
 
 import { API_PATH } from '@api/constant';
 import { privateRequest, request } from '@api/request';
+import { THEME_BOT } from '@utils/common';
 
 interface IChatSuggestions {
   title: string;
@@ -33,6 +34,7 @@ interface IBodyCreateBot {
   timezone: string;
   url: string;
   contentFontSize: string;
+  themeBot: THEME_BOT;
 }
 
 const convertToFormData = (body: IBodyCreateBot): FormData => {

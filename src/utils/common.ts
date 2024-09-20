@@ -2,6 +2,7 @@
 export const ROUTE_PATH = {
   Home: '/',
   CREATE_BOT: '/create-bot',
+  TEMPLATE_BOT: '/template-bot',
 };
 
 export enum STEP_SETUP_BOT {
@@ -76,3 +77,14 @@ export const renderStatusUpload = (status: string) => {
   }
   return text;
 };
+
+export enum THEME_BOT {
+  DEFAULT = 'DEFAULT',
+  HALLOWEEN = 'HALLOWEEN',
+  LEMON = 'LEMON',
+  VALENTINE = 'VALENTINE',
+  CYBERPUNK = 'CYBERPUNK',
+  COFFEE = 'COFFEE',
+  LUXURY = 'LUXURY',
+  RETRO = 'RETRO',
+}

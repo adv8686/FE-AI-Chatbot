@@ -15,6 +15,7 @@ interface TextProps {
     | 'font-12-400'
     | 'font-12-600'
     | 'font-20-600'
+    | 'font-16-400'
     | undefined;
   color?:
     | 'cwhite'
@@ -47,6 +48,7 @@ interface TextProps {
   className?: string;
   onClick?: () => void;
   element?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
+  style?: any;
 }
 
 const Text: React.FC<TextProps> = ({
@@ -56,6 +58,7 @@ const Text: React.FC<TextProps> = ({
   className = '',
   onClick = () => {},
   children,
+  style,
   element = 'p',
 }) => {
   const classes = classNames(type, color, { 'text-disable': disabled }, className);
@@ -64,6 +67,7 @@ const Text: React.FC<TextProps> = ({
     element,
     {
       className: classes,
+      style,
       onClick,
     },
     React.createElement(React.Fragment, undefined, children),

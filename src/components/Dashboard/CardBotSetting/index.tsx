@@ -41,7 +41,7 @@ const CardBotSetting = () => {
           </Text>
         </Button> */}
         <Button
-          onClick={() => router.push(ROUTE_PATH.CREATE_BOT)}
+          onClick={() => router.push(ROUTE_PATH.TEMPLATE_BOT)}
           radius='md'
           size='lg'
           className='bg-fill-accent min-h-11'
