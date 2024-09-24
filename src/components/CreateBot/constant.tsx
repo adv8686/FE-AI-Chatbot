@@ -359,7 +359,7 @@ export const getColorTextThinking = (themeBot: THEME_BOT) => {
       color: 'rgba(57, 14, 30, 0.40)',
     };
   }
-  if (themeBot === THEME_BOT?.VALENTINE) {
+  if (themeBot === THEME_BOT?.CYBERPUNK) {
     return {
       color: 'rgba(18, 25, 51, 0.40)',
     };
