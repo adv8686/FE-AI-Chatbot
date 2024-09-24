@@ -5,589 +5,199 @@ import { useMemo } from 'react';
 
 import { Avatar, Button } from '@nextui-org/react';
 import { ArrowRight, ChatCircleDots, X } from '@phosphor-icons/react';
+import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
+import BubbleChat from '@components/UI/BubbleChat';
 import InputText from '@components/UI/InputText';
 import Text from '@components/UI/Text';
 import { THEME_BOT } from '@utils/common';
+
+import {
+  getBackgroundChatStyle,
+  getBackgroundContentMessageStyle,
+  getBackgroundHeaderStyle,
+  getBackgroundUserChatStyle,
+  getColorBotNameStyle,
+  getColorButtonSuggestion,
+  getColorFooterBotStyle,
+  getColorIconChat,
+  getColorTextThinking,
+  getTextHeaderBotStyle,
+} from '../constant';
 
 const ViewBot = ({ control, errors, watch }: any) => {
   const allValues = watch();
   const router = useRouter();
 
-  const themeBot = useMemo(() => {
+  const themeBot: any = useMemo(() => {
     return router.query.theme;
   }, [router]);
 
-  const getBackgroundHeaderStyle = () => {
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      return {
-        background: '#E1DCD8',
-      };
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      return {
-        background: '#262E38',
-      };
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      return {
-        background: '#2E2C00',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        background: '#390E1E',
-      };
-    }
-    if (themeBot === THEME_BOT?.CYBERPUNK) {
-      return {
-        background: '#121933',
-      };
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      return {
-        background: '#150F14',
-      };
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      return {
-        background: '#0D0D0E',
-      };
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      return {
-        background: '#292425',
-      };
-    }
-  };
-  const getBackgroundChatStyle = () => {
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      return {
-        background: '#1E1E1E',
-      };
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      return {
-        background: '#F0F0F0',
-      };
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      return {
-        background: '#EBF3DF',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        background: '#F9E4F2',
-      };
-    }
-    if (themeBot === THEME_BOT?.CYBERPUNK) {
-      return {
-        background: '#FFEE4B',
-      };
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      return {
-        background: '#FFE5C0',
-      };
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      return {
-        background: '#BDC7D9',
-      };
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      return {
-        background: '#D6C291',
-      };
-    }
-  };
-  const getBackgroundContentMessageStyle = () => {
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      return {
-        background: '#464546',
-      };
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      return {
-        background: '#fff',
-      };
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      return {
-        background: '#FCFFF7',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        background: '#FFF8FD',
-      };
-    }
-    if (themeBot === THEME_BOT?.CYBERPUNK) {
-      return {
-        background: '#FFF',
-      };
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      return {
-        background: '#FFF7EC',
-      };
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      return {
-        background: '#E9EDF7',
-      };
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      return {
-        background: '#F9F3E2',
-      };
-    }
-  };
-  const getBackgroundUserChatStyle = () => {
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      return {
-        background: '#FF8400',
-      };
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      return {
-        background: '#3B1FFF',
-      };
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      return {
-        background: '#3E8800',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        background: '#E36471',
-      };
-    }
-    if (themeBot === THEME_BOT?.CYBERPUNK) {
-      return {
-        background: '#C46EFF',
-      };
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      return {
-        background: '#D58746',
-      };
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      return {
-        background: '#15233E',
-      };
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      return {
-        background: '#198E72',
-      };
-    }
-  };
-
-  const getTextHeaderBotStyle = () => {
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      return {
-        color: '#464546',
-      };
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      return {
-        color: '#fff',
-      };
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      return {
-        color: '#FCFFF7',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        color: '#FFF8FD',
-      };
-    }
-    if (themeBot === THEME_BOT?.CYBERPUNK) {
-      return {
-        color: '#fff',
-      };
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      return {
-        color: '#FFE3BA',
-      };
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      return {
-        color: '#E9EDF7',
-      };
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      return {
-        color: '#F9F3E2',
-      };
-    }
-  };
-  const getColorFooterBotStyle = () => {
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      return {
-        color: '#FF8400',
-      };
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      return {
-        color: '#3B1FFF',
-      };
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      return {
-        color: '#3E8800',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        color: '#E36471',
-      };
-    }
-    if (themeBot === THEME_BOT?.CYBERPUNK) {
-      return {
-        color: '#C46EFF',
-      };
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      return {
-        color: '#D58746',
-      };
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      return {
-        color: '#15233E',
-      };
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      return {
-        color: '#198E72',
-      };
-    }
-  };
-
-  const getColorButtonSuggestion = () => {
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      return {
-        color: '#E1DCD8CC',
-      };
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      return {
-        color: 'rgba(38, 46, 56, 0.80)',
-      };
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      return {
-        color: 'rgba(46, 44, 0, 0.80)',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        color: 'rgba(57, 14, 30, 0.80)',
-      };
-    }
-    if (themeBot === THEME_BOT?.CYBERPUNK) {
-      return {
-        color: 'rgba(18, 25, 51, 0.80)',
-      };
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      return {
-        color: 'rgba(29, 22, 28, 0.80)',
-      };
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      return {
-        color: 'rgba(13, 13, 14, 0.80)',
-      };
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      return {
-        color: 'rgba(41, 36, 37, 0.80)',
-      };
-    }
-  };
-  const getColorBotNameStyle = () => {
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      return {
-        color: '#E1DCD8',
-      };
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      return {
-        color: '#262E38',
-      };
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      return {
-        color: '#2E2C00',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        color: '#390E1E',
-      };
-    }
-    if (themeBot === THEME_BOT?.CYBERPUNK) {
-      return {
-        color: '#121933',
-      };
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      return {
-        color: '#150F14',
-      };
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      return {
-        color: '#472E3F',
-      };
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      return {
-        color: '#292425',
-      };
-    }
-  };
-  const getColorTextThinking = () => {
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      return {
-        color: '#E1DCD866',
-      };
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      return {
-        color: 'rgba(38, 46, 56, 0.40',
-      };
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      return {
-        color: 'rgba(46, 44, 0, 0.40)',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        color: 'rgba(57, 14, 30, 0.40)',
-      };
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      return {
-        color: 'rgba(18, 25, 51, 0.40)',
-      };
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      return {
-        color: 'rgba(29, 22, 28, 0.40)',
-      };
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      return {
-        color: 'rgba(13, 13, 14, 0.40)',
-      };
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      return {
-        color: 'rgba(41, 36, 37, 0.40)',
-      };
-    }
-  };
-
-  const getColorIconChat = () => {
-    let color: string = '#464546';
-    if (themeBot === THEME_BOT?.HALLOWEEN) {
-      color = '#464546';
-    }
-    if (themeBot === THEME_BOT?.DEFAULT) {
-      color = '#FFFFFF';
-    }
-    if (themeBot === THEME_BOT?.LEMON) {
-      color = '#FCFFF7';
-    }
-    if (themeBot === THEME_BOT?.VALENTINE) {
-      color = '#FFF8FD';
-    }
-    if (themeBot === THEME_BOT?.CYBERPUNK) {
-      color = '#FFFFFF';
-    }
-    if (themeBot === THEME_BOT?.COFFEE) {
-      color = '#FFE3BA';
-    }
-    if (themeBot === THEME_BOT?.LUXURY) {
-      color = '#E9EDF7';
-    }
-    if (themeBot === THEME_BOT?.RETRO) {
-      color = '#F9F3E2';
-    }
-    return color;
-  };
-
   return (
-    <div>
-      <div
-        style={{
-          ...getBackgroundHeaderStyle(),
-        }}
-        className={'rounded-[12px_12px_0_0] p-4 flex items-center justify-between'}
-      >
-        <div className='flex items-center gap-[10px]'>
-          <ChatCircleDots weight='bold' size={16} color={getColorIconChat()} />
-          <Text
-            style={{
-              ...getTextHeaderBotStyle(),
-            }}
-            type='font-14-600'
-          >
-            {allValues?.botname || 'Demy Bot'}
-          </Text>
+    <div className='flex flex-col gap-4 items-end'>
+      <div>
+        <div
+          style={{
+            ...getBackgroundHeaderStyle(themeBot),
+          }}
+          className={'rounded-[12px_12px_0_0] p-4 flex items-center justify-between'}
+        >
+          <div className='flex items-center gap-[10px]'>
+            <ChatCircleDots weight='bold' size={16} color={getColorIconChat(themeBot)} />
+            <Text
+              style={{
+                ...getTextHeaderBotStyle(themeBot),
+              }}
+              type='font-14-600'
+            >
+              {allValues?.botname || 'Demy Bot'}
+            </Text>
+          </div>
+          <X size={14} color={'#FFFFFF86'} />
         </div>
-        <X size={14} color={'#FFFFFF86'} />
-      </div>
-      <div
-        style={{
-          ...getBackgroundChatStyle(),
-        }}
-        className={'bg-cover bg-center p-4 flex-col flex justify-between min-h-[480px]'}
-      >
-        <div className='flex flex-col gap-6'>
-          <div className='flex gap-2 flex-auto w-10/12'>
-            <div>
-              <Avatar src={allValues?.avatar?.url || '/images/img-bot.png'} className='w-9 h-9' />
-            </div>
-            <div className='flex flex-col gap-1 mr-8'>
-              <Text
-                style={{
-                  ...getColorBotNameStyle(),
-                }}
-                type='font-12-600'
-              >
-                {' '}
-                {allValues?.botname || 'Demy Bot'}
-              </Text>
-              <div className='flex flex-col gap-2'>
-                <div
+        <div
+          style={{
+            ...getBackgroundChatStyle(themeBot),
+          }}
+          className={'bg-cover bg-center p-4 flex-col flex justify-between min-h-[480px]'}
+        >
+          <div className='flex flex-col gap-6'>
+            <div className='flex gap-2 flex-auto w-10/12'>
+              <div>
+                <Avatar src={allValues?.avatar?.url || '/images/img-bot.png'} className='w-9 h-9' />
+              </div>
+              <div className='flex flex-col gap-1 mr-8'>
+                <Text
                   style={{
-                    ...getBackgroundContentMessageStyle(),
+                    ...getColorBotNameStyle(themeBot),
                   }}
-                  className='py-3 px-4 rounded-[0_12px_12px_12px]'
+                  type='font-12-600'
                 >
-                  <Text
-                    style={{
-                      ...getColorButtonSuggestion(),
-                    }}
-                    type='font-14-400'
-                    className={'font-normal'}
-                  >
-                    {allValues?.welcomeMessage ||
-                      `Hi there! 👋 I'm here to help you with any questions or issues you might have. How
-                  can I assist you?`}
-                  </Text>
-                </div>
+                  {' '}
+                  {allValues?.botname || 'Demy Bot'}
+                </Text>
                 <div className='flex flex-col gap-2'>
-                  {allValues?.chatSuggestions?.map((item: any) => {
-                    const colorSuggestion = getColorButtonSuggestion();
-                    return (
-                      <Button
-                        key={item?.id}
-                        size='md'
-                        className='bg-transparent border border-solid border-[#0000001A]'
-                      >
-                        <Text
-                          style={{
-                            ...getColorButtonSuggestion(),
-                          }}
-                          type='font-12-400'
-                        >
-                          {item?.title}
-                        </Text>
-                        <ArrowRight color={colorSuggestion?.color} size={16} />
-                      </Button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='flex items-end justify-end'>
-            <div
-              style={{
-                ...getBackgroundUserChatStyle(),
-              }}
-              className='rounded-[12px_0_12px_12px]  py-3 px-4'
-            >
-              <Text type='font-14-400' className='text-white'>
-                I’m having trouble with my account.
-              </Text>
-            </div>
-          </div>
-          <div className='flex gap-2 flex-auto w-10/12'>
-            <div>
-              <Avatar src={allValues?.avatar?.url || '/images/img-bot.png'} className='w-9 h-9' />
-            </div>
-            <div className='flex flex-col gap-1 mr-8'>
-              <Text
-                style={{
-                  ...getColorBotNameStyle(),
-                }}
-                type='font-12-600'
-              >
-                {' '}
-                {allValues?.botname || 'Demy Bot'}
-              </Text>
-              <div className='flex flex-col gap-2'>
-                <div
-                  style={{
-                    ...getBackgroundContentMessageStyle(),
-                  }}
-                  className='py-3 px-4 rounded-[0_12px_12px_12px]'
-                >
-                  <Text
+                  <div
                     style={{
-                      ...getColorTextThinking(),
+                      ...getBackgroundContentMessageStyle(themeBot),
                     }}
-                    type='font-14-400'
-                    className={'font-normal'}
+                    className='py-3 px-4 rounded-[0_12px_12px_12px]'
                   >
-                    Thinking...
-                  </Text>
+                    <Text
+                      style={{
+                        ...getColorButtonSuggestion(themeBot),
+                      }}
+                      type='font-14-400'
+                      className={'font-normal'}
+                    >
+                      {allValues?.welcomeMessage ||
+                        `Hi there! 👋 I'm here to help you with any questions or issues you might have. How
+                  can I assist you?`}
+                    </Text>
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    {allValues?.chatSuggestions?.map((item: any) => {
+                      const colorSuggestion = getColorButtonSuggestion(themeBot);
+                      return (
+                        <Button
+                          key={item?.id}
+                          size='md'
+                          className={clsx('bg-transparent border border-solid border-[#0000001A]', {
+                            'border-[#FFFFFF1A]': themeBot === THEME_BOT.HALLOWEEN,
+                          })}
+                        >
+                          <Text
+                            style={{
+                              ...getColorButtonSuggestion(themeBot),
+                            }}
+                            type='font-12-400'
+                          >
+                            {item?.title}
+                          </Text>
+                          <ArrowRight color={colorSuggestion?.color} size={16} />
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='flex items-end justify-end'>
+              <div
+                style={{
+                  ...getBackgroundUserChatStyle(themeBot),
+                }}
+                className='rounded-[12px_0_12px_12px]  py-3 px-4'
+              >
+                <Text type='font-14-400' className='text-white'>
+                  I’m having trouble with my account.
+                </Text>
+              </div>
+            </div>
+            <div className='flex gap-2 flex-auto w-10/12'>
+              <div>
+                <Avatar src={allValues?.avatar?.url || '/images/img-bot.png'} className='w-9 h-9' />
+              </div>
+              <div className='flex flex-col gap-1 mr-8'>
+                <Text
+                  style={{
+                    ...getColorBotNameStyle(themeBot),
+                  }}
+                  type='font-12-600'
+                >
+                  {' '}
+                  {allValues?.botname || 'Demy Bot'}
+                </Text>
+                <div className='flex flex-col gap-2'>
+                  <div
+                    style={{
+                      ...getBackgroundContentMessageStyle(themeBot),
+                    }}
+                    className='py-3 px-4 rounded-[0_12px_12px_12px]'
+                  >
+                    <Text
+                      style={{
+                        ...getColorTextThinking(themeBot),
+                      }}
+                      type='font-14-400'
+                      className={'font-normal'}
+                    >
+                      Thinking...
+                    </Text>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className='flex flex-col border rounded-[0px_0px_12px_12px] border-t-0  border-solid border-neutral-01 bg-white text-center'>
-        <div className='border-b-1 py-1 border-solid border-neutral-01'>
-          <InputText
-            control={control}
-            errors={errors}
-            name='question'
-            botSetting
-            size={'lg'}
-            endContent={<IconEmoji />}
-            placeholder='Type your question'
-          />
+        <div className='flex flex-col border rounded-[0px_0px_12px_12px] border-t-0  border-solid border-neutral-01 bg-white text-center'>
+          <div className='border-b-1 py-1 border-solid border-neutral-01'>
+            <InputText
+              control={control}
+              errors={errors}
+              name='question'
+              botSetting
+              size={'lg'}
+              endContent={<IconEmoji />}
+              placeholder='Type your question'
+            />
+          </div>
+          <div className='p-2'>
+            <Text type='font-12-400' className='text-neutral'>
+              Powered by{' '}
+              <span
+                style={{
+                  ...getColorFooterBotStyle(themeBot),
+                }}
+              >
+                Demy.ai
+              </span>
+            </Text>
+          </div>
         </div>
-        <div className='p-2'>
-          <Text type='font-12-400' className='text-neutral'>
-            Powered by{' '}
-            <span
-              style={{
-                ...getColorFooterBotStyle(),
-              }}
-            >
-              Demy.ai
-            </span>
-          </Text>
-        </div>
       </div>
+      <BubbleChat theme={themeBot} />
     </div>
   );
 };
