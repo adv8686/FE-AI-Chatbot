@@ -64,7 +64,7 @@ const TemplateBot = () => {
           Choose a template to get started and enhance your customer support effortlessly.
         </Text>
       </div>
-      <div className='grid grid-cols-4 gap-6'>
+      <div className='grid grid-cols-4 gap-2'>
         {DATA_THEME_BOT?.map((item) => {
           return (
             <div
@@ -74,7 +74,7 @@ const TemplateBot = () => {
                 backgroundImage: `url(${item?.url})`,
               }}
               className={clsx(
-                'w-full  hover:opacity-80 cursor-pointer h-[393px] bg-cover bg-center',
+                'w-full  hover:opacity-80 cursor-pointer h-[413px] bg-cover bg-center',
               )}
             />
             // <Image
