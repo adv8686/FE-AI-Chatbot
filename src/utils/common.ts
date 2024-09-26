@@ -3,6 +3,7 @@ export const ROUTE_PATH = {
   Home: '/',
   CREATE_BOT: '/create-bot',
   TEMPLATE_BOT: '/template-bot',
+  SIGN_IN: '/auth/sign-in',
 };
 
 export enum STEP_SETUP_BOT {

@@ -409,3 +409,32 @@ export const getColorIconChat = (themeBot: THEME_BOT) => {
   }
   return color;
 };
+
+export const getColorIconSendMessage = (themeBot: THEME_BOT) => {
+  let color: string = '#464546';
+  if (themeBot === THEME_BOT?.HALLOWEEN) {
+    color = '#FF8400';
+  }
+  if (themeBot === THEME_BOT?.DEFAULT) {
+    color = '#3B1FFF';
+  }
+  if (themeBot === THEME_BOT?.LEMON) {
+    color = '#3E8800';
+  }
+  if (themeBot === THEME_BOT?.VALENTINE) {
+    color = '#E36471';
+  }
+  if (themeBot === THEME_BOT?.CYBERPUNK) {
+    color = '#C46EFF';
+  }
+  if (themeBot === THEME_BOT?.COFFEE) {
+    color = '#D58746';
+  }
+  if (themeBot === THEME_BOT?.LUXURY) {
+    color = '#15233E';
+  }
+  if (themeBot === THEME_BOT?.RETRO) {
+    color = '#198E72';
+  }
+  return color;
+};

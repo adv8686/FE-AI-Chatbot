@@ -1,17 +1,19 @@
 /* eslint-disable indent */
 /* eslint-disable no-console */
 /* eslint-disable multiline-ternary */
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Popover, PopoverContent, PopoverTrigger, Radio, RadioGroup } from '@nextui-org/react';
 import { CaretDown } from '@phosphor-icons/react';
 import { useClickAway } from 'ahooks';
 import clsx from 'clsx';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import ColorPickerCustom from '@components/UI/ColorPickerCustom';
+import CustomSelect from '@components/UI/CustomSelect';
 import Text from '@components/UI/Text';
-import { HeaderBackgroundType } from '@utils/common';
+import { HeaderBackgroundType, THEME_BOT } from '@utils/common';
 
 import CardSetupBot from '../CardSetupBot';
 
@@ -57,8 +59,19 @@ const Appearance = ({ watch, control, register, setValue }: any) => {
   const refFontStyle = useRef<any>(null);
   const watchChatbotHeader = watch('chatbotHeader');
   const watchContentFontStyle = watch('contentFontStyle');
+  const router = useRouter();
 
   const [openFontStyle, setOpenFontStyle] = useState(false);
+  const watchThemeBot = watch('themeBot');
+
+  useEffect(() => {
+    if (watchThemeBot) {
+      router.replace({
+        pathname: router.pathname,
+        query: { ...router.query, theme: watchThemeBot },
+      });
+    }
+  }, [watchThemeBot]);
 
   const onValueChangeRadio = (value: any) => {
     setValue('chatbotHeader', value);
@@ -80,11 +93,55 @@ const Appearance = ({ watch, control, register, setValue }: any) => {
       >
         <div className='flex flex-col gap-4'>
           <div className='grid grid-cols-2 gap-4'>
-            <ColorPickerCustom
+            {/* <ColorPickerCustom
               label='Theme Color'
               control={control}
               register={register}
               name='contentColor'
+            /> */}
+            <CustomSelect
+              label='Theme Color'
+              control={control}
+              name='themeBot'
+              defaultSelectedKeys={[router.query.theme]}
+              className='w-full'
+              radius='md'
+              size='lg'
+              placeholder='Default'
+              options={[
+                {
+                  value: THEME_BOT?.DEFAULT,
+                  label: 'Default',
+                },
+                {
+                  value: THEME_BOT?.HALLOWEEN,
+                  label: 'Halloween',
+                },
+                {
+                  value: THEME_BOT?.LEMON,
+                  label: 'Lemon',
+                },
+                {
+                  value: THEME_BOT?.VALENTINE,
+                  label: 'Valentine',
+                },
+                {
+                  value: THEME_BOT?.CYBERPUNK,
+                  label: 'Cyberpunk',
+                },
+                {
+                  value: THEME_BOT?.COFFEE,
+                  label: 'Coffee',
+                },
+                {
+                  value: THEME_BOT?.LUXURY,
+                  label: 'Luxury',
+                },
+                {
+                  value: THEME_BOT?.RETRO,
+                  label: 'Retro',
+                },
+              ]}
             />
             <Popover
               classNames={{

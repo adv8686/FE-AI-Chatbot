@@ -2,7 +2,7 @@
 import '../styles/globals.scss';
 import '../styles/tailwind.css';
 
-import { ReactElement, ReactNode, useEffect } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
@@ -12,7 +12,6 @@ import { PagesProgressBar as ProgressBar } from 'next-nprogress-bar';
 
 import ErrorBoundary from '@components/ErrorBoundary';
 import AppLayout from '@layout/AppLayout';
-import { setAuthCookies } from '@store/auth';
 
 import nextI18nConfig from '../next-i18next.config';
 
@@ -25,15 +24,6 @@ type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page: any) => page);
-
-  useEffect(
-    () =>
-      setAuthCookies({
-        token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZTZhYTRjZDJmYjQ3YWRlMDViNGY0ZCIsImVtYWlsIjpudWxsLCJ1c2VybmFtZSI6ImR1Y3RoYW5oIiwiZmlyc3ROYW1lIjpudWxsLCJsYXN0TmFtZSI6bnVsbCwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MjYzOTI5MTcsImV4cCI6MTcyNjM5NjUxN30.rIohIE_mJBuhSUqJvJfQ17VX5TQ85FdXdXvJwYyVWxg',
-      }),
-    [],
-  );
 
   return (
     <>

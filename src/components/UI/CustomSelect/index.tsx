@@ -19,6 +19,7 @@ interface ICustomSelect {
   name: string;
   control?: Control;
   defaultSelectedKeys?: any;
+  selectedKeys?: any;
 }
 const CustomSelect = (props: ICustomSelect) => {
   const {
@@ -27,6 +28,7 @@ const CustomSelect = (props: ICustomSelect) => {
     size,
     placeholder,
     selectionMode,
+    selectedKeys,
     radius,
     defaultSelectedKeys,
     control,
@@ -56,6 +58,7 @@ const CustomSelect = (props: ICustomSelect) => {
         label={''}
         name={field?.name}
         value={field?.value}
+        selectedKeys={selectedKeys}
         defaultSelectedKeys={defaultSelectedKeys}
         onChange={field.onChange}
         // labelPlacement='inside'

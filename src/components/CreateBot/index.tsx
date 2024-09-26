@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import StepProgress from '@components/UI/StepProgress';
 import Text from '@components/UI/Text';
 import { toast } from '@components/UI/Toast/toast';
-import { HeaderBackgroundType, STEP_SETUP_BOT } from '@utils/common';
+import { HeaderBackgroundType, ROUTE_PATH, STEP_SETUP_BOT } from '@utils/common';
 
 import Appearance from './Appearance';
 import CardLinkChatBot from './CardLinkChatBot';
@@ -65,7 +65,7 @@ const CreateBot = () => {
       chatSuggestions: [{ title: 'I’m having trouble with my account.' }],
       files: [],
       contentColor: '#8B5CF6',
-      headerBackground: '#8B5CF6',
+      headerBackground: '',
       startColor: '#8B5CF6',
       avatar: '',
       url: '',
@@ -78,6 +78,7 @@ const CreateBot = () => {
   const requestCreateSettingBot = useCreateSettingBot({
     onSuccess: () => {
       toast.success('Create bot successfully');
+      router.push(ROUTE_PATH.Home);
     },
     onError: () => {},
   });
@@ -94,18 +95,20 @@ const CreateBot = () => {
   };
 
   const onSubmit = (values: any) => {
-    const body = {
-      ...values,
-      avatar: values?.avatar?.file,
-      files: values?.files?.map((item: any) => item?.file),
-      chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
-      themeBot: router.query.theme,
-    };
-    requestCreateSettingBot.run(body);
+    if (currentStep === STEP_SETUP_BOT?.INSTALLATION) {
+      const body = {
+        ...values,
+        avatar: values?.avatar?.file,
+        files: values?.files?.map((item: any) => item?.file),
+        chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
+        themeBot: router.query.theme,
+      };
+      requestCreateSettingBot.run(body);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <div className='flex flex-col gap-6'>
         <div className='flex flex-col gap-1'>
           <div className='flex items-center gap-1'>
@@ -173,7 +176,7 @@ const CreateBot = () => {
                   </Button>
                 )}
 
-                {currentStep === STEP_SETUP_BOT.INSTALLATION ? (
+                {currentStep === STEP_SETUP_BOT.INSTALLATION && (
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     type='submit'
@@ -185,8 +188,15 @@ const CreateBot = () => {
                       Publish Chatbot
                     </Text>
                   </Button>
-                ) : (
-                  <Button onClick={handleNextStep} radius='md' size='lg' className='bg-black'>
+                )}
+                {currentStep !== STEP_SETUP_BOT.INSTALLATION && (
+                  <Button
+                    type='button'
+                    onClick={handleNextStep}
+                    radius='md'
+                    size='lg'
+                    className='bg-black'
+                  >
                     <Text type='font-14-600' className='text-white'>
                       Next
                     </Text>

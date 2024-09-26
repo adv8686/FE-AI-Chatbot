@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/consistent-function-scoping */
 import { Button, Checkbox } from '@nextui-org/react';
 import { useForm } from 'react-hook-form';
 
@@ -6,6 +7,10 @@ import Text from '@components/UI/Text';
 
 const SignIn = () => {
   const { control } = useForm<any>({});
+
+  const handleLoginWithGoogle = () => {
+    window.open('https://be-aibot-dev.joomlart.com/api/auth/google/redirect');
+  };
 
   return (
     <div className='w-6/12 mx-auto flex flex-col gap-12 h-screen items-center justify-center'>
@@ -30,6 +35,7 @@ const SignIn = () => {
           size='lg'
           radius='md'
           className='bg-white border-1 border-solid border-neutral-01 w-full'
+          onClick={handleLoginWithGoogle}
         >
           <IconGoogle />
           <Text type='font-16-600'>Sign in with Google</Text>
