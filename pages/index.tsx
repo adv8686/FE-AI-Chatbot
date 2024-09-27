@@ -12,7 +12,7 @@ const HomePage = () => {
   const router = useRouter();
   useEffect(() => {
     if (token) {
-      router.push(ROUTE_PATH.Home);
+      router.push(ROUTE_PATH.TEMPLATE_BOT);
     } else {
       router.push(ROUTE_PATH.SIGN_IN);
     }

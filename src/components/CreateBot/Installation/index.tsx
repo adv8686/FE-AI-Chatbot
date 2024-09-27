@@ -1,7 +1,4 @@
-import { Button } from '@nextui-org/react';
-
 import InputTextarea from '@components/UI/InputTextarea';
-import Text from '@components/UI/Text';
 
 import CardSetupBot from '../CardSetupBot';
 
@@ -20,7 +17,7 @@ const Installation = ({ errors, control }: any) => {
           placeholder='Enter a script'
           size='lg'
         />
-        <div className='flex items-center gap-2'>
+        {/* <div className='flex items-center gap-2'>
           <Button
             size='md'
             className='bg-white border-1 border-solid border-neutral-02'
@@ -35,7 +32,7 @@ const Installation = ({ errors, control }: any) => {
           >
             <Text type='font-14-600'>Copy</Text>
           </Button>
-        </div>
+        </div> */}
       </div>
     </CardSetupBot>
   );

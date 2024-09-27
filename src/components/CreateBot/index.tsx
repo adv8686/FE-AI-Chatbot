@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import StepProgress from '@components/UI/StepProgress';
 import Text from '@components/UI/Text';
 import { toast } from '@components/UI/Toast/toast';
-import { HeaderBackgroundType, ROUTE_PATH, STEP_SETUP_BOT } from '@utils/common';
+import { HeaderBackgroundType, STEP_SETUP_BOT } from '@utils/common';
 
 import Appearance from './Appearance';
 import CardLinkChatBot from './CardLinkChatBot';
@@ -76,9 +76,10 @@ const CreateBot = () => {
   });
 
   const requestCreateSettingBot = useCreateSettingBot({
-    onSuccess: () => {
+    onSuccess: (res: any) => {
       toast.success('Create bot successfully');
-      router.push(ROUTE_PATH.Home);
+      // router.push(ROUTE_PATH.Home);
+      window.open(`https://sdk-chat-test.vercel.app/?botId=${res?.data?.id}`);
     },
     onError: () => {},
   });
@@ -101,7 +102,7 @@ const CreateBot = () => {
         avatar: values?.avatar?.file,
         files: values?.files?.map((item: any) => item?.file),
         chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
-        themeBot: router.query.theme,
+        templateName: router.query.theme,
       };
       requestCreateSettingBot.run(body);
     }

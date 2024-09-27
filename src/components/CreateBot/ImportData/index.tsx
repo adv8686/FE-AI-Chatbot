@@ -44,8 +44,8 @@ const columns = [
   },
 ];
 
-const ImportData = ({ errors, trigger, control, watch, setValue, register }: any) => {
-  const watchedUrl = watch('url');
+const ImportData = ({ errors, control, watch, setValue, register }: any) => {
+  // const watchedUrl = watch('url');
   const watchedFiles = watch('files');
 
   const refModalDeleteFile: any = useRef();
@@ -143,7 +143,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
         fileName: file.name,
         file,
         uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
-        status: EnumStatusUpload.PROCESSING,
+        status: EnumStatusUpload.DONE,
       }));
       if (fileArray.length > 0) {
         const arrayFiles = [...watchedFiles];
@@ -167,7 +167,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
         fileName: file.name,
         file,
         uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
-        status: EnumStatusUpload.PROCESSING,
+        status: EnumStatusUpload.DONE,
       }));
 
       if (fileArray.length > 0) {
@@ -187,10 +187,10 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
     setValue('files', newValue);
   };
 
-  const handleSubmitUrl = async () => {
-    const isValid = await trigger('url');
-    console.log(isValid, 'isValid');
-  };
+  // const handleSubmitUrl = async () => {
+  //   const isValid = await trigger('url');
+  //   console.log(isValid, 'isValid');
+  // };
 
   return (
     <>
@@ -213,7 +213,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
                   </div>
                 }
               />
-              <Button
+              {/* <Button
                 onClick={handleSubmitUrl}
                 size='lg'
                 isDisabled={!watchedUrl}
@@ -223,7 +223,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
                 <Text type='font-14-400' className='text-white'>
                   Submit URL
                 </Text>
-              </Button>
+              </Button> */}
             </div>
             {errors?.url?.message && (
               <Text type='font-12-400' className='text-danger-1'>
