@@ -11,7 +11,7 @@ const GoogleAuthenticationSuccessPage = () => {
 
   useEffect(() => {
     if (router.query.access_token) {
-      router.push(ROUTE_PATH.Home);
+      router.push(ROUTE_PATH.TEMPLATE_BOT);
       setAuthCookies({
         token: router.query.access_token as string,
       });
