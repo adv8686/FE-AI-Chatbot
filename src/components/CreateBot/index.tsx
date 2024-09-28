@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 import { ArrowLeft, ArrowRight, CaretLeft } from '@phosphor-icons/react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -48,7 +48,7 @@ const createBotSchema = Yup.object().shape({
 const CreateBot = () => {
   const router = useRouter();
   const refModalDiscardChanges: any = useRef();
-
+  const [idBot, setIdBot] = useState<any>();
   const [currentStep, setCurrentStep] = useState<string>(STEP_SETUP_BOT.GENERAL);
 
   const {
@@ -79,7 +79,11 @@ const CreateBot = () => {
     onSuccess: (res: any) => {
       toast.success('Create bot successfully');
       // router.push(ROUTE_PATH.Home);
-      window.open(`https://sdk-chat-test.vercel.app/?botId=${res?.data?.id}`);
+      setIdBot(res?.data?.id);
+      // window.open(`https://sdk-chat-test.vercel.app/?botId=${res?.data?.id}`);
+      const currentIndex = steps.findIndex((item: any) => item.value === currentStep);
+      const nextStep = steps?.[currentIndex + 1]?.value;
+      setCurrentStep(nextStep);
     },
     onError: () => {},
   });
@@ -96,18 +100,19 @@ const CreateBot = () => {
   };
 
   const onSubmit = (values: any) => {
-    if (currentStep === STEP_SETUP_BOT?.INSTALLATION) {
-      const body = {
-        ...values,
-        avatar: values?.avatar?.file,
-        files: values?.files?.map((item: any) => item?.file),
-        chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
-        templateName: router.query.theme,
-      };
-      requestCreateSettingBot.run(body);
-    }
+    const body = {
+      ...values,
+      avatar: values?.avatar?.file,
+      files: values?.files?.map((item: any) => item?.file),
+      chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
+      templateName: router.query.theme,
+    };
+    requestCreateSettingBot.run(body);
   };
 
+  const handleOpenBot = () => {
+    window.open(`https://sdk-chat-test.vercel.app/?botId=${idBot}`);
+  };
   return (
     <form>
       <div className='flex flex-col gap-6'>
@@ -154,7 +159,7 @@ const CreateBot = () => {
               <Appearance watch={watch} register={register} setValue={setValue} control={control} />
             )}
             {currentStep === STEP_SETUP_BOT.INSTALLATION && (
-              <Installation control={control} errors={errors} />
+              <Installation idBot={idBot} control={control} errors={errors} />
             )}
 
             <div className='flex items-center justify-between'>
@@ -179,18 +184,36 @@ const CreateBot = () => {
 
                 {currentStep === STEP_SETUP_BOT.INSTALLATION && (
                   <Button
-                    onClick={handleSubmit(onSubmit)}
-                    type='submit'
+                    onClick={handleOpenBot}
+                    type='button'
                     radius='md'
                     size='lg'
                     className='bg-fill-accent'
                   >
                     <Text type='font-14-600' className='text-white'>
-                      Publish Chatbot
+                      Open bot
                     </Text>
                   </Button>
                 )}
-                {currentStep !== STEP_SETUP_BOT.INSTALLATION && (
+
+                {currentStep === STEP_SETUP_BOT.APPEARANCE && (
+                  <Button
+                    type='submit'
+                    onClick={handleSubmit(onSubmit)}
+                    radius='md'
+                    spinner={<Spinner size='sm' color='white' />}
+                    isLoading={requestCreateSettingBot?.loading}
+                    size='lg'
+                    className='bg-black'
+                  >
+                    <Text type='font-14-600' className='text-white'>
+                      Save & Next
+                    </Text>
+                    <ArrowRight color='#fff' size={16} />
+                  </Button>
+                )}
+
+                {[STEP_SETUP_BOT.IMPORT_DATA, STEP_SETUP_BOT.GENERAL].includes(currentStep) && (
                   <Button
                     type='button'
                     onClick={handleNextStep}
