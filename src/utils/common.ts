@@ -89,3 +89,14 @@ export enum THEME_BOT {
   LUXURY = 'LUXURY',
   RETRO = 'RETRO',
 }
+
+export const getAvatar = () => {
+  const randomNumber = Math.floor(Math.random() * 1_000_000);
+  return `https://api.dicebear.com/9.x/bottts-neutral/svg?seed=${randomNumber}`;
+};
+
+export enum TAB_HOWITWORK {
+  CUSTOMIZABLE = 'CUSTOMIZABLE',
+  INPUT_DATA = 'INPUT_DATA',
+  INTEGRATE = 'INTEGRATE',
+}

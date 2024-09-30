@@ -1,20 +1,7 @@
-import { ReactElement } from 'react';
-
-import Dashboard from '@components/Dashboard';
-import MainLayout from '@layout/MainLayout';
+import LandingPage from '@components/LandingPage';
 
 const HomePage = () => {
-  return <Dashboard />;
+  return <LandingPage />;
 };
-
-HomePage.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <MainLayout>
-      <>{page}</>
-    </MainLayout>
-  );
-};
-
-//
 
 export default HomePage;

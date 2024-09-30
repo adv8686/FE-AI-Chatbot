@@ -72,3 +72,26 @@
   font-weight: 600;
   line-height: 32px;
 }
+.font-48-600 {
+  font-size: var(--Font-Size-5xl, 40px);
+  font-style: normal;
+  font-weight: var(--Font-Weight-SemiBold, 600);
+  line-height: var(--Line-Height-4xl, 48px); /* 100% */
+  letter-spacing: var(--Lettter-Spacing-none, 0px);
+}
+
+.font-60-600 {
+  font-size: var(--Font-Size-6xl, 50px);
+  font-style: normal;
+  font-weight: var(--Font-Weight-SemiBold, 600);
+  line-height: var(--Line-Height-5xl, 60px);
+  letter-spacing: var(--Lettter-Spacing-none, 0px);
+}
+
+.font-18-400 {
+  font-size: var(--Font-Size-lg, 18px);
+  font-style: normal;
+  font-weight: var(--Font-Weight-Regular, 400);
+  line-height: var(--Line-Height-lg, 28px); /* 155.556% */
+  letter-spacing: var(--Lettter-Spacing-none, 0px);
+}

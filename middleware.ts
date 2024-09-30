@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/consistent-destructuring */
 import { NextRequest, NextResponse } from 'next/server';
 
-const PATH_AUTH = ['/auth/sign-in', '/google-authentication-success'];
+const PATH_AUTH = ['/auth/sign-in', '/google-authentication-success', '/'];
 
 const AUTH_PATH: any = { '/auth/sign-in': true };
 

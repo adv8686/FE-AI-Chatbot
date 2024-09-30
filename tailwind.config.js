@@ -17,6 +17,11 @@ module.exports = {
       'neutral-01': 'var(--neutral-01)',
       'neutral-02': 'var(--neutral-02)',
       'neutral-03': 'var(--neutral-03)',
+      'neutral-04': 'var(--neutral-04)',
+      'indigo-500': '#6366F1',
+      'indigo-50': '#EEF2FF',
+      'indigo-shade': '#E0E7FF',
+      'indigo-700': '#4338CA',
 
       neutral: 'var(--neutral)',
       'accent-soft': 'var(--accent-soft)',
@@ -55,9 +60,24 @@ module.exports = {
           transform: 'translateY(0)',
         },
       },
+      'scroll-left': {
+        '0%': { transform: 'translateX(0)' },
+        '100%': { transform: 'translateX(-50%)' },
+      },
+      'scroll-right': {
+        '0%': { transform: 'translateX(-50%)' },
+        '100%': { transform: 'translateX(0)' },
+      },
+      float: {
+        '0%, 100%': { transform: 'translateY(0)' },
+        '50%': { transform: 'translateY(-15px)' },
+      },
     },
     animation: {
+      float: 'float 3s ease-in-out infinite',
       tableRow: 'tableRow 0.3s forwards',
+      'scroll-left': 'scroll-left 20s linear infinite',
+      'scroll-right': 'scroll-right 20s linear infinite',
       // skeleton: "skeleton 2s infinite",
     },
   },
