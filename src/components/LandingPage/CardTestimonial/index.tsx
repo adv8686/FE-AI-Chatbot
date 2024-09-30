@@ -5,6 +5,8 @@ import { Avatar } from '@nextui-org/react';
 import Text from '@components/UI/Text';
 import { getAvatar } from '@utils/common';
 
+import { AnimatedItem } from '..';
+
 const testimonials = [
   {
     name: 'Floyd Miles',
@@ -68,36 +70,68 @@ const TestimonialItem = ({ item }: { item: any }) => (
 const CardTestimonial = () => (
   <div className='flex flex-col gap-16 pb-[128px]'>
     <div className='flex flex-col gap-4 text-center justify-center items-center'>
-      <div className='border-1 w-max h-[36px] border-solid border-indigo-500 rounded-lg py-2 px-3'>
-        <Text type='font-14-400' className='uppercase text-indigo-500'>
-          testimonials
+      <AnimatedItem
+        transition={{
+          duration: 0.3,
+          ease: 'linear',
+          delay: 0.4,
+        }}
+      >
+        <div className='border-1 w-max h-[36px] border-solid border-indigo-500 rounded-lg py-2 px-3'>
+          <Text type='font-14-400' className='uppercase text-indigo-500'>
+            testimonials
+          </Text>
+        </div>
+      </AnimatedItem>
+      <AnimatedItem
+        transition={{
+          duration: 0.4,
+          ease: 'linear',
+          delay: 0.4,
+        }}
+      >
+        <Text type='font-48-600'>
+          What Our Users Are
+          <br /> Raving About
         </Text>
-      </div>
-      <Text type='font-48-600'>
-        What Our Users Are
-        <br /> Raving About
-      </Text>
-      <Text type='font-18-400' className='text-secodary'>
-        Hear from satisfied customers who have transformed their businesses with Demy.ai and are
-        achieving remarkable results.
-      </Text>
+      </AnimatedItem>
+      <AnimatedItem
+        transition={{
+          duration: 0.5,
+          ease: 'linear',
+          delay: 0.4,
+        }}
+      >
+        <Text type='font-18-400' className='text-secodary'>
+          Hear from satisfied customers who have transformed their businesses with Demy.ai and are
+          achieving remarkable results.
+        </Text>
+      </AnimatedItem>
     </div>
-    <div className='relative w-full h-max overflow-hidden'>
-      <div className='absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10'></div>
-      <div className='absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10'></div>
-      <div className='flex flex-col'>
-        <div className='flex animate-scroll-left'>
-          {[...testimonials, ...testimonials].map((testimonial, index) => (
-            <TestimonialItem key={`row1-${index}`} item={testimonial} />
-          ))}
-        </div>
-        <div className='flex animate-scroll-right mt-4'>
-          {[...testimonials, ...testimonials].map((testimonial, index) => (
-            <TestimonialItem key={`row2-${index}`} item={testimonial} />
-          ))}
+    <AnimatedItem
+      transition={{
+        duration: 0.7,
+        ease: 'linear',
+        delay: 0.4,
+      }}
+    >
+      <div className='relative w-full h-max overflow-hidden'>
+        <div className='absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10'></div>
+        <div className='absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10'></div>
+        <div className='flex flex-col'>
+          <div className='flex animate-scroll-left'>
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
+              <TestimonialItem key={`row1-${index}`} item={testimonial} />
+            ))}
+          </div>
+          <div className='flex animate-scroll-right mt-4'>
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
+              <TestimonialItem key={`row2-${index}`} item={testimonial} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </AnimatedItem>
   </div>
 );
 

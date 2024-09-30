@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
 import { Tab, Tabs } from '@nextui-org/react';
-import { Code, Gear, TrendUp } from '@phosphor-icons/react';
+import { Code, Gear, Globe, TrendUp } from '@phosphor-icons/react';
 import clsx from 'clsx';
 import Image from 'next/image';
 
 import Text from '@components/UI/Text';
 import { TAB_HOWITWORK } from '@utils/common';
 
+import { AnimatedItem } from '..';
 import { ItemContent } from '../WhyDemy';
 import { IconAvailability, IconEffortless, IconInsights } from '../WhyDemy/Icons';
 
@@ -42,98 +43,187 @@ const HowItWork = () => {
       return <Code size={32} color={selectedTab ? '#6366F1' : '#000000'} />;
     }
   };
+
+  const renderTitleCard = () => {
+    let text: string = '';
+    if (tab === TAB_HOWITWORK.CUSTOMIZABLE) {
+      text = 'Step 1: Customize Appearance';
+    }
+    if (tab === TAB_HOWITWORK.INPUT_DATA) {
+      text = 'Step 2: Input Your Data';
+    }
+    if (tab === TAB_HOWITWORK.INTEGRATE) {
+      text = 'Step 3: Integrate with Website';
+    }
+    return text;
+  };
+  const renderImageHowItWork = () => {
+    let url: string = '';
+    if (tab === TAB_HOWITWORK.CUSTOMIZABLE) {
+      url = '/images/bg-it-work1.png';
+    }
+    if (tab === TAB_HOWITWORK.INPUT_DATA) {
+      url = '/images/bg-it-work2.png';
+    }
+    if (tab === TAB_HOWITWORK.INTEGRATE) {
+      url = '/images/bg-it-work3.png';
+    }
+    return url;
+  };
+
+  const renderIconHeader = () => {
+    if (tab === TAB_HOWITWORK.CUSTOMIZABLE) {
+      return <Gear size={32} color={'#FFFFFF'} />;
+    }
+    if (tab === TAB_HOWITWORK.INPUT_DATA) {
+      return <Code size={32} color={'#FFFFFF'} />;
+    }
+    if (tab === TAB_HOWITWORK.INTEGRATE) {
+      return <Globe size={32} color={'#FFFFFF'} />;
+    }
+  };
   return (
     <div className='bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'>
       <div className='container m-auto py-[128px]'>
         <div className='flex flex-col gap-[68px] '>
           <div className='flex flex-col gap-8'>
             <div className='flex flex-col gap-4 text-center justify-center items-center'>
-              <div className='border-1 w-max h-[36px] border-solid border-indigo-500 rounded-lg py-2 px-3'>
-                <Text type='font-14-400' className='uppercase text-indigo-500'>
-                  How It Work
-                </Text>
-              </div>
-              <Text type='font-48-600'>
-                Get Your Chatbot Ready in Just 5<br /> Minutes with 3 Simple Steps
-              </Text>
-              <Text type='font-18-400' className='text-secodary'>
-                Follow these straightforward steps to unleash the full potential of your custom
-                chatbot and enhance user experiences.
-              </Text>
-            </div>
-            <div className='flex flex-col justify-center items-center gap-[64px]'>
-              <Tabs
-                classNames={{
-                  tab: ['h-[100px] !border-0 w-[164px] shadow-none'],
-                  cursor: '!border-0 bg-indigo-shade !text-indigo-500',
+              <AnimatedItem
+                transition={{
+                  duration: 0.3,
+                  ease: 'linear',
+                  delay: 0.4,
                 }}
-                variant={'light'}
-                size='lg'
-                selectedKey={tab}
-                onSelectionChange={onChangeTab}
               >
-                {TAB_WORKS?.map((item) => {
-                  return (
-                    <Tab
-                      key={item?.id}
-                      title={
-                        <div className='flex flex-col gap-1 items-center'>
-                          <>{renderIcon(item?.id, item?.id === tab)}</>
-                          <Text
-                            className={clsx('text-black', {
-                              '!text-indigo-500': item?.id === tab,
-                            })}
-                            type='font-16-600'
-                          >
-                            {item?.label}
-                          </Text>
-                        </div>
-                      }
-                    />
-                  );
-                })}
-              </Tabs>
-              <div className='bg-indigo-50 z-50 rounded-3xl p-16 relative grid grid-cols-2'>
-                <Image
-                  src={'/images/img-grid.png'}
-                  width={404}
-                  height={511}
-                  alt=''
-                  className='w-[404px] z-[-1] h-full absolute right-[159px] top-0 bottom-0'
-                />
-                <div className='flex flex-col gap-8'>
-                  <div className='bg-indigo-500 rounded-2xl w-[64px] h-[64px] flex justify-center items-center'>
-                    <Gear size={32} color={'#FFFFFF'} />
-                  </div>
-                  <div className='flex flex-col gap-6'>
-                    <Text className='text-[36px] font-semibold leading-10'>
-                      Customize Your Chatbot
-                    </Text>
-                    <Text type='font-18-400' className='text-secodary'>
-                      Create your chatbot, tailor the interface, and design engaging welcome
-                      messages to ensure your chatbot truly reflects your brand’s unique style and
-                      personality.
-                    </Text>
-                    <ItemContent
-                      icon={<IconEffortless />}
-                      text='Effortless customization, no coding required'
-                    />
-                    <ItemContent icon={<IconAvailability />} text='24/7 support availability' />
-
-                    <ItemContent icon={<IconInsights />} text='Data-driven insights' />
-                  </div>
+                <div className='border-1 w-max h-[36px] border-solid border-indigo-500 rounded-lg py-2 px-3'>
+                  <Text type='font-14-400' className='uppercase text-indigo-500'>
+                    How It Work
+                  </Text>
                 </div>
-                <div className='bg-white p-2 rounded-xl shadow-lg'>
+              </AnimatedItem>
+
+              <AnimatedItem
+                transition={{
+                  duration: 0.4,
+                  ease: 'linear',
+                  delay: 0.4,
+                }}
+              >
+                <Text type='font-48-600'>
+                  Get Your Chatbot Ready in Just 5<br /> Minutes with 3 Simple Steps
+                </Text>
+              </AnimatedItem>
+              <AnimatedItem
+                transition={{
+                  duration: 0.5,
+                  ease: 'linear',
+                  delay: 0.4,
+                }}
+              >
+                <Text type='font-18-400' className='text-secodary'>
+                  Follow these straightforward steps to unleash the full potential of your custom
+                  chatbot and enhance user experiences.
+                </Text>
+              </AnimatedItem>
+            </div>
+            <AnimatedItem
+              transition={{
+                duration: 0.3,
+                ease: 'linear',
+                delay: 0.6,
+              }}
+            >
+              <div className='flex flex-col justify-center items-center gap-[64px]'>
+                <Tabs
+                  classNames={{
+                    tab: ['h-[100px] !border-0 w-[164px] shadow-none'],
+                    cursor: '!border-0 bg-indigo-shade !text-indigo-500',
+                  }}
+                  variant={'light'}
+                  size='lg'
+                  selectedKey={tab}
+                  onSelectionChange={onChangeTab}
+                >
+                  {TAB_WORKS?.map((item) => {
+                    return (
+                      <Tab
+                        key={item?.id}
+                        title={
+                          <div className='flex flex-col gap-1 items-center'>
+                            <>{renderIcon(item?.id, item?.id === tab)}</>
+                            <Text
+                              className={clsx('text-black', {
+                                '!text-indigo-500': item?.id === tab,
+                              })}
+                              type='font-16-600'
+                            >
+                              {item?.label}
+                            </Text>
+                          </div>
+                        }
+                      />
+                    );
+                  })}
+                </Tabs>
+                <div
+                  className={clsx('z-50 rounded-3xl p-16 relative gap-8 grid grid-cols-2', {
+                    '!bg-[#6D28D90D]': tab === TAB_HOWITWORK.CUSTOMIZABLE,
+                    '!bg-[#FF3D3A08]': tab === TAB_HOWITWORK.INPUT_DATA,
+                    '!bg-[#FFAA0008]': tab === TAB_HOWITWORK.INTEGRATE,
+                  })}
+                >
                   <Image
-                    src={'/images/bg-settings-bot.png'}
+                    src={'/images/img-grid.png'}
+                    width={404}
+                    height={511}
+                    alt=''
+                    className='w-[404px] z-[-1] h-full absolute right-[159px] top-0 bottom-0'
+                  />
+                  <div className='flex flex-col gap-8'>
+                    <div
+                      className={clsx(
+                        'rounded-2xl w-[64px] h-[64px] flex justify-center items-center',
+                        {
+                          '!bg-indigo-500 ': tab === TAB_HOWITWORK.CUSTOMIZABLE,
+                          '!bg-[#FF3D3A]': tab === TAB_HOWITWORK.INPUT_DATA,
+                          '!bg-[#FA0]': tab === TAB_HOWITWORK.INTEGRATE,
+                        },
+                      )}
+                    >
+                      {renderIconHeader()}
+                    </div>
+                    <div className='flex flex-col gap-6'>
+                      <Text className='text-[36px] font-semibold leading-10'>
+                        {renderTitleCard()}
+                      </Text>
+                      <Text type='font-18-400' className='text-secodary'>
+                        Create your chatbot, tailor the interface, and design engaging welcome
+                        messages to ensure your chatbot truly reflects your brand’s unique style and
+                        personality.
+                      </Text>
+                      <ItemContent
+                        icon={<IconEffortless />}
+                        text='Effortless customization, no coding required'
+                      />
+                      <ItemContent icon={<IconAvailability />} text='24/7 support availability' />
+
+                      <ItemContent icon={<IconInsights />} text='Data-driven insights' />
+                    </div>
+                  </div>
+
+                  <Image
+                    src={renderImageHowItWork()}
                     alt=''
                     width={592}
                     height={394}
-                    className='w-full h-full'
+                    className={clsx('w-full h-full', {
+                      'mt-[-20px]': tab === TAB_HOWITWORK.CUSTOMIZABLE,
+                      'shadow-lg': tab === TAB_HOWITWORK.INPUT_DATA,
+                    })}
                   />
                 </div>
               </div>
-            </div>
+            </AnimatedItem>
           </div>
         </div>
       </div>

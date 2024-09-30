@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Text from '@components/UI/Text';
 import { ROUTE_PATH } from '@utils/common';
 
+import { AnimatedItem } from '..';
 import { IconAvailability, IconEffortless, IconInsights } from './Icons';
 
 const DATA_TRUSTED = [
@@ -18,92 +19,162 @@ const DATA_TRUSTED = [
 const WhyDemy = () => {
   const router = useRouter();
   return (
-    <div className='container m-auto flex flex-col gap-8 mt-[80px]'>
+    <div className='container m-auto flex flex-col gap-8 pt-[150px]'>
       <div className='grid grid-cols-2 gap-8'>
         <div className='flex flex-col gap-12'>
           <div className='flex flex-col gap-4'>
             <div className='relative z-50'>
-              <Text type='font-60-600'>
-                Save 70% on Support with Custom{' '}
-                <Text className='text-indigo-500' element='span'>
-                  AI Chatbots
+              <AnimatedItem
+                transition={{
+                  duration: 0.4,
+                  ease: 'linear',
+                  delay: 0.4,
+                }}
+              >
+                <Text type='font-60-600'>
+                  Save 70% on Support with Custom{' '}
+                  <Text className='text-indigo-500' element='span'>
+                    AI Chatbots
+                  </Text>
                 </Text>
-              </Text>
-
-              <div className='absolute right-6 bottom-[-6px] z-[-1]'>
-                <IconLightning />
-              </div>
+              </AnimatedItem>
+              <AnimatedItem
+                transition={{
+                  duration: 0.4,
+                  ease: 'linear',
+                  delay: 0.4,
+                }}
+              >
+                <div className='absolute right-6 bottom-[-6px] z-[-1]'>
+                  <IconLightning />
+                </div>
+              </AnimatedItem>
             </div>
 
             <div className='flex flex-col gap-6'>
-              <Text type='font-18-400' className='text-secodary'>
-                The #1 no-code platform for creating custom AI agents tailored to your business
-                needs. Effortlessly deflect support tickets, maximize employee efficiency, and
-                enhance customer interactions.
-              </Text>
-              <ItemContent
-                icon={<IconEffortless />}
-                text='Effortless customization, no coding required'
-              />
-              <ItemContent icon={<IconAvailability />} text='24/7 support availability' />
-
-              <ItemContent icon={<IconInsights />} text='Data-driven insights' />
+              <AnimatedItem
+                transition={{
+                  duration: 0.5,
+                  ease: 'linear',
+                  delay: 0.4,
+                }}
+              >
+                <Text type='font-18-400' className='text-secodary'>
+                  The #1 no-code platform for creating custom AI agents tailored to your business
+                  needs. Effortlessly deflect support tickets, maximize employee efficiency, and
+                  enhance customer interactions.
+                </Text>
+              </AnimatedItem>
+              <AnimatedItem
+                transition={{
+                  duration: 0.5,
+                  ease: 'linear',
+                  delay: 0.4,
+                }}
+              >
+                <ItemContent
+                  icon={<IconEffortless />}
+                  text='Effortless customization, no coding required'
+                />
+              </AnimatedItem>
+              <AnimatedItem
+                transition={{
+                  duration: 0.6,
+                  ease: 'linear',
+                  delay: 0.4,
+                }}
+              >
+                <ItemContent icon={<IconAvailability />} text='24/7 support availability' />
+              </AnimatedItem>
+              <AnimatedItem
+                transition={{
+                  duration: 0.7,
+                  ease: 'linear',
+                  delay: 0.4,
+                }}
+              >
+                <ItemContent icon={<IconInsights />} text='Data-driven insights' />
+              </AnimatedItem>
             </div>
           </div>
-          <div className='flex items-center gap-2'>
-            <Button
-              type='button'
-              radius='md'
-              size='lg'
-              className='bg-fill-accent'
-              onClick={() => router.push(ROUTE_PATH.TEMPLATE_BOT)}
-            >
-              <Text type='font-14-600' className='text-white'>
-                Get Started for Free
-              </Text>
-            </Button>
-            <Button
-              type='button'
-              radius='md'
-              size='lg'
-              className='bg-white border-1 border-solid border-indigo-shade'
-              onClick={() => router.push(ROUTE_PATH.TEMPLATE_BOT)}
-            >
-              <Text type='font-14-600' className='text-indigo-700'>
-                Try a Demo
-              </Text>
-            </Button>
+          <AnimatedItem
+            transition={{
+              duration: 0.8,
+              ease: 'linear',
+              delay: 0.4,
+            }}
+          >
+            <div className='flex items-center gap-2'>
+              <Button
+                type='button'
+                radius='md'
+                size='lg'
+                className='bg-fill-accent'
+                onClick={() => router.push(ROUTE_PATH.TEMPLATE_BOT)}
+              >
+                <Text type='font-14-600' className='text-white'>
+                  Get Started for Free
+                </Text>
+              </Button>
+              <Button
+                type='button'
+                radius='md'
+                size='lg'
+                className='bg-white border-1 border-solid border-indigo-shade'
+                onClick={() => router.push(ROUTE_PATH.TEMPLATE_BOT)}
+              >
+                <Text type='font-14-600' className='text-indigo-700'>
+                  Try a Demo
+                </Text>
+              </Button>
+            </div>
+          </AnimatedItem>
+        </div>
+        <AnimatedItem
+          transition={{
+            duration: 0.6,
+            ease: 'linear',
+            delay: 0.3,
+          }}
+        >
+          <div className='flex justify-end items-end mr-20'>
+            <Image
+              src={'/images/img-bot-preview.png'}
+              width={384}
+              height={560}
+              alt=''
+              className='w-[384px] h-[560px] shadow-lg rounded-xl'
+            />
+          </div>
+        </AnimatedItem>
+      </div>
+      <AnimatedItem
+        transition={{
+          duration: 0.8,
+          ease: 'linear',
+          delay: 0.3,
+        }}
+      >
+        <div className='flex justify-center items-center flex-col gap-8'>
+          <Image
+            src={'/images/img-arrow.png'}
+            width={1334}
+            height={14}
+            className='w-auto h-[14]'
+            alt=''
+          />
+          <Text className='uppercase' type='font-12-600'>
+            trusted by 5000+ websites and counting
+          </Text>
+          <div className='flex items-center gap-8'>
+            {DATA_TRUSTED?.map((item) => {
+              return (
+                <Image key={item} alt='' src={item} width={89} height={24} className='w-auto h-6' />
+              );
+            })}
           </div>
         </div>
-        <div className='flex justify-end items-end mr-14'>
-          <Image
-            src={'/images/img-bot-preview.png'}
-            width={384}
-            height={560}
-            alt=''
-            className='w-[384px] h-[560px] shadow-lg rounded-xl'
-          />
-        </div>
-      </div>
-      <div className='flex justify-center items-center flex-col gap-8'>
-        <Image
-          src={'/images/img-arrow.png'}
-          width={1334}
-          height={14}
-          className='w-auto h-[14]'
-          alt=''
-        />
-        <Text className='uppercase' type='font-12-600'>
-          trusted by 5000+ websites and counting
-        </Text>
-        <div className='flex items-center gap-8'>
-          {DATA_TRUSTED?.map((item) => {
-            return (
-              <Image key={item} alt='' src={item} width={89} height={24} className='w-auto h-6' />
-            );
-          })}
-        </div>
-      </div>
+      </AnimatedItem>
     </div>
   );
 };
