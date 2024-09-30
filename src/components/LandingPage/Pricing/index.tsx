@@ -160,7 +160,10 @@ const Pricing = () => {
   };
 
   return (
-    <div className='bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'>
+    <div
+      id='#pricing'
+      className='bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'
+    >
       <div className='container m-auto py-[128px]'>
         <div className='flex flex-col gap-9 items-center'>
           <div className='flex flex-col gap-4 text-center justify-center items-center'>

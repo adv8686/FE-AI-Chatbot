@@ -7,6 +7,8 @@ const AUTH_PATH: any = { '/auth/sign-in': true };
 
 const HOME_PATH: any = { '/': true };
 
+const PATH: any = ['/template-bot'];
+
 export function middleware(request: NextRequest) {
   const { cookies } = request;
   const token = cookies.get('accessToken');
@@ -14,6 +16,8 @@ export function middleware(request: NextRequest) {
   const isMatchPathAuth = PATH_AUTH.find((path: string) => request.nextUrl.pathname.includes(path));
   const isMatchHomePath = HOME_PATH[request.nextUrl.pathname];
   const isMatchAuthPath = AUTH_PATH[request.nextUrl.pathname];
+
+  const isMatchPath = PATH.find((path: string) => request.nextUrl.pathname.includes(path));
 
   const url = request.nextUrl.clone();
 
@@ -31,13 +35,15 @@ export function middleware(request: NextRequest) {
     url.pathname = '/auth/sign-in';
     return NextResponse.redirect(url);
   }
+
+  if (!token && isMatchPath) {
+    url.pathname = '/auth/sign-in';
+    return NextResponse.redirect(url);
+  }
   return NextResponse.next();
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: [
-    '/((?!api|static|_next/static|_next/images|svgIcon|svg|logo|lottie|styles-antd|locales|/_next/data|robots.txt|public|images|manifest.json|sw.js|favicon.ico|workbox-*).*)',
-    '/',
-  ],
+  matcher: ['/template-bot'],
 };

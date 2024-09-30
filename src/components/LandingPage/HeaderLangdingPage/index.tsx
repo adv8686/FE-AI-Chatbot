@@ -10,9 +10,10 @@ import Siderbar from './Siderbar';
 
 const HeaderLangdingPage = ({ scrollY }: { scrollY: number }) => {
   const router = useRouter();
+
   return (
     <div
-      className={clsx('sticky top-0  left-0 right-0 w-full', {
+      className={clsx('sticky top-0 z-[1000] left-0 right-0 w-full', {
         'bg-[rgba(0_0_0_0.08)] backdrop-blur transition-all z-50': scrollY > 0,
       })}
     >

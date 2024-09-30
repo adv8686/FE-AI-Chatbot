@@ -40,7 +40,7 @@ const DATA_FAQS = [
 
 const FAQ = () => {
   return (
-    <div className='bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'>
+    <div id='#faq' className='bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'>
       <div className='container grid grid-cols-6 gap-8 m-auto py-[128px]'>
         <div className='col-span-2 flex flex-col gap-8'>
           <AnimatedItem

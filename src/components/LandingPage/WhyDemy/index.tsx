@@ -19,7 +19,7 @@ const DATA_TRUSTED = [
 const WhyDemy = () => {
   const router = useRouter();
   return (
-    <div className='container m-auto flex flex-col gap-8 pt-[150px]'>
+    <div id='#why-demy' className='container m-auto flex flex-col gap-8 pt-[150px]'>
       <div className='grid grid-cols-2 gap-8'>
         <div className='flex flex-col gap-12'>
           <div className='flex flex-col gap-4'>

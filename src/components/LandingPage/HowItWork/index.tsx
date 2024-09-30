@@ -83,7 +83,7 @@ const HowItWork = () => {
     }
   };
   return (
-    <div className='bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'>
+    <div id='#it-work' className='bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'>
       <div className='container m-auto py-[128px]'>
         <div className='flex flex-col gap-[68px] '>
           <div className='flex flex-col gap-8'>
