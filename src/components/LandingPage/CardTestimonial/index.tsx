@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import React from 'react';
 
 import { Avatar } from '@nextui-org/react';
@@ -68,9 +69,7 @@ const TestimonialItem = ({ item }: { item: any }) => (
 );
 
 const CardTestimonial = () => (
-  <div
-  id='#testimonials'
-   className='flex flex-col gap-16 pb-[128px]'>
+  <div id='#testimonials' className='flex flex-col gap-16 pb-[128px]'>
     <div className='flex flex-col gap-4 text-center justify-center items-center'>
       <AnimatedItem
         transition={{

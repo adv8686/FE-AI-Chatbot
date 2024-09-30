@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import clsx from 'clsx';
 

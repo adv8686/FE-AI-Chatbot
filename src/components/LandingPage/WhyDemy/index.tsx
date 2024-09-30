@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable multiline-ternary */
 import { useState } from 'react';
 

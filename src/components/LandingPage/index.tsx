@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { useEffect, useRef, useState } from 'react';
 
 import { motion, useAnimation } from 'framer-motion';
