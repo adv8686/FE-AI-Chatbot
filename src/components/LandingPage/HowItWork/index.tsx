@@ -5,6 +5,7 @@ import { Tab, Tabs } from '@nextui-org/react';
 import { Code, Gear, Globe, TrendUp } from '@phosphor-icons/react';
 import clsx from 'clsx';
 import Image from 'next/image';
+import { isMobile } from 'react-device-detect';
 
 import Text from '@components/UI/Text';
 import { TAB_HOWITWORK } from '@utils/common';
@@ -86,11 +87,11 @@ const HowItWork = () => {
   return (
     <div
       id='#it-work'
-      className='bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'
+      className='md:bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'
     >
-      <div className='container m-auto py-[128px]'>
+      <div className='container px-4 md:px-0 m-auto py-[48px] md:py-[128px]'>
         <div className='flex flex-col gap-[68px] '>
-          <div className='flex flex-col gap-8'>
+          <div className='flex flex-col  gap-4 md:gap-8'>
             <div className='flex flex-col gap-4 text-center justify-center items-center'>
               <AnimatedItem
                 transition={{
@@ -137,10 +138,12 @@ const HowItWork = () => {
                 delay: 0.6,
               }}
             >
-              <div className='flex flex-col justify-center items-center gap-[64px]'>
+              <div className='flex flex-col justify-center items-center gap-8 md:gap-[64px]'>
                 <Tabs
                   classNames={{
-                    tab: ['h-[100px] !border-0 w-[164px] shadow-none'],
+                    tab: isMobile
+                      ? ['h-[88px] !border-0 w-[114px] shadow-none']
+                      : ['h-[100px] !border-0 w-[164px] shadow-none'],
                     cursor: '!border-0 bg-indigo-shade !text-indigo-500',
                   }}
                   variant={'light'}
@@ -170,37 +173,46 @@ const HowItWork = () => {
                   })}
                 </Tabs>
                 <div
-                  className={clsx('z-50 rounded-3xl p-16 relative gap-8 grid grid-cols-2', {
-                    '!bg-[#6D28D90D]': tab === TAB_HOWITWORK.CUSTOMIZABLE,
-                    '!bg-[#FF3D3A08]': tab === TAB_HOWITWORK.INPUT_DATA,
-                    '!bg-[#FFAA0008]': tab === TAB_HOWITWORK.INTEGRATE,
-                  })}
+                  className={clsx(
+                    'z-50 rounded-3xl p-4 md:p-16 relative gap-8 grid grid-cols-1 md:grid-cols-2',
+                    {
+                      '!bg-[#6D28D90D]': tab === TAB_HOWITWORK.CUSTOMIZABLE,
+                      '!bg-[#FF3D3A08]': tab === TAB_HOWITWORK.INPUT_DATA,
+                      '!bg-[#FFAA0008]': tab === TAB_HOWITWORK.INTEGRATE,
+                    },
+                  )}
                 >
-                  <Image
-                    src={'/images/img-grid.png'}
-                    width={404}
-                    height={511}
-                    alt=''
-                    className='w-[404px] z-[-1] h-full absolute right-[159px] top-0 bottom-0'
-                  />
+                  {!isMobile && (
+                    <Image
+                      src={'/images/img-grid.png'}
+                      width={404}
+                      height={511}
+                      alt=''
+                      className='w-[404px] z-[-1] h-full absolute right-[159px] top-0 bottom-0'
+                    />
+                  )}
+
                   <div className='flex flex-col gap-8'>
-                    <div
-                      className={clsx(
-                        'rounded-2xl w-[64px] h-[64px] flex justify-center items-center',
-                        {
-                          '!bg-indigo-500 ': tab === TAB_HOWITWORK.CUSTOMIZABLE,
-                          '!bg-[#FF3D3A]': tab === TAB_HOWITWORK.INPUT_DATA,
-                          '!bg-[#FA0]': tab === TAB_HOWITWORK.INTEGRATE,
-                        },
-                      )}
-                    >
-                      {renderIconHeader()}
-                    </div>
-                    <div className='flex flex-col gap-6'>
-                      <Text className='text-[36px] font-semibold leading-10'>
+                    {!isMobile && (
+                      <div
+                        className={clsx(
+                          'rounded-2xl w-[64px] h-[64px] flex justify-center items-center',
+                          {
+                            '!bg-indigo-500 ': tab === TAB_HOWITWORK.CUSTOMIZABLE,
+                            '!bg-[#FF3D3A]': tab === TAB_HOWITWORK.INPUT_DATA,
+                            '!bg-[#FA0]': tab === TAB_HOWITWORK.INTEGRATE,
+                          },
+                        )}
+                      >
+                        {renderIconHeader()}
+                      </div>
+                    )}
+
+                    <div className='flex flex-col gap-2 md:gap-6'>
+                      <Text className='text-[22px] md:text-[36px] font-semibold leading-10'>
                         {renderTitleCard()}
                       </Text>
-                      <Text type='font-18-400' className='text-secodary'>
+                      <Text type='font-18-400' className='text-secodary mb-2'>
                         Create your chatbot, tailor the interface, and design engaging welcome
                         messages to ensure your chatbot truly reflects your brand’s unique style and
                         personality.

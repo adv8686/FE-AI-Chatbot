@@ -1,7 +1,9 @@
 /* eslint-disable import/no-cycle */
 import { useEffect, useRef, useState } from 'react';
 
+import clsx from 'clsx';
 import { motion, useAnimation } from 'framer-motion';
+import { isMobile } from 'react-device-detect';
 import { useInView } from 'react-intersection-observer';
 
 import CardFooter from './CardFooter';
@@ -37,10 +39,17 @@ const LandingPage = () => {
     };
   }, []);
   return (
-    <div ref={divRef} className='w-screen h-screen overflow-auto'>
+    <div ref={divRef} className='w-screen h-screen overflow-x-hidden overflow-auto'>
       <HeaderLangdingPage scrollY={scrollY} />
 
-      <div className='mt-[-80px] bg-[url("/images/bg-header.png")] h-[1024px] pb-[130px] bg-no-repeat bg-cover'>
+      <div
+        className={clsx(
+          'mt-[-80px] md:bg-[url("/images/bg-header.png")] md:h-[1024px] md:pb-[130px] bg-no-repeat bg-cover',
+          {
+            '!bg-[url("/images/bg-header-mobile.png")]': isMobile,
+          },
+        )}
+      >
         <WhyDemy />
       </div>
       <HowItWork />

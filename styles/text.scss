@@ -64,6 +64,12 @@
   font-style: normal;
   font-weight: 600;
   line-height: 28px;
+  @media only screen and (max-width: 768px) {
+    font-size: var(--Font-Size-md, 16px);
+    font-style: normal;
+    font-weight: var(--Font-Weight-Regular, 600);
+    line-height: var(--Line-Height-md, 24px);
+  }
 }
 
 .font-16-400 {
@@ -78,6 +84,12 @@
   font-weight: var(--Font-Weight-SemiBold, 600);
   line-height: var(--Line-Height-4xl, 48px); /* 100% */
   letter-spacing: var(--Lettter-Spacing-none, 0px);
+  @media only screen and (max-width: 768px) {
+    font-size: var(--Font-Size-2xl, 24px);
+    font-style: normal;
+    font-weight: var(--Font-Weight-SemiBold, 600);
+    line-height: var(--Line-Height-xl, 32px);
+  }
 }
 
 .font-60-600 {
@@ -86,6 +98,12 @@
   font-weight: var(--Font-Weight-SemiBold, 600);
   line-height: var(--Line-Height-5xl, 60px);
   letter-spacing: var(--Lettter-Spacing-none, 0px);
+  @media only screen and (max-width: 768px) {
+    font-size: var(--Font-Size-3xl, 34px);
+    font-style: normal;
+    font-weight: var(--Font-Weight-SemiBold, 600);
+    line-height: var(--Line-Height-2xl, 36px);
+  }
 }
 
 .font-18-400 {
@@ -94,4 +112,10 @@
   font-weight: var(--Font-Weight-Regular, 400);
   line-height: var(--Line-Height-lg, 28px); /* 155.556% */
   letter-spacing: var(--Lettter-Spacing-none, 0px);
+  @media only screen and (max-width: 768px) {
+    font-size: var(--Font-Size-md, 16px);
+    font-style: normal;
+    font-weight: var(--Font-Weight-Regular, 400);
+    line-height: var(--Line-Height-md, 24px);
+  }
 }

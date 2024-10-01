@@ -9,8 +9,8 @@ const CardFooter = () => {
   const router = useRouter();
 
   return (
-    <div className='container m-auto'>
-      <div className='bg-[url("/images/bg-card-footer.png")] flex-col gap-[50px] flex justify-center items-center text-center rounded-3xl w-full   bg-cover  h-max py-[80px]'>
+    <div className='container m-auto px-4 md:px-0 '>
+      <div className='bg-[url("/images/bg-card-footer.png")]  flex-col gap-[50px] flex justify-center items-center text-center rounded-3xl w-full   bg-cover  h-max py-[40px] md:py-[80px]'>
         <div className='w-[72px] h-[72px] flex justify-center items-center shadow-lg rounded-xl bg-white'>
           <Image src={'/images/logo-web.png'} alt='' width={40} height={32} className='w-10 h-8' />
         </div>

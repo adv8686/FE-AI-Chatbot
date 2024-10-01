@@ -45,6 +45,10 @@ module.exports = {
       'expo-out': 'cubic-bezier(0.19, 1, 0.22, 1)',
     },
     keyframes: {
+      scroll: {
+        '0%': { transform: 'translateX(0)' },
+        '100%': { transform: 'translateX(-100%)' },
+      },
       skeleton: {
         to: {
           transform: 'translateX(100%)',
@@ -74,6 +78,7 @@ module.exports = {
       },
     },
     animation: {
+      scroll: 'scroll 20s linear infinite',
       float: 'float 3s ease-in-out infinite',
       tableRow: 'tableRow 0.3s forwards',
       'scroll-left': 'scroll-left 20s linear infinite',

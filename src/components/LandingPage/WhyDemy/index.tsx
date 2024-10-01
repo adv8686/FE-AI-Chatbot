@@ -2,6 +2,7 @@
 import { Button } from '@nextui-org/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { isMobile } from 'react-device-detect';
 
 import Text from '@components/UI/Text';
 import { ROUTE_PATH } from '@utils/common';
@@ -20,10 +21,13 @@ const DATA_TRUSTED = [
 const WhyDemy = () => {
   const router = useRouter();
   return (
-    <div id='#why-demy' className='container m-auto flex flex-col gap-8 pt-[150px]'>
-      <div className='grid grid-cols-2 gap-8'>
-        <div className='flex flex-col gap-12'>
-          <div className='flex flex-col gap-4'>
+    <div
+      id='#why-demy'
+      className='container m-auto flex flex-col gap-8 pt-[120px] px-4 md:px-0 md:pt-[150px]'
+    >
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+        <div className='flex flex-col gap-6 md:gap-12'>
+          <div className='flex flex-col md:gap-4'>
             <div className='relative z-50'>
               <AnimatedItem
                 transition={{
@@ -46,13 +50,13 @@ const WhyDemy = () => {
                   delay: 0.4,
                 }}
               >
-                <div className='absolute right-6 bottom-[-6px] z-[-1]'>
+                <div className='absolute right-6 bottom-[-10px] md:bottom-[-6px] z-[-1]'>
                   <IconLightning />
                 </div>
               </AnimatedItem>
             </div>
 
-            <div className='flex flex-col gap-6'>
+            <div className='flex flex-col gap-2 md:gap-6'>
               <AnimatedItem
                 transition={{
                   duration: 0.5,
@@ -60,7 +64,7 @@ const WhyDemy = () => {
                   delay: 0.4,
                 }}
               >
-                <Text type='font-18-400' className='text-secodary'>
+                <Text type='font-18-400' className='text-secodary my-4 m:my-0'>
                   The #1 no-code platform for creating custom AI agents tailored to your business
                   needs. Effortlessly deflect support tickets, maximize employee efficiency, and
                   enhance customer interactions.
@@ -138,13 +142,13 @@ const WhyDemy = () => {
             delay: 0.3,
           }}
         >
-          <div className='flex justify-end items-end mr-20'>
+          <div className='flex md:justify-end justify-center items-center md:items-end md:mr-20'>
             <Image
-              src={'/images/img-bot-preview.png'}
-              width={384}
-              height={560}
+              src={isMobile ? '/images/img-bot-preview-mobile.png' : '/images/img-bot-preview.png'}
+              width={isMobile ? 358 : 384}
+              height={isMobile ? 324 : 560}
               alt=''
-              className='w-[384px] h-[560px] shadow-lg rounded-xl'
+              className='w-[358px] h-[324px] md:w-[384px] md:h-[560px] md:shadow-lg md:rounded-xl'
             />
           </div>
         </AnimatedItem>
@@ -158,16 +162,16 @@ const WhyDemy = () => {
       >
         <div className='flex justify-center items-center flex-col gap-8'>
           <Image
-            src={'/images/img-arrow.png'}
+            src={isMobile ? '/images/ic-arrow-mobile.png' : '/images/img-arrow.png'}
             width={1334}
             height={14}
-            className='w-auto h-[14]'
+            className='w-auto h-[14px]'
             alt=''
           />
           <Text className='uppercase' type='font-12-600'>
             trusted by 5000+ websites and counting
           </Text>
-          <div className='flex items-center gap-8'>
+          <div className='flex items-center gap-8 overflow-auto scrollbar-hide'>
             {DATA_TRUSTED?.map((item) => {
               return (
                 <Image key={item} alt='' src={item} width={89} height={24} className='w-auto h-6' />
@@ -196,8 +200,7 @@ const IconLightning = () => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='270'
-      height='28'
+      className='w-[180px] md:w-[270px] h-[28px]'
       viewBox='0 0 322 28'
       fill='none'
     >

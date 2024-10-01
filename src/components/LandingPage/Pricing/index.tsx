@@ -163,9 +163,9 @@ const Pricing = () => {
   return (
     <div
       id='#pricing'
-      className='bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'
+      className='md:bg-[url("/images/bg-how-it-work.png")] h-max bg-no-repeat bg-cover'
     >
-      <div className='container m-auto py-[128px]'>
+      <div className='container m-auto px-4 md:px-0 py-[48px] md:py-[128px]'>
         <div className='flex flex-col gap-9 items-center'>
           <div className='flex flex-col gap-4 text-center justify-center items-center'>
             <AnimatedItem
@@ -200,7 +200,7 @@ const Pricing = () => {
                 delay: 0.4,
               }}
             >
-              <Text type='font-18-400' className='text-secodary'>
+              <Text type='font-18-400' className='text-secodary px-8 md:px-0'>
                 Explore our range of plans designed to suit every budget and help you maximize your
                 chatbot’s potential.
               </Text>
@@ -213,7 +213,7 @@ const Pricing = () => {
               delay: 0.4,
             }}
           >
-            <div className='flex flex-col items-center justify-center gap-16'>
+            <div className='flex flex-col items-center justify-center gap-8 md:gap-16'>
               <Tabs
                 classNames={{
                   tabList: ['bg-white border-1 border-solid border-indigo-shade'],
@@ -259,7 +259,7 @@ const Pricing = () => {
                   }
                 />
               </Tabs>
-              <div className='grid grid-cols-3 gap-8'>
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                 {DATA_PRICING?.map((item, index) => {
                   return (
                     <div

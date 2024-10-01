@@ -5,7 +5,7 @@ import Text from '@components/UI/Text';
 const FooterLangdingpage = () => {
   return (
     <div className='container m-auto py-4'>
-      <div className='py-3 flex justify-between items-center'>
+      <div className='py-3 flex flex-col md:flex-row justify-between items-center'>
         <Text type='font-14-400' className='text-neutral'>
           Copyright © 2024 by{' '}
           <Text element='span' className='text-black font-medium'>

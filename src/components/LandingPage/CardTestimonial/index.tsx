@@ -69,7 +69,7 @@ const TestimonialItem = ({ item }: { item: any }) => (
 );
 
 const CardTestimonial = () => (
-  <div id='#testimonials' className='flex flex-col gap-16 pb-[128px]'>
+  <div id='#testimonials' className='flex flex-col gap-8 md:gap-16 md:pb-[128px]'>
     <div className='flex flex-col gap-4 text-center justify-center items-center'>
       <AnimatedItem
         transition={{
@@ -103,7 +103,7 @@ const CardTestimonial = () => (
           delay: 0.4,
         }}
       >
-        <Text type='font-18-400' className='text-secodary'>
+        <Text type='font-18-400' className='text-secodary px-6 md:px-0'>
           Hear from satisfied customers who have transformed their businesses with Demy.ai and are
           achieving remarkable results.
         </Text>
@@ -125,7 +125,7 @@ const CardTestimonial = () => (
               <TestimonialItem key={`row1-${index}`} item={testimonial} />
             ))}
           </div>
-          <div className='flex animate-scroll-right mt-4'>
+          <div className='md:flex hidden animate-scroll-right mt-4'>
             {[...testimonials, ...testimonials].map((testimonial, index) => (
               <TestimonialItem key={`row2-${index}`} item={testimonial} />
             ))}
