@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable no-console */
 /* eslint-disable indent */
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { Button, Spinner } from '@nextui-org/react';
 import dayjs from 'dayjs';
@@ -52,6 +52,8 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
 
   const router = useRouter();
 
+  const [listFileUpload, setListFileUpload] = useState<any>([]);
+
   const refModalDeleteFile: any = useRef();
 
   const requestCrawlChildLink = useCrawlChildLink({
@@ -63,6 +65,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
   const requestCrawlerFile = useCrawlerFile({
     onSuccess: (res: any) => {
       console.log(res, 'res');
+      setListFileUpload(res?.data?.uploadedFiles);
 
       // toast.success('Submit url successfully');
     },
@@ -83,7 +86,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
       case 'name': {
         return (
           <div className='w-[200px] line-clamp-1 cursor-pointer'>
-            <Text type='font-14-600'>{record?.fileName || '-'}</Text>
+            <Text type='font-14-600'>{record?.name || '-'}</Text>
           </div>
         );
       }
@@ -91,7 +94,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
       case 'uploaded_at': {
         return (
           <Text className='text-secodary' type='font-14-400'>
-            {record?.uploaded_at || '-'}
+            {dayjs(record?.timestamp).format('DD/MM/YYYY') || '-'}
           </Text>
         );
       }
@@ -99,8 +102,8 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
         return (
           <>
             <StatusUpload
-              labelStatus={renderStatusUpload(record?.status)}
-              status={record?.status}
+              labelStatus={renderStatusUpload(EnumStatusUpload.DONE)}
+              status={EnumStatusUpload.DONE}
             />
           </>
         );
@@ -278,7 +281,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
             emptyContent={<NoDataUpload />}
             renderCell={renderCell}
             columns={columns}
-            dataSource={watchedFiles}
+            dataSource={listFileUpload}
           />
         </div>
       </CardSetupBot>
