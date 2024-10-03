@@ -14,13 +14,13 @@ interface IModalDeleteFile {
 const ModalDeleteFile = (props: IModalDeleteFile, ref?: any) => {
   const { handleDeleteFile } = props;
   const [visible, setVisible] = useState(false);
-  const [idDelete, setIdDelete] = useState<string>('');
+  const [fileName, setFileName] = useState<string>('');
 
   useImperativeHandle(ref, () => {
     return {
-      onOpen: (id: string) => {
+      onOpen: (name: string) => {
         setVisible(true);
-        setIdDelete(id);
+        setFileName(name);
       },
       onClose: () => setVisible(false),
     };
@@ -54,7 +54,7 @@ const ModalDeleteFile = (props: IModalDeleteFile, ref?: any) => {
             </Button>
             <Button
               onClick={() => {
-                handleDeleteFile(idDelete);
+                handleDeleteFile(fileName);
                 onVisible();
               }}
               radius='sm'

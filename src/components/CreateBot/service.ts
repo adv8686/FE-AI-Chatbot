@@ -127,3 +127,16 @@ export const useCrawlerFile = (options: any) => {
     ...options,
   });
 };
+
+const serviceDeleteFile = (body: { docName: string; botId: string }) => {
+  return privateRequest(request.post, API_PATH.DELETE_FILE, {
+    data: body,
+  });
+};
+
+export const useDeleteFile = (options: any) => {
+  return useRequest(serviceDeleteFile, {
+    manual: true,
+    ...options,
+  });
+};

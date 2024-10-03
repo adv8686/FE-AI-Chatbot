@@ -7,4 +7,6 @@ export const API_PATH = {
 
   CRAWL_LINK: '/api/data/crawl-child-link',
   CRAWLER_FILE: '/api/data/crawler-files',
+
+  DELETE_FILE: '/api/data/delete-by-docName',
 };

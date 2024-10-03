@@ -6,7 +6,6 @@ import { useRef, useState } from 'react';
 import { Button, Spinner } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
-import { uuid } from 'uuidv4';
 
 import DragDropUpload from '@components/UI/DragDropUpload';
 import IconDeleteDanger from '@components/UI/Icons';
@@ -20,7 +19,7 @@ import { EnumStatusUpload, renderStatusUpload } from '@utils/common';
 import CardSetupBot from '../CardSetupBot';
 import ModalDeleteFile from '../ModalDeleteFile';
 import NoDataUpload from '../NoDataUpload';
-import { useCrawlChildLink, useCrawlerFile } from '../service';
+import { useCrawlChildLink, useCrawlerFile, useDeleteFile } from '../service';
 
 const columns = [
   {
@@ -46,9 +45,8 @@ const columns = [
   },
 ];
 
-const ImportData = ({ errors, trigger, control, watch, setValue, register }: any) => {
+const ImportData = ({ errors, trigger, control, watch, register }: any) => {
   const watchedUrl = watch('url');
-  const watchedFiles = watch('files');
 
   const router = useRouter();
 
@@ -60,16 +58,27 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
     onSuccess: () => {
       toast.success('Submit url successfully');
     },
-    onError: () => {},
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
   });
-  const requestCrawlerFile = useCrawlerFile({
+
+  const requestDeleteFile = useDeleteFile({
     onSuccess: (res: any) => {
       console.log(res, 'res');
-      setListFileUpload(res?.data?.uploadedFiles);
-
-      // toast.success('Submit url successfully');
     },
-    onError: () => {},
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+  });
+
+  const requestCrawlerFile = useCrawlerFile({
+    onSuccess: (res: any) => {
+      setListFileUpload(res?.data?.uploadedFiles);
+    },
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
   });
 
   const renderCell = (record: any, columnKey: any) => {
@@ -112,7 +121,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
       case 'action': {
         return (
           <Button
-            onClick={() => refModalDeleteFile.current.onOpen(record.id)}
+            onClick={() => refModalDeleteFile.current.onOpen(record.name)}
             isIconOnly
             size='md'
             radius='full'
@@ -128,60 +137,45 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
     }
   };
 
-  const validateFile = (files: any) => {
-    const allowedFormats = new Set([
-      'application/pdf',
-      'text/plain',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'application/json',
-      'text/csv',
-    ]);
-    const maxFileSize = 50 * 1024 * 1024; // 50MB
+  // const validateFile = (files: any) => {
+  //   const allowedFormats = new Set([
+  //     'application/pdf',
+  //     'text/plain',
+  //     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  //     'application/json',
+  //     'text/csv',
+  //   ]);
+  //   const maxFileSize = 50 * 1024 * 1024; // 50MB
 
-    for (const file of files) {
-      // Check file size
-      if (file.size > maxFileSize) {
-        return { valid: false, message: `File ${file.name} exceeds 50MB.` };
-      }
+  //   for (const file of files) {
+  //     // Check file size
+  //     if (file.size > maxFileSize) {
+  //       return { valid: false, message: `File ${file.name} exceeds 50MB.` };
+  //     }
 
-      // Check file format
-      if (!allowedFormats.has(file.type)) {
-        return { valid: false, message: `File ${file.name} has an invalid format.` };
-      }
-    }
+  //     // Check file format
+  //     if (!allowedFormats.has(file.type)) {
+  //       return { valid: false, message: `File ${file.name} has an invalid format.` };
+  //     }
+  //   }
 
-    return { valid: true, message: 'All files are valid' };
-  };
+  //   return { valid: true, message: 'All files are valid' };
+  // };
 
   const handleDrop = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
     const files = e.dataTransfer.files;
-    const validation = validateFile(files);
+    const body = {
+      botId: router.query.idBot as string,
+      files: [...files],
+    };
 
-    if (validation.valid) {
-      const fileArray = [...files].map((file: any) => ({
-        id: uuid(),
-        fileName: file.name,
-        file,
-        uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
-        status: EnumStatusUpload.DONE,
-      }));
-      if (fileArray.length > 0) {
-        const arrayFiles = [...watchedFiles];
-
-        arrayFiles.unshift(...fileArray);
-
-        setValue('files', arrayFiles);
-      }
-    } else {
-      toast.error(validation.message);
-    }
+    requestCrawlerFile.run(body);
   };
 
   const handleFileChange = (e: any) => {
     const files = e.target.files;
-    // const validation = validateFile(files);
 
     const body = {
       botId: router.query.idBot as string,
@@ -189,31 +183,18 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
     };
 
     requestCrawlerFile.run(body);
-
-    // if (validation.valid) {
-    //   const fileArray = [...files].map((file: any) => ({
-    //     id: uuid(),
-    //     fileName: file.name,
-    //     file,
-    //     uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
-    //     status: EnumStatusUpload.PROCESSING,
-    //   }));
-
-    //   if (fileArray.length > 0) {
-    //     const arrayFiles = [...watchedFiles];
-
-    //     arrayFiles.unshift(...fileArray);
-
-    //     setValue('files', arrayFiles);
-    //   }
-    // } else {
-    //   toast.error(validation.message);
-    // }
   };
 
-  const handleDeleteFile = (id: string) => {
-    const newValue = watchedFiles?.filter((item: any) => item?.id !== id);
-    setValue('files', newValue);
+  const handleDeleteFile = (name: string) => {
+    const newData = listFileUpload?.filter((item: any) => item?.name !== name);
+    setListFileUpload(newData);
+
+    const body = {
+      docName: name,
+      botId: router.query.idBot as string,
+    };
+
+    requestDeleteFile?.run(body);
   };
 
   const handleSubmitUrl = async () => {
@@ -275,6 +256,7 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
           <DragDropUpload
             {...register('files')}
             handleDrop={handleDrop}
+            loading={requestCrawlerFile?.loading}
             handleFileChange={handleFileChange}
           />
           <TableCustom
