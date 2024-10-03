@@ -3,8 +3,9 @@
 /* eslint-disable indent */
 import { useRef } from 'react';
 
-import { Button } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
 import { uuid } from 'uuidv4';
 
 import DragDropUpload from '@components/UI/DragDropUpload';
@@ -19,6 +20,7 @@ import { EnumStatusUpload, renderStatusUpload } from '@utils/common';
 import CardSetupBot from '../CardSetupBot';
 import ModalDeleteFile from '../ModalDeleteFile';
 import NoDataUpload from '../NoDataUpload';
+import { useCrawlChildLink } from '../service';
 
 const columns = [
   {
@@ -44,11 +46,28 @@ const columns = [
   },
 ];
 
-const ImportData = ({ errors, control, watch, setValue, register }: any) => {
-  // const watchedUrl = watch('url');
+const ImportData = ({ errors, trigger, control, watch, setValue, register }: any) => {
+  const watchedUrl = watch('url');
   const watchedFiles = watch('files');
 
+  const router = useRouter();
+
   const refModalDeleteFile: any = useRef();
+
+  const requestCrawlChildLink = useCrawlChildLink({
+    onSuccess: () => {
+      toast.success('Submit url successfully');
+    },
+    onError: () => {},
+  });
+  // const requestCrawlerFile = useCrawlerFile({
+  //   onSuccess: (res: any) => {
+  //     console.log(res, 'res');
+
+  //     // toast.success('Submit url successfully');
+  //   },
+  //   onError: () => {},
+  // });
 
   const renderCell = (record: any, columnKey: any) => {
     const cellValue = record[columnKey];
@@ -161,13 +180,20 @@ const ImportData = ({ errors, control, watch, setValue, register }: any) => {
     const files = e.target.files;
     const validation = validateFile(files);
 
+    // const body = {
+    //   botId: router.query.idBot as string,
+    //   files: [...files],
+    // };
+
+    // requestCrawlerFile.run(body);
+
     if (validation.valid) {
       const fileArray = [...files].map((file: any) => ({
         id: uuid(),
         fileName: file.name,
         file,
         uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
-        status: EnumStatusUpload.DONE,
+        status: EnumStatusUpload.PROCESSING,
       }));
 
       if (fileArray.length > 0) {
@@ -187,10 +213,16 @@ const ImportData = ({ errors, control, watch, setValue, register }: any) => {
     setValue('files', newValue);
   };
 
-  // const handleSubmitUrl = async () => {
-  //   const isValid = await trigger('url');
-  //   console.log(isValid, 'isValid');
-  // };
+  const handleSubmitUrl = async () => {
+    const isValid = await trigger('url');
+    if (isValid) {
+      const body = {
+        url: watchedUrl,
+        botId: router.query.idBot as string,
+      };
+      requestCrawlChildLink.run(body);
+    }
+  };
 
   return (
     <>
@@ -213,17 +245,19 @@ const ImportData = ({ errors, control, watch, setValue, register }: any) => {
                   </div>
                 }
               />
-              {/* <Button
+              <Button
                 onClick={handleSubmitUrl}
                 size='lg'
                 isDisabled={!watchedUrl}
                 radius='md'
+                spinner={<Spinner size='sm' color='white' />}
+                isLoading={requestCrawlChildLink?.loading}
                 className='bg-black'
               >
                 <Text type='font-14-400' className='text-white'>
                   Submit URL
                 </Text>
-              </Button> */}
+              </Button>
             </div>
             {errors?.url?.message && (
               <Text type='font-12-400' className='text-danger-1'>

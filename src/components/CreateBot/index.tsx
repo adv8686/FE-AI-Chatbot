@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable multiline-ternary */
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Spinner } from '@nextui-org/react';
@@ -20,7 +20,7 @@ import General from './General';
 import ImportData from './ImportData';
 import Installation from './Installation';
 import ModalDiscardChanges from './ModalDiscardChanges';
-import { useCreateSettingBot } from './service';
+import { useEditSettingBot } from './service';
 import ViewBot from './ViewBot';
 
 const steps = [
@@ -48,7 +48,6 @@ const createBotSchema = Yup.object().shape({
 const CreateBot = () => {
   const router = useRouter();
   const refModalDiscardChanges: any = useRef();
-  const [idBot, setIdBot] = useState<any>();
   const [currentStep, setCurrentStep] = useState<string>(STEP_SETUP_BOT.GENERAL);
 
   const {
@@ -75,12 +74,16 @@ const CreateBot = () => {
     },
   });
 
-  const requestCreateSettingBot = useCreateSettingBot({
-    onSuccess: (res: any) => {
+  const idBot: string = useMemo(() => {
+    return router.query.idBot as string;
+  }, [router]);
+
+  const requestEditSettingBot = useEditSettingBot({
+    onSuccess: () => {
       toast.success('Create bot successfully');
       // router.push(ROUTE_PATH.Home);
-      setIdBot(res?.data?.id);
-      // window.open(`https://sdk-chat-test.vercel.app/?botId=${res?.data?.id}`);
+      // setIdBot(res?.data?.id);
+      window.open(`https://sdk-chat-test.vercel.app/?botId=${idBot}`);
       const currentIndex = steps.findIndex((item: any) => item.value === currentStep);
       const nextStep = steps?.[currentIndex + 1]?.value;
       setCurrentStep(nextStep);
@@ -107,12 +110,14 @@ const CreateBot = () => {
       chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
       templateName: router.query.theme,
     };
-    requestCreateSettingBot.run(body);
+    delete body.script;
+    delete body.url;
+    delete body.question;
+    delete body.themeBot;
+
+    requestEditSettingBot.run(body, idBot);
   };
 
-  const handleOpenBot = () => {
-    window.open(`https://sdk-chat-test.vercel.app/?botId=${idBot}`);
-  };
   return (
     <form>
       <div className='flex flex-col gap-6'>
@@ -184,36 +189,21 @@ const CreateBot = () => {
 
                 {currentStep === STEP_SETUP_BOT.INSTALLATION && (
                   <Button
-                    onClick={handleOpenBot}
-                    type='button'
+                    onClick={handleSubmit(onSubmit)}
+                    type='submit'
                     radius='md'
                     size='lg'
+                    spinner={<Spinner size='sm' color='white' />}
+                    isLoading={requestEditSettingBot?.loading}
                     className='bg-fill-accent'
                   >
                     <Text type='font-14-600' className='text-white'>
-                      Open bot
+                      Publish Chatbot
                     </Text>
                   </Button>
                 )}
 
-                {currentStep === STEP_SETUP_BOT.APPEARANCE && (
-                  <Button
-                    type='submit'
-                    onClick={handleSubmit(onSubmit)}
-                    radius='md'
-                    spinner={<Spinner size='sm' color='white' />}
-                    isLoading={requestCreateSettingBot?.loading}
-                    size='lg'
-                    className='bg-black'
-                  >
-                    <Text type='font-14-600' className='text-white'>
-                      Save & Next
-                    </Text>
-                    <ArrowRight color='#fff' size={16} />
-                  </Button>
-                )}
-
-                {[STEP_SETUP_BOT.IMPORT_DATA, STEP_SETUP_BOT.GENERAL].includes(currentStep) && (
+                {currentStep !== STEP_SETUP_BOT.INSTALLATION && (
                   <Button
                     type='button'
                     onClick={handleNextStep}
