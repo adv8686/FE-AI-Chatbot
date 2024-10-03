@@ -111,8 +111,8 @@ export const useCrawlChildLink = (options: any) => {
 const serviceCrawlerFile = (body: { files: any[]; botId: string }) => {
   const formData = new FormData();
 
-  body?.files.forEach((file, index) => {
-    formData.append(`files[${index}]`, file);
+  body?.files.forEach((file) => {
+    formData.append('files', file);
   });
   formData.append('botId', body?.botId);
 

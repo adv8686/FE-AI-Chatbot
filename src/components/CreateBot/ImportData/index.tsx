@@ -20,7 +20,7 @@ import { EnumStatusUpload, renderStatusUpload } from '@utils/common';
 import CardSetupBot from '../CardSetupBot';
 import ModalDeleteFile from '../ModalDeleteFile';
 import NoDataUpload from '../NoDataUpload';
-import { useCrawlChildLink } from '../service';
+import { useCrawlChildLink, useCrawlerFile } from '../service';
 
 const columns = [
   {
@@ -60,14 +60,14 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
     },
     onError: () => {},
   });
-  // const requestCrawlerFile = useCrawlerFile({
-  //   onSuccess: (res: any) => {
-  //     console.log(res, 'res');
+  const requestCrawlerFile = useCrawlerFile({
+    onSuccess: (res: any) => {
+      console.log(res, 'res');
 
-  //     // toast.success('Submit url successfully');
-  //   },
-  //   onError: () => {},
-  // });
+      // toast.success('Submit url successfully');
+    },
+    onError: () => {},
+  });
 
   const renderCell = (record: any, columnKey: any) => {
     const cellValue = record[columnKey];
@@ -178,34 +178,34 @@ const ImportData = ({ errors, trigger, control, watch, setValue, register }: any
 
   const handleFileChange = (e: any) => {
     const files = e.target.files;
-    const validation = validateFile(files);
+    // const validation = validateFile(files);
 
-    // const body = {
-    //   botId: router.query.idBot as string,
-    //   files: [...files],
-    // };
+    const body = {
+      botId: router.query.idBot as string,
+      files: [...files],
+    };
 
-    // requestCrawlerFile.run(body);
+    requestCrawlerFile.run(body);
 
-    if (validation.valid) {
-      const fileArray = [...files].map((file: any) => ({
-        id: uuid(),
-        fileName: file.name,
-        file,
-        uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
-        status: EnumStatusUpload.PROCESSING,
-      }));
+    // if (validation.valid) {
+    //   const fileArray = [...files].map((file: any) => ({
+    //     id: uuid(),
+    //     fileName: file.name,
+    //     file,
+    //     uploaded_at: dayjs(file.lastModifiedDate).format('DD/MM/YYYY'),
+    //     status: EnumStatusUpload.PROCESSING,
+    //   }));
 
-      if (fileArray.length > 0) {
-        const arrayFiles = [...watchedFiles];
+    //   if (fileArray.length > 0) {
+    //     const arrayFiles = [...watchedFiles];
 
-        arrayFiles.unshift(...fileArray);
+    //     arrayFiles.unshift(...fileArray);
 
-        setValue('files', arrayFiles);
-      }
-    } else {
-      toast.error(validation.message);
-    }
+    //     setValue('files', arrayFiles);
+    //   }
+    // } else {
+    //   toast.error(validation.message);
+    // }
   };
 
   const handleDeleteFile = (id: string) => {

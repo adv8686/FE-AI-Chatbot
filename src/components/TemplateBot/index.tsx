@@ -72,7 +72,7 @@ const TemplateBot = () => {
   const handleSelectTheme = (value: THEME_BOT) => {
     setValueTheme(value);
     const body = {
-      botname: 'Demy bot 3',
+      botname: 'Demy bot 4',
     };
     requestCreateSettingBot.run(body);
   };
