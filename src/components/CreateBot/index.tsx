@@ -90,7 +90,9 @@ const CreateBot = () => {
       const nextStep = steps?.[currentIndex + 1]?.value;
       setCurrentStep(nextStep);
     },
-    onError: () => {},
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
   });
 
   const requestCreateSettingBot = useCreateSettingBot({

@@ -2,12 +2,13 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 import React, { useRef } from 'react';
 
-import { Button } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 import { UploadSimple } from '@phosphor-icons/react';
+import clsx from 'clsx';
 
 import Text from '../Text';
 
-const DragDropUpload = ({ handleDrop, handleFileChange }: any) => {
+const DragDropUpload = ({ handleDrop, handleFileChange, loading }: any) => {
   const fileInputRef = useRef<any>(null);
 
   const handleDragOver = (e: any) => {
@@ -17,25 +18,35 @@ const DragDropUpload = ({ handleDrop, handleFileChange }: any) => {
 
   const handleClickUpload = () => {
     if (fileInputRef.current) {
-      fileInputRef.current.click();
+      !loading && fileInputRef.current.click();
     }
   };
 
   return (
     <div className='flex flex-col items-center'>
       <div
-        className='flex flex-col items-center justify-center w-full min-h-[184px] border-1 border-dashed border-upload-border rounded-lg cursor-pointer bg-upload-accent p-12 hover:border-accent transition-all'
+        className={clsx(
+          'flex flex-col items-center justify-center w-full min-h-[184px] border-1 border-dashed border-upload-border rounded-lg cursor-pointer bg-upload-accent p-12 hover:border-accent transition-all',
+          {
+            '!cursor-not-allowed hover:!border-upload-border': loading,
+          },
+        )}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onClick={handleClickUpload}
       >
-        <div className='flex flex-col items-center justify-center gap-2'>
+        <div className='flex flex-col items-center relative justify-center gap-2'>
+          {loading && <Spinner className='absolute z-[1000]' color='white' />}
+
           <Button
             isIconOnly
             size='lg'
+            disabled={!loading}
             onClick={handleClickUpload}
             radius='sm'
-            className='bg-white border-upload-border border-1 border-solid'
+            className={clsx('bg-white border-upload-border border-1 border-solid', {
+              '!cursor-not-allowed': loading,
+            })}
           >
             <UploadSimple size={20} color='#8B5CF6' weight='light' />
           </Button>
