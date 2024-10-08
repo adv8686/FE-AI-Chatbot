@@ -11,8 +11,6 @@ import Text from '@components/UI/Text';
 import { TAB_HOWITWORK } from '@utils/common';
 
 import { AnimatedItem } from '..';
-import { ItemContent } from '../WhyDemy';
-import { IconAvailability, IconEffortless, IconInsights } from '../WhyDemy/Icons';
 
 const TAB_WORKS = [
   {
@@ -26,6 +24,46 @@ const TAB_WORKS = [
   {
     id: TAB_HOWITWORK?.INTEGRATE,
     label: 'Integrate',
+  },
+];
+
+const dataStep1 = [
+  {
+    id: 1,
+    text: 'Welcome Message: Create a personalized message to make a friendly first impression.',
+  },
+  {
+    id: 2,
+    text: 'Bot Name: A memorable name makes the bot more relatable to users.',
+  },
+  {
+    id: 3,
+    text: 'Color Scheme: Selecting colors that blend well with your website’s theme.',
+  },
+  {
+    id: 4,
+    text: 'Frequently Asked Questions (FAQs): They help the Chatbot handle routine inquiries automatically, saving time.',
+  },
+];
+
+const dataStep2 = [
+  {
+    id: 1,
+    text: 'Website URLs: Add URLs from your site so the chatbot can extract information directly from your content, enabling it to answer queries based on real-time website data.',
+  },
+  {
+    id: 2,
+    text: 'Upload Files: Supplement the chatbot’s knowledge by uploading important files (such as PDFs, documents, or reports).',
+  },
+];
+const dataStep3 = [
+  {
+    id: 1,
+    text: 'Integration Process: Follow the detailed coding instructions provided by the platform to ensure the chatbot functions seamlessly.',
+  },
+  {
+    id: 2,
+    text: 'Placement and Functionality: You can decide where the chatbot will appear on your site to help the chatbot be fully operational and ready to assist users in real time.',
   },
 ];
 
@@ -49,16 +87,31 @@ const HowItWork = () => {
   const renderTitleCard = () => {
     let text: string = '';
     if (tab === TAB_HOWITWORK.CUSTOMIZABLE) {
-      text = 'Step 1: Customize Appearance';
+      text = 'Step 1: Configure General Information';
     }
     if (tab === TAB_HOWITWORK.INPUT_DATA) {
-      text = 'Step 2: Input Your Data';
+      text = 'Step 2: Upload Data for Chatbot Training';
     }
     if (tab === TAB_HOWITWORK.INTEGRATE) {
-      text = 'Step 3: Integrate with Website';
+      text = 'Step 3: Integrate the Chatbot into Your Website';
     }
     return text;
   };
+  const renderDescriptionCard = () => {
+    let text: string = '';
+    if (tab === TAB_HOWITWORK.CUSTOMIZABLE) {
+      text = 'Start by setting up the core details of your chatbot to match your brand and goals:';
+    }
+    if (tab === TAB_HOWITWORK.INPUT_DATA) {
+      text =
+        'To improve the chatbot’s accuracy and ability to answer specific questions, you’ll need to provide relevant data:';
+    }
+    if (tab === TAB_HOWITWORK.INTEGRATE) {
+      text = 'Once your chatbot is configured and trained, it’s time to implement it on your site:';
+    }
+    return text;
+  };
+
   const renderImageHowItWork = () => {
     let url: string = '';
     if (tab === TAB_HOWITWORK.CUSTOMIZABLE) {
@@ -212,18 +265,33 @@ const HowItWork = () => {
                       <Text className='text-[22px] md:text-[36px] font-semibold leading-10'>
                         {renderTitleCard()}
                       </Text>
-                      <Text type='font-18-400' className='text-secodary mb-2'>
-                        Create your chatbot, tailor the interface, and design engaging welcome
-                        messages to ensure your chatbot truly reflects your brand’s unique style and
-                        personality.
+                      <Text type='font-18-400' className='text-secodary'>
+                        {renderDescriptionCard()}
                       </Text>
-                      <ItemContent
-                        icon={<IconEffortless />}
-                        text='Effortless customization, no coding required'
-                      />
-                      <ItemContent icon={<IconAvailability />} text='24/7 support availability' />
+                      {tab === TAB_HOWITWORK.CUSTOMIZABLE && (
+                        <ItemContent
+                          // icon={<IconEffortless />}
+                          dataContent={dataStep1}
+                          // text='Effortless customization, no coding required'
+                        />
+                      )}
+                      {tab === TAB_HOWITWORK.INPUT_DATA && (
+                        <ItemContent
+                          // icon={<IconEffortless />}
+                          dataContent={dataStep2}
+                          // text='Effortless customization, no coding required'
+                        />
+                      )}
+                      {tab === TAB_HOWITWORK.INTEGRATE && (
+                        <ItemContent
+                          // icon={<IconEffortless />}
+                          dataContent={dataStep3}
+                          // text='Effortless customization, no coding required'
+                        />
+                      )}
+                      {/* <ItemContent icon={<IconAvailability />} text='24/7 support availability' />
 
-                      <ItemContent icon={<IconInsights />} text='Data-driven insights' />
+                      <ItemContent icon={<IconInsights />} text='Data-driven insights' /> */}
                     </div>
                   </div>
 
@@ -247,3 +315,26 @@ const HowItWork = () => {
   );
 };
 export default HowItWork;
+
+const ItemContent = ({ dataContent }: { dataContent: any }) => {
+  return (
+    <div className='flex flex-col gap-2'>
+      {dataContent?.map((item: any) => {
+        return (
+          <div key={item?.item} className='flex items-center gap-3'>
+            <div className='w-2 h-[2px]  rounded-full bg-neutral' />
+            <Text type='font-14-400' className='text-neutral'>
+              {item.text}
+            </Text>
+          </div>
+        );
+      })}
+    </div>
+    // <div className='flex items-center gap-2'>
+    //   {icon}
+    //   <Text type='font-18-400' className='text-secodary'>
+    //     {text}
+    //   </Text>
+    // </div>
+  );
+};
