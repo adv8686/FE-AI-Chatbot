@@ -3,7 +3,7 @@
 import TokenManager, { injectBearer } from 'brainless-token-manager';
 import { extend } from 'umi-request';
 
-import { getAccessToken } from '@store/auth';
+import { deleteAuthCookies, getAccessToken } from '@store/auth';
 import { ENV } from 'src/utils/env';
 
 const REQ_TIMEOUT = 25 * 1000;
@@ -15,6 +15,10 @@ const request = extend({
   prefix: PREFIX_API,
   timeout: REQ_TIMEOUT,
   errorHandler: (error) => {
+    if (getAccessToken() && error.data.message === 'Invalid token') {
+      deleteAuthCookies();
+      window.location.href = '/auth/sign-in';
+    }
     throw error?.data || error?.response;
   },
 });

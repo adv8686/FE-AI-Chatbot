@@ -20,7 +20,7 @@ import General from './General';
 import ImportData from './ImportData';
 import Installation from './Installation';
 import ModalDiscardChanges from './ModalDiscardChanges';
-import { useEditSettingBot } from './service';
+import { useCreateSettingBot, useEditSettingBot } from './service';
 import ViewBot from './ViewBot';
 
 const steps = [
@@ -43,13 +43,15 @@ const steps = [
 ];
 const createBotSchema = Yup.object().shape({
   url: Yup.string().url('Enter a valid URL'),
+
+  botname: Yup.string().required('Please enter Bot Name'),
 });
 
 const CreateBot = () => {
   const router = useRouter();
   const refModalDiscardChanges: any = useRef();
   const [currentStep, setCurrentStep] = useState<string>(STEP_SETUP_BOT.GENERAL);
-
+  const currentQuery = router.query;
   const {
     formState: { errors },
     control,
@@ -91,6 +93,24 @@ const CreateBot = () => {
     onError: () => {},
   });
 
+  const requestCreateSettingBot = useCreateSettingBot({
+    onSuccess: (res: any) => {
+      if (res?.data?.id) {
+        router.push({
+          pathname: router.pathname,
+          query: {
+            ...currentQuery,
+            idBot: res?.data?.id,
+          },
+        });
+        handleNextStep();
+      }
+    },
+    onError: (error: any) => {
+      toast.error(error.message);
+    },
+  });
+
   const handleNextStep = () => {
     const currentIndex = steps.findIndex((item: any) => item.value === currentStep);
     const nextStep = steps?.[currentIndex + 1]?.value;
@@ -116,6 +136,22 @@ const CreateBot = () => {
     delete body.themeBot;
 
     requestEditSettingBot.run(body, idBot);
+  };
+
+  const onCreateBot = (values: any) => {
+    const body = {
+      ...values,
+      avatar: values?.avatar?.file,
+      files: values?.files?.map((item: any) => item?.file),
+      chatSuggestions: values?.chatSuggestions?.map((item: any) => item?.title),
+      templateName: router.query.theme,
+    };
+    delete body.script;
+    delete body.url;
+    delete body.question;
+    delete body.themeBot;
+
+    requestCreateSettingBot.run(body);
   };
 
   return (
@@ -202,8 +238,25 @@ const CreateBot = () => {
                     </Text>
                   </Button>
                 )}
-
-                {currentStep !== STEP_SETUP_BOT.INSTALLATION && (
+                {currentStep === STEP_SETUP_BOT.GENERAL && (
+                  <Button
+                    type='submit'
+                    onClick={handleSubmit(onCreateBot)}
+                    radius='md'
+                    isLoading={requestCreateSettingBot?.loading}
+                    size='lg'
+                    spinner={<Spinner size='sm' color='white' />}
+                    className='bg-black'
+                  >
+                    <Text type='font-14-600' className='text-white'>
+                      Next
+                    </Text>
+                    <ArrowRight color='#fff' size={16} />
+                  </Button>
+                )}
+                {[STEP_SETUP_BOT.INSTALLATION, STEP_SETUP_BOT.IMPORT_DATA].includes(
+                  currentStep,
+                ) && (
                   <Button
                     type='button'
                     onClick={handleNextStep}
@@ -222,7 +275,7 @@ const CreateBot = () => {
           </div>
           <div className='col-span-2 flex flex-col gap-4'>
             <ViewBot watch={watch} control={control} errors={errors} />
-            <CardLinkChatBot />
+            {idBot && <CardLinkChatBot idBot={idBot} />}
           </div>
         </div>
 

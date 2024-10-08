@@ -1,13 +1,9 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 /* eslint-disable unicorn/no-null */
 
-import { useState } from 'react';
-
-import { Spinner } from '@nextui-org/react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
-import { useCreateSettingBot } from '@components/CreateBot/service';
 import Text from '@components/UI/Text';
 import { ROUTE_PATH, THEME_BOT } from '@utils/common';
 
@@ -57,24 +53,28 @@ const DATA_THEME_BOT = [
 
 const TemplateBot = () => {
   const router = useRouter();
-  const [valueTheme, setValueTheme] = useState<THEME_BOT>(THEME_BOT.DEFAULT);
+  // const [valueTheme, setValueTheme] = useState<THEME_BOT>(THEME_BOT.DEFAULT);
 
-  const requestCreateSettingBot = useCreateSettingBot({
-    onSuccess: (res: any) => {
-      router.push({
-        pathname: ROUTE_PATH.CREATE_BOT,
-        query: { theme: valueTheme, idBot: res?.data?.id },
-      });
-    },
-    onError: () => {},
-  });
+  // const requestCreateSettingBot = useCreateSettingBot({
+  //   onSuccess: (res: any) => {
+  //     router.push({
+  //       pathname: ROUTE_PATH.CREATE_BOT,
+  //       query: { theme: valueTheme, idBot: res?.data?.id },
+  //     });
+  //   },
+  //   onError: () => {},
+  // });
 
   const handleSelectTheme = (value: THEME_BOT) => {
-    setValueTheme(value);
-    const body = {
-      botname: 'Demy bot 4',
-    };
-    requestCreateSettingBot.run(body);
+    // setValueTheme(value);
+    router.push({
+      pathname: ROUTE_PATH.CREATE_BOT,
+      query: { theme: value },
+    });
+    // const body = {
+    //   botname: 'Demy bot 4',
+    // };
+    // requestCreateSettingBot.run(body);
   };
   return (
     <div className='flex flex-col gap-12 mt-6'>
@@ -88,9 +88,9 @@ const TemplateBot = () => {
         {DATA_THEME_BOT?.map((item) => {
           return (
             <div key={item?.id} className='flex relative justify-center items-center'>
-              {requestCreateSettingBot?.loading && valueTheme === item?.value && (
+              {/* {requestCreateSettingBot?.loading && valueTheme === item?.value && (
                 <Spinner className='absolute' color='white' />
-              )}
+              )} */}
 
               <div
                 onClick={() => handleSelectTheme(item?.value)}
