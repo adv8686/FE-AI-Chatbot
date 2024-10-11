@@ -98,6 +98,7 @@ export const useEditSettingBot = (options: any) => {
 const serviceCrawlChildLink = (body: { url: string; botId: string }) => {
   return privateRequest(request.post, API_PATH.CRAWL_LINK, {
     data: body,
+    timeout: 50_000,
   });
 };
 

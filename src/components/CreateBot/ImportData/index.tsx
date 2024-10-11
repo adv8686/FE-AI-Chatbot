@@ -199,9 +199,10 @@ const ImportData = ({ errors, trigger, control, watch, register }: any) => {
 
   const handleSubmitUrl = async () => {
     const isValid = await trigger('url');
+    const isUrl = watchedUrl.includes('https://');
     if (isValid) {
       const body = {
-        url: watchedUrl,
+        url: isUrl ? `${watchedUrl}` : `https://${watchedUrl}`,
         botId: router.query.idBot as string,
       };
       requestCrawlChildLink.run(body);
