@@ -42,8 +42,6 @@ const steps = [
   },
 ];
 const createBotSchema = Yup.object().shape({
-  url: Yup.string().url('Enter a valid URL'),
-
   botname: Yup.string().required('Please enter Bot Name'),
 });
 
@@ -256,9 +254,7 @@ const CreateBot = () => {
                     <ArrowRight color='#fff' size={16} />
                   </Button>
                 )}
-                {[STEP_SETUP_BOT.INSTALLATION, STEP_SETUP_BOT.IMPORT_DATA].includes(
-                  currentStep,
-                ) && (
+                {[STEP_SETUP_BOT.APPEARANCE, STEP_SETUP_BOT.IMPORT_DATA].includes(currentStep) && (
                   <Button
                     type='button'
                     onClick={handleNextStep}
