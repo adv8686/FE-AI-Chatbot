@@ -32,8 +32,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <meta name='googlebot' content={'index,follow'} />
         <meta charSet='utf-8' />
         <meta name='theme-color' content='#476055' />
-        <meta name='title' content='Maby Client' />
-        <meta name='description' content='Maby Client' />
+        <meta name='title' content='My Wealth Log' />
+        <meta name='description' content='My Wealth Log' />
         <link rel='shortcut icon' href='/static/favicon.ico' />
         <meta
           name='viewport'
